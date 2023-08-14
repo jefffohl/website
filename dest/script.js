@@ -1,5 +1,5 @@
 "use strict";
-const sweetness = 48;
+const sweetness = 40;
 const hueClamp = [0, 50];
 const saturationClamp = [50, 95];
 const lightnessClamp = [10, 90];
@@ -151,10 +151,6 @@ const createGrid = (gridType // parentElement: HTMLElement
         columns: createSpread(columnLength),
         rows: createSpread(rowLength),
     };
-    console.log('------------GRID-----------');
-    console.log(grid);
-    console.log('COLUMNS:', grid.columns.reduce(sum, 0));
-    console.log('ROWS:', grid.rows.reduce(sum, 0));
     return grid;
 };
 var GridType;
@@ -165,7 +161,6 @@ var GridType;
 })(GridType || (GridType = {}));
 const chooseGridType = () => {
     const gridType = Math.random() >= 0.5 ? GridType.ROW : GridType.COLUMN;
-    console.warn(gridType);
     return gridType;
 };
 const instantiateGrid = (parentElement, recursionCount, gridType = GridType.DEFAULT) => {
@@ -173,8 +168,8 @@ const instantiateGrid = (parentElement, recursionCount, gridType = GridType.DEFA
         return;
     }
     const grid = createGrid(gridType);
-    const breakoutChance = 0.0125 * sweetness;
-    const subGridChance = 0.005 * sweetness;
+    const breakoutChance = 0.005 * sweetness;
+    const subGridChance = 0.002 * sweetness;
     grid.rows.forEach((row, rowIndex) => {
         const rowElement = document.createElement('div');
         const rowElementTop = rowIndex === 0 ? 0 : grid.rows.slice(0, rowIndex).reduce(sum, 0);
@@ -197,17 +192,17 @@ const instantiateGrid = (parentElement, recursionCount, gridType = GridType.DEFA
                 ? 0
                 : grid.columns.slice(0, columnIndex).reduce(sum, 0);
             let width = column;
-            let zIndex = 0;
-            const hasColumnBreakout = Math.random() < breakoutChance;
+            const hasColumnBreakout = Math.random() < breakoutChance && gridType === GridType.DEFAULT;
             if (hasColumnBreakout) {
-                const numberOfExtraColumns = grid.columns.length - columnIndex + 1;
-                // randomly select integer
-                const col = Math.round(Math.random() * numberOfExtraColumns);
-                width = grid.columns.slice(columnIndex, col).reduce(sum, 0);
-                for (let c = 0; c < numberOfExtraColumns; c++) {
+                const numberOfExtraColumns = grid.columns.length - (columnIndex + 1);
+                // randomly select the number of columns we want to span to the right
+                const columnSpan = Math.ceil(Math.random() * numberOfExtraColumns);
+                width = grid.columns
+                    .slice(columnIndex, columnIndex + columnSpan)
+                    .reduce(sum, 0);
+                for (let c = 0; c < columnSpan - 1; c++) {
                     skipCells.push(c + columnIndex + 1);
                 }
-                zIndex = 1;
             }
             const styleArray = [
                 `position:absolute`,
@@ -215,7 +210,6 @@ const instantiateGrid = (parentElement, recursionCount, gridType = GridType.DEFA
                 `left:${left}%`,
                 `height:100%`,
                 `width:${width}%`,
-                `z-index:${zIndex}`,
                 `background-color:${randomColor()}`,
             ];
             const columnElement = document.createElement('div');
