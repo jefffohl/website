@@ -1,0 +1,25 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "A website",
+  "main": "script.js",
+  "scripts": {
+    "start": "tsc --watch",
+    "format": "npx prettier --write src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jefffohl/website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jefffohl/website/issues"
+  },
+  "homepage": "https://github.com/jefffohl/website#readme",
+  "devDependencies": {
+    "prettier": "^3.0.1",
+    "typescript": "^5.1.6"
+  }
+}
