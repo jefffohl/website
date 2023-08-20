@@ -8,8 +8,20 @@
             div {
                 transition: width 0.5s;
             }
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                width: 100vw;
+            }
+            canvas {
+                width: 100%;
+                height: 100%;
+            }
         </style>
         <script src="dest/script.js" defer></script>
     </head>
-    <body id="grid"></body>
+    <body id="grid">
+        <canvas id="grid-canvas"></canvas>
+    </body>
 </html>

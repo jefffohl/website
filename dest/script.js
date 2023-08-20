@@ -3,13 +3,13 @@ const sweetness = 40;
 const hueClamp = [0, 50];
 const saturationClamp = [50, 95];
 const lightnessClamp = [10, 90];
-const maxRecursionDepth = 2;
+const maxRecursionDepth = 3;
 const getRandomClamped = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
 };
-const randomColor = () => `hsl(${getRandomClamped(hueClamp[0], hueClamp[1])},${getRandomClamped(saturationClamp[0], saturationClamp[1])}%,${getRandomClamped(lightnessClamp[0], lightnessClamp[1])}%)`;
+const randomColor = () => `hsl(${getRandomClamped(hueClamp[0], hueClamp[1])} ${getRandomClamped(saturationClamp[0], saturationClamp[1])}% ${getRandomClamped(lightnessClamp[0], lightnessClamp[1])}%)`;
 const sum = (partialSum, a) => partialSum + a;
 // constants
 const navigationItems = [
@@ -118,16 +118,16 @@ const createSpread = (count) => {
     // Then, we can take n - 1 and create a variable for each pair of neighboring elements.
     // Then, we create a random boolean, to determine if we add this or subtract it from the first element of the pair.
     // For the second element of the pair, we do the opposite.
-    // The result should always add up to 100%. There should be no decimal rounding. All percentage values should be integers.
+    // The result should always add up to 1.
     const initialValue = 100 / count;
     for (let a = 0; a < count; a++) {
-        spread.push(initialValue);
+        spread.push(initialValue / 100);
     }
     for (let b = 0; b < count - 1; b++) {
         // addSubtract value can't be larger than the initialValue
         const percentage = b === 0 || b === count - 1
-            ? Math.random() * initialValue
-            : Math.random() * (initialValue / 2);
+            ? (Math.random() * initialValue) / 100
+            : (Math.random() * (initialValue / 2)) / 100;
         const addToFirst = Math.random() < 0.5;
         const pair = [spread[b], spread[b + 1]];
         if (addToFirst) {
@@ -141,10 +141,7 @@ const createSpread = (count) => {
     }
     return spread;
 };
-const createGrid = (gridType // parentElement: HTMLElement
-// parentGrid?: IGrid,
-// coordinates?: ICellCoordinates
-) => {
+const createGrid = (gridType) => {
     const columnLength = gridType === GridType.COLUMN ? 1 : getValue(sweetness);
     const rowLength = gridType === GridType.ROW ? 1 : getValue(sweetness);
     const grid = {
@@ -221,6 +218,68 @@ const instantiateGrid = (parentElement, recursionCount, gridType = GridType.DEFA
         });
     });
 };
-console.time('timer');
-instantiateGrid(document.getElementById('grid'), 0);
-console.timeEnd('timer');
+// console.time('timer')
+// instantiateGrid(document.getElementById('grid'), 0)
+// console.timeEnd('timer')
+const drawGrid = (context, gridHeight, gridWidth, offset, // [x, y]
+recursionCount, gridType = GridType.DEFAULT) => {
+    if (!context) {
+        return;
+    }
+    console.warn(recursionCount);
+    const grid = createGrid(gridType);
+    const breakoutChance = 0.005 * sweetness;
+    const subGridChance = 0.002 * sweetness;
+    grid.rows.forEach((row, rowIndex) => {
+        const height = gridHeight * row;
+        const top = (rowIndex === 0
+            ? 0
+            : grid.rows.slice(0, rowIndex).reduce(sum, 0) * gridHeight) +
+            offset[1];
+        // row
+        context.fillStyle = randomColor();
+        context.fillRect(0, Math.ceil(top), Math.ceil(gridWidth), Math.ceil(height));
+        const skipCells = [];
+        grid.columns.forEach((column, columnIndex) => {
+            if (skipCells.includes(columnIndex)) {
+                return;
+            }
+            const left = (columnIndex === 0
+                ? 0
+                : grid.columns.slice(0, columnIndex).reduce(sum, 0) *
+                    gridWidth) + offset[0];
+            let width = column * gridWidth;
+            const hasColumnBreakout = Math.random() < breakoutChance && gridType === GridType.DEFAULT;
+            if (hasColumnBreakout) {
+                const numberOfExtraColumns = grid.columns.length - (columnIndex + 1);
+                // randomly select the number of columns we want to span to the right
+                const columnSpan = Math.ceil(Math.random() * numberOfExtraColumns);
+                width =
+                    grid.columns
+                        .slice(columnIndex, columnIndex + columnSpan)
+                        .reduce(sum, 0) * gridWidth;
+                for (let c = 0; c < columnSpan - 1; c++) {
+                    skipCells.push(c + columnIndex + 1);
+                }
+            }
+            context.fillStyle = randomColor();
+            context.fillRect(Math.ceil(left), Math.ceil(top), Math.ceil(width), Math.ceil(height));
+            if (Math.random() < subGridChance &&
+                recursionCount < maxRecursionDepth) {
+                drawGrid(context, height, width, [left, top], recursionCount + 1, chooseGridType());
+            }
+        });
+    });
+};
+const canvas = document.getElementById('grid-canvas');
+if (canvas === null || canvas === void 0 ? void 0 : canvas.getContext) {
+    const dpr = window.devicePixelRatio;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    const context = canvas.getContext('2d');
+    context === null || context === void 0 ? void 0 : context.scale(dpr, dpr);
+    canvas.style.width = `${rect.width}px`;
+    canvas.style.height = `${rect.height}px`;
+    drawGrid(context, rect.height, rect.width, [0, 0], 0);
+}
