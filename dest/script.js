@@ -278,7 +278,7 @@ if (canvas === null || canvas === void 0 ? void 0 : canvas.getContext) {
     const sumOfCells = Math.round(flatGrid.map((cell) => cell.width * cell.height).reduce(sum, 0));
     console.warn('sum of cells:', sumOfCells);
     console.warn('EQUAL? ', area === sumOfCells);
-    animateGrid(100);
+    animateGrid(50);
     console.warn(globalGrid);
     // setInterval(() => {
     //     if (!index) {

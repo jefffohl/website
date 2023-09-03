@@ -369,7 +369,7 @@ if (canvas?.getContext) {
     )
     console.warn('sum of cells:', sumOfCells)
     console.warn('EQUAL? ', area === sumOfCells)
-    animateGrid(100)
+    animateGrid(50)
     console.warn(globalGrid)
     // setInterval(() => {
     //     if (!index) {
