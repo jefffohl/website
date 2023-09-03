@@ -1,16 +1,39 @@
 "use strict";
-const sweetness = 40;
-const hueClamp = [0, 50];
-const saturationClamp = [50, 95];
-const lightnessClamp = [10, 90];
-const maxRecursionDepth = 3;
-const getRandomClamped = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
-};
-const randomColor = () => `hsl(${getRandomClamped(hueClamp[0], hueClamp[1])} ${getRandomClamped(saturationClamp[0], saturationClamp[1])}% ${getRandomClamped(lightnessClamp[0], lightnessClamp[1])}%)`;
-const sum = (partialSum, a) => partialSum + a;
+/**
+ *  Key concepts:
+ *    - Navigation elements should be in a column
+ *    - Column needs to be wide enough to accommodate text
+ *    - Number of columns can be variable
+ *    - Number of rows can be variable
+ *    - Colors of text links need to be dark enough to create contrast with the links
+ *    - Navigation elements must be in a certain order
+ *
+ *    Things that are chance:
+ *      - Color of cell
+ *      - If cell will extend past column (left or right?)
+ *      - If cell will extend past row (down or up?)
+ *      - If cell extends past boundaries, how far
+ *      - If cell will have grid inside of it
+ *
+ *    Things that are not chance:
+ *      - Order of navigation items
+ *      - Maximum depth of recursion for grids
+ *      - All navigation cells will be in the same column
+ *      - Navigation cells cannot have recursive grids inside of them
+ *      - Minimum width in pixels (or percentage?) for navigation column
+ **/
+var GridType;
+(function (GridType) {
+    GridType["DEFAULT"] = "default";
+    GridType["ROW"] = "row";
+    GridType["COLUMN"] = "column";
+})(GridType || (GridType = {}));
+var CellType;
+(function (CellType) {
+    CellType["GRID"] = "grid";
+    CellType["ROW"] = "row";
+    CellType["CELL"] = "cell";
+})(CellType || (CellType = {}));
 // constants
 const navigationItems = [
     {
@@ -32,52 +55,23 @@ const navigationItems = [
         text: 'archive',
         href: '/archive',
     },
-];
-// const saltiness = 1
-// const maxRecursionDepth = 3
-// const minimumWidthNavigationColumn = 300
-// const maxColumnsTopLevel = 12
-// const minColumnsTopLevel = 3
-// const maxRowsTopLevel = 50
-// const minRowsTopLevel = 10
-// const maxColumnsNested = 6
-// const minColumnsNested = 1
-// const maxRowsNested = 20
-// const minRowsNested = 1
-// const topGrid: IGrid | undefined = undefined
-/**
- *  Key concepts:
- *    1. Navigation elements should be in a column
- *    2. Column needs to be wide enough to accommodate text
- *    3. Number of columns can be variable
- *    4. Number of rows can be variable
- *    5. Colors of text links need to be dark enough to create contrast with the links
- *    6. Navigation column needs to have a higher likelihood of definition. How can this be defined?
- *    7. Navigation elements must be in a certain order
- *
- *    Things that are chance:
- *      1. Color of cell
- *      2. If cell will extend past column (left or right?)
- *      3. If cell will extend past row (down or up?)
- *      4. If cell extends past boundaries, how far?
- *      5. z-index of cell
- *      6. If cell will have grid inside of it
- *
- *    Things that are not chance:
- *      1. Order of navigation items
- *      2. Z-index of navigation elements will always be top
- *      3. Maximum depth of recursion for grids
- *      4. All navigation cells will be in the same column
- *      5. Navigation cells cannot have recursive grids inside of them
- *      6. Minimum width in pixels (or percentage?) for navigation column
- *      7. Max and minimum number of columns and rows
- *
- **/
-// const cell = () => {}
+], sweetness = 20, hueClamp = [20, 50], saturationClamp = [50, 95], lightnessClamp = [10, 90], maxRecursionDepth = 3, animationDuration = 1000; // milliseconds
+let drawingGrid = false;
+// global state
+let globalGrid, globalContext, start, previousTimeStamp, index = 0, flatGrid = [];
+// utilities
+const getRandomClamped = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+};
+const randomColor = () => `hsl(${getRandomClamped(hueClamp[0], hueClamp[1])} ${getRandomClamped(saturationClamp[0], saturationClamp[1])}% ${getRandomClamped(lightnessClamp[0], lightnessClamp[1])}%)`;
+const sum = (partialSum, a) => partialSum + a;
 /**
  * Function for generating a random number, with an upper bound
  * determined by a diminishing probability.
- * @param sweetness This parameter determines how likely the random number is to be large. Lower numbers reduce the probability, larger numbers increase the probability.
+ * @param sweetness This parameter determines how likely the random number is to be large.
+ * Lower numbers reduce the probability, larger numbers increase the probability.
  */
 const getValue = (sweet) => {
     let count = 0;
@@ -95,30 +89,14 @@ const getValue = (sweet) => {
     }
     return count;
 };
-const valueFromRange = (min, max) => {
-    if (min < max) {
-        return min;
-    }
-    const range = max - min;
-    return Math.round(Math.random() * range) + min;
-};
-const createRange = (limits) => {
-    const columns = valueFromRange(limits.maxColumn, limits.minColumn);
-    const rows = valueFromRange(limits.maxRow, limits.minColumn);
-    return {
-        columns: valueFromRange(limits.maxColumn, limits.minColumn),
-        rows: valueFromRange(limits.maxRow, limits.minColumn),
-    };
-};
 const createSpread = (count) => {
     const spread = [];
-    // now we need to figure out how to create variation of the height of each row, and the width of each column
-    // these values need to add up to 100% of container dimensions
+    // now we need to figure out how to create variation of the height of each row,
+    // and the width of each column these values need to add up to 100% of container dimensions
     // to create variation between rows / columns, we can divide the space evenly.
     // Then, we can take n - 1 and create a variable for each pair of neighboring elements.
     // Then, we create a random boolean, to determine if we add this or subtract it from the first element of the pair.
-    // For the second element of the pair, we do the opposite.
-    // The result should always add up to 1.
+    // For the second element of the pair, we do the opposite. The result should always add up to 1.
     const initialValue = 100 / count;
     for (let a = 0; a < count; a++) {
         spread.push(initialValue / 100);
@@ -141,145 +119,173 @@ const createSpread = (count) => {
     }
     return spread;
 };
-const createGrid = (gridType) => {
+/**
+ *
+ * @param gridType
+ * @returns a grid scaffold, which is a definition of the grid in terms of two arrays:
+ * One for the rows, in which each row is described by its height.
+ * Second for the columns, in which each column is described by its width.
+ * The heights of all rows should add up to the total height of the grid.
+ * The widths of each column should add up to the total width of the grid.
+ */
+const createGridScaffold = (gridType) => {
     const columnLength = gridType === GridType.COLUMN ? 1 : getValue(sweetness);
     const rowLength = gridType === GridType.ROW ? 1 : getValue(sweetness);
-    const grid = {
+    const gridScaffold = {
         columns: createSpread(columnLength),
         rows: createSpread(rowLength),
     };
-    return grid;
+    return gridScaffold;
 };
-var GridType;
-(function (GridType) {
-    GridType["DEFAULT"] = "default";
-    GridType["ROW"] = "row";
-    GridType["COLUMN"] = "column";
-})(GridType || (GridType = {}));
 const chooseGridType = () => {
     const gridType = Math.random() >= 0.5 ? GridType.ROW : GridType.COLUMN;
     return gridType;
 };
-const instantiateGrid = (parentElement, recursionCount, gridType = GridType.DEFAULT) => {
-    if (!parentElement || recursionCount > maxRecursionDepth) {
-        return;
-    }
-    const grid = createGrid(gridType);
-    const breakoutChance = 0.005 * sweetness;
-    const subGridChance = 0.002 * sweetness;
-    grid.rows.forEach((row, rowIndex) => {
-        const rowElement = document.createElement('div');
-        const rowElementTop = rowIndex === 0 ? 0 : grid.rows.slice(0, rowIndex).reduce(sum, 0);
-        const rowStyleArray = [
-            `position:absolute`,
-            `top:${rowElementTop}%`,
-            `left:0`,
-            `height:${row}%`,
-            `width:100%`,
-            `background-color:${randomColor()}`,
-        ];
-        rowElement.setAttribute('style', rowStyleArray.join(';'));
-        parentElement.appendChild(rowElement);
-        const skipCells = [];
-        grid.columns.forEach((column, columnIndex) => {
-            if (skipCells.includes(columnIndex)) {
-                return;
-            }
-            const left = columnIndex === 0
-                ? 0
-                : grid.columns.slice(0, columnIndex).reduce(sum, 0);
-            let width = column;
-            const hasColumnBreakout = Math.random() < breakoutChance && gridType === GridType.DEFAULT;
-            if (hasColumnBreakout) {
-                const numberOfExtraColumns = grid.columns.length - (columnIndex + 1);
-                // randomly select the number of columns we want to span to the right
-                const columnSpan = Math.ceil(Math.random() * numberOfExtraColumns);
-                width = grid.columns
-                    .slice(columnIndex, columnIndex + columnSpan)
-                    .reduce(sum, 0);
-                for (let c = 0; c < columnSpan - 1; c++) {
-                    skipCells.push(c + columnIndex + 1);
-                }
-            }
-            const styleArray = [
-                `position:absolute`,
-                `top:0`,
-                `left:${left}%`,
-                `height:100%`,
-                `width:${width}%`,
-                `background-color:${randomColor()}`,
-            ];
-            const columnElement = document.createElement('div');
-            columnElement.setAttribute('style', styleArray.join(';'));
-            if (Math.random() < subGridChance) {
-                instantiateGrid(columnElement, recursionCount + 1, chooseGridType());
-            }
-            rowElement.appendChild(columnElement);
-        });
-    });
-};
-// console.time('timer')
-// instantiateGrid(document.getElementById('grid'), 0)
-// console.timeEnd('timer')
-const drawGrid = (context, gridHeight, gridWidth, offset, // [x, y]
+const generateGrid = (gridHeight, gridWidth, offset, // [x, y]
 recursionCount, gridType = GridType.DEFAULT) => {
-    if (!context) {
-        return;
-    }
-    console.warn(recursionCount);
-    const grid = createGrid(gridType);
+    const gridColor = randomColor();
+    const grid = {
+        color: gridColor,
+        rows: [],
+        height: gridHeight,
+        width: gridWidth,
+    };
+    const gridCell = {
+        left: offset[0],
+        top: offset[1],
+        height: gridHeight,
+        width: gridWidth,
+        color: gridColor,
+        type: CellType.GRID,
+    };
+    // flatGrid.push({ ...gridCell })
+    const gridScaffold = createGridScaffold(gridType);
     const breakoutChance = 0.005 * sweetness;
-    const subGridChance = 0.002 * sweetness;
-    grid.rows.forEach((row, rowIndex) => {
+    const subGridChance = 0.0075 * sweetness;
+    gridScaffold.rows.forEach((row, rowIndex) => {
         const height = gridHeight * row;
-        const top = (rowIndex === 0
-            ? 0
-            : grid.rows.slice(0, rowIndex).reduce(sum, 0) * gridHeight) +
+        const left = offset[0];
+        const top = gridScaffold.rows.slice(0, rowIndex).reduce(sum, 0) * gridHeight +
             offset[1];
         // row
-        context.fillStyle = randomColor();
-        context.fillRect(0, Math.ceil(top), Math.ceil(gridWidth), Math.ceil(height));
+        const rowColor = randomColor();
+        const rowCell = {
+            left,
+            top,
+            height,
+            width: gridWidth,
+            color: rowColor,
+            type: CellType.ROW,
+        };
+        grid.rows[rowIndex] = Object.assign(Object.assign({}, rowCell), { cells: [] });
+        // flatGrid.push({ ...rowCell })
         const skipCells = [];
-        grid.columns.forEach((column, columnIndex) => {
+        gridScaffold.columns.forEach((column, columnIndex) => {
             if (skipCells.includes(columnIndex)) {
                 return;
             }
-            const left = (columnIndex === 0
-                ? 0
-                : grid.columns.slice(0, columnIndex).reduce(sum, 0) *
-                    gridWidth) + offset[0];
-            let width = column * gridWidth;
-            const hasColumnBreakout = Math.random() < breakoutChance && gridType === GridType.DEFAULT;
+            const columnLeft = gridScaffold.columns.slice(0, columnIndex).reduce(sum, 0) *
+                gridWidth +
+                offset[0];
+            let columnWidth = column * gridWidth;
+            const hasColumnBreakout = Math.random() < breakoutChance &&
+                gridType === GridType.DEFAULT &&
+                columnIndex < gridScaffold.columns.length - 1;
             if (hasColumnBreakout) {
-                const numberOfExtraColumns = grid.columns.length - (columnIndex + 1);
+                const numberOfExtraColumns = gridScaffold.columns.length - (columnIndex + 1);
                 // randomly select the number of columns we want to span to the right
                 const columnSpan = Math.ceil(Math.random() * numberOfExtraColumns);
-                width =
-                    grid.columns
+                columnWidth =
+                    gridScaffold.columns
                         .slice(columnIndex, columnIndex + columnSpan)
                         .reduce(sum, 0) * gridWidth;
                 for (let c = 0; c < columnSpan - 1; c++) {
                     skipCells.push(c + columnIndex + 1);
                 }
             }
-            context.fillStyle = randomColor();
-            context.fillRect(Math.ceil(left), Math.ceil(top), Math.ceil(width), Math.ceil(height));
+            const cell = {
+                left: columnLeft,
+                top,
+                height,
+                width: columnWidth,
+                color: randomColor(),
+                type: CellType.CELL,
+            };
+            grid.rows[rowIndex].cells[columnIndex] = cell;
             if (Math.random() < subGridChance &&
                 recursionCount < maxRecursionDepth) {
-                drawGrid(context, height, width, [left, top], recursionCount + 1, chooseGridType());
+                grid.rows[rowIndex].cells[columnIndex].grid = generateGrid(height, columnWidth, [columnLeft, top], recursionCount + 1, chooseGridType());
+            }
+            else {
+                flatGrid.push(Object.assign({}, cell));
             }
         });
     });
+    return grid;
 };
+const drawCell = (index) => {
+    if (!globalContext) {
+        return;
+    }
+    const cell = flatGrid[index];
+    // globalContext.globalCompositeOperation = 'difference'
+    globalContext.fillStyle = cell.color;
+    globalContext.fillRect(cell.left, cell.top, cell.width, cell.height);
+};
+const animateGrid = (timeout) => {
+    if (flatGrid[index]) {
+        drawCell(index);
+    }
+    index++;
+    if (index < flatGrid.length) {
+        setTimeout(() => animateGrid(timeout), timeout);
+    }
+    else {
+        index = 0;
+    }
+};
+function shuffleArray(array) {
+    const arrayCopy = [...array];
+    for (let i = arrayCopy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arrayCopy[i], arrayCopy[j]] = [arrayCopy[j], arrayCopy[i]];
+    }
+    return arrayCopy;
+}
+/**
+ * This function will select a single cell randomly from the array of cells,
+ * then zoom the entire canvas until that cell covers the entire canvas.
+ */
+const zoomGrid = () => { };
 const canvas = document.getElementById('grid-canvas');
 if (canvas === null || canvas === void 0 ? void 0 : canvas.getContext) {
     const dpr = window.devicePixelRatio;
     const rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
-    const context = canvas.getContext('2d');
-    context === null || context === void 0 ? void 0 : context.scale(dpr, dpr);
+    globalContext = canvas.getContext('2d');
+    globalContext === null || globalContext === void 0 ? void 0 : globalContext.scale(dpr, dpr);
     canvas.style.width = `${rect.width}px`;
     canvas.style.height = `${rect.height}px`;
-    drawGrid(context, rect.height, rect.width, [0, 0], 0);
+    if (globalContext) {
+        globalContext.fillStyle = randomColor();
+        globalContext.fillRect(0, 0, rect.width, rect.height);
+    }
+    globalGrid = generateGrid(rect.height, rect.width, [0, 0], 0);
+    // flatGrid = shuffleArray<Cell>(flatGrid)
+    const area = Math.round(rect.height * rect.width);
+    console.warn('viewport:', area);
+    const sumOfCells = Math.round(flatGrid.map((cell) => cell.width * cell.height).reduce(sum, 0));
+    console.warn('sum of cells:', sumOfCells);
+    console.warn('EQUAL? ', area === sumOfCells);
+    animateGrid(100);
+    console.warn(globalGrid);
+    // setInterval(() => {
+    //     if (!index) {
+    //         // drawingGrid = true
+    //         globalGrid = generateGrid(rect.height, rect.width, [0, 0], 0)
+    //         shuffleArray<Cell>(flatGrid)
+    //         animateGrid(1500)
+    //     }
+    // }, 100)
 }
