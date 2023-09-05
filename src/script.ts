@@ -20,6 +20,50 @@
  *      - All navigation cells will be in the same column
  *      - Navigation cells cannot have recursive grids inside of them
  *      - Minimum width in pixels (or percentage?) for navigation column
+ *
+ * The structure should evolve. In order to evolve, the organism needs to have an optimization.
+ * As organisms evolve, they also impact their environment. So, they adapt again. And, this adaptation
+ * in turn affects the environment, and so on.
+ *
+ * In this abstraction, what is the environment, and what is the organism?
+ *
+ * The organism is the algorithm. The environment is the generated grid.
+ *
+ * The organism should be constantly trying to balance itself with its own
+ * created environment. However, as it does so, it creates an environment that is
+ * not stable. So, it continues to evolve forever.
+ *
+ * An organism is constantly seeking... something.
+ *
+ * Essentially, this is a cellular automata. The generated world determines what will be generated next.
+ *
+ * But, what is our algorithm?
+ *
+ * Step 1: Generate with some randomness to fix.
+ * Step 2: Analyze the environment.
+ * Step 3: What needs fixing?
+ * Step 4: Go to step 1
+ *
+ * The "environment" is the canvas.
+ *
+ *     // current cell
+    divide in random proportion with random number of rows or columns
+    The amount of "food" in the cell is a function of its size.
+    Each turn, there is a chance that a cell will have children, based on the amount of food in the cell.
+    When the children are released, they traverse the grid, eating other cells, and expanding themselves.
+    As they eat other cells, the likelihood that they will have children goes up.
+    Cells can attempt to eat the cells to the left or right in their row.
+    If they are the only cell in their row, they can then proceed to attempt to eat the row above or below them, increasing their size
+    If a cell attempts to attack a cell that contains multiple cells - and loses - those cells expand to fill the space left by the loser.
+    War algorithm: When attempting to eat another cell, the likelihood that a cell will successfully eat another cell is based on the ratio of their sizes.
+    If cell A is equal in size to cell B, the chance will be 50% likely. If cell A is twice the size of cell B, the chance will be 100%, and so forth.
+    Each turn (the order of which will be randomized), each cell will have a likelihood of either having children, or attacking, based on its size,
+    in proportion to the available space of the overall page.
+    What happens when a parent eats another cell after having children? The children expand into that area.
+    If one child eats all of its siblings, it becomes the parent.
+    So, at the beginning, when there is only one cell, there will be a 1:1 (100%) chance that it will have children.
+    As more and more children a generated, the likelihood that they will have children before growing goes down.
+    What constitutes a "turn"? Perhaps we re-shuffle after every turn?
  **/
 
 // types
@@ -28,47 +72,11 @@ interface NavItem {
     onClick?: () => any
     href?: string
 }
-interface GridScaffold {
-    columns: number[]
-    rows: number[]
-}
 
 enum GridType {
     DEFAULT = 'default',
     ROW = 'row',
     COLUMN = 'column',
-}
-
-enum CellType {
-    GRID = 'grid',
-    ROW = 'row',
-    CELL = 'cell',
-}
-
-interface Grid {
-    height: number
-    width: number
-    color: string
-    rows?: Row[]
-}
-
-interface Row {
-    top: number
-    left: number
-    width: number
-    height: number
-    color: string
-    cells?: Cell[]
-}
-
-interface Cell {
-    left: number
-    top: number
-    width: number
-    height: number
-    color: string
-    type?: CellType
-    grid?: Grid
 }
 
 // constants
@@ -97,20 +105,12 @@ const navigationItems: NavItem[] = [
     sweetness = 20,
     hueClamp = [20, 50],
     saturationClamp = [50, 95],
-    lightnessClamp = [10, 90],
-    maxRecursionDepth = 3,
-    animationDuration = 1000 // milliseconds
+    lightnessClamp = [10, 90]
 
-let drawingGrid = false
-
-// global state
-
-let globalGrid: Grid,
-    globalContext: CanvasRenderingContext2D | null,
-    start: number,
-    previousTimeStamp: number,
-    index: number = 0,
-    flatGrid: any[] = []
+let globalContext: CanvasRenderingContext2D | null
+let viewportArea: number
+let colony: Organism
+let renderInterval = 50
 
 // utilities
 
@@ -134,7 +134,7 @@ const sum = (partialSum: number, a: number) => partialSum + a
  * @param sweetness This parameter determines how likely the random number is to be large.
  * Lower numbers reduce the probability, larger numbers increase the probability.
  */
-const getValue = (sweet: number) => {
+const getValue = (sweet: number): number => {
     let count = 0
     if ((!sweet && sweet !== 0) || sweet < 0) {
         return count++
@@ -182,23 +182,14 @@ const createSpread = (count: number): number[] => {
     return spread
 }
 
-/**
- *
- * @param gridType
- * @returns a grid scaffold, which is a definition of the grid in terms of two arrays:
- * One for the rows, in which each row is described by its height.
- * Second for the columns, in which each column is described by its width.
- * The heights of all rows should add up to the total height of the grid.
- * The widths of each column should add up to the total width of the grid.
- */
-const createGridScaffold = (gridType: GridType): GridScaffold => {
-    const columnLength = gridType === GridType.COLUMN ? 1 : getValue(sweetness)
-    const rowLength = gridType === GridType.ROW ? 1 : getValue(sweetness)
-    const gridScaffold = {
-        columns: createSpread(columnLength),
-        rows: createSpread(rowLength),
-    }
-    return gridScaffold
+interface Organism {
+    left: number
+    top: number
+    width: number
+    height: number
+    color: string
+    parent: Organism | null
+    children: Organism[]
 }
 
 const chooseGridType = () => {
@@ -206,143 +197,174 @@ const chooseGridType = () => {
     return gridType
 }
 
-const generateGrid = (
-    gridHeight: number,
-    gridWidth: number,
-    offset: [number, number], // [x, y]
-    recursionCount: number,
-    gridType: GridType = GridType.DEFAULT
-): Grid => {
-    const gridColor = randomColor()
-    const grid: Grid = {
-        color: gridColor,
-        rows: [],
-        height: gridHeight,
-        width: gridWidth,
-    }
-    const gridCell: Cell = {
-        left: offset[0],
-        top: offset[1],
-        height: gridHeight,
-        width: gridWidth,
-        color: gridColor,
-        type: CellType.GRID,
-    }
-    // flatGrid.push({ ...gridCell })
-    const gridScaffold = createGridScaffold(gridType)
-    const breakoutChance = 0.005 * sweetness
-    const subGridChance = 0.0075 * sweetness
-    gridScaffold.rows.forEach((row, rowIndex) => {
-        const height = gridHeight * row
-        const left = offset[0]
-        const top =
-            gridScaffold.rows.slice(0, rowIndex).reduce(sum, 0) * gridHeight +
-            offset[1]
-        // row
-        const rowColor = randomColor()
-        const rowCell: Cell = {
-            left,
-            top,
-            height,
-            width: gridWidth,
-            color: rowColor,
-            type: CellType.ROW,
-        }
-        grid.rows![rowIndex] = { ...rowCell, cells: [] }
-        // flatGrid.push({ ...rowCell })
-        const skipCells: number[] = []
-        gridScaffold.columns.forEach((column, columnIndex) => {
-            if (skipCells.includes(columnIndex)) {
-                return
-            }
-            const columnLeft =
-                gridScaffold.columns.slice(0, columnIndex).reduce(sum, 0) *
-                    gridWidth +
-                offset[0]
-            let columnWidth = column * gridWidth
-            const hasColumnBreakout =
-                Math.random() < breakoutChance &&
-                gridType === GridType.DEFAULT &&
-                columnIndex < gridScaffold.columns.length - 1
-            if (hasColumnBreakout) {
-                const numberOfExtraColumns =
-                    gridScaffold.columns.length - (columnIndex + 1)
-                // randomly select the number of columns we want to span to the right
-                const columnSpan = Math.ceil(
-                    Math.random() * numberOfExtraColumns
-                )
-                columnWidth =
-                    gridScaffold.columns
-                        .slice(columnIndex, columnIndex + columnSpan)
-                        .reduce(sum, 0) * gridWidth
-                for (let c = 0; c < columnSpan - 1; c++) {
-                    skipCells.push(c + columnIndex + 1)
-                }
-            }
-            const cell: Cell = {
-                left: columnLeft,
-                top,
-                height,
-                width: columnWidth,
-                color: randomColor(),
-                type: CellType.CELL,
-            }
-            grid.rows![rowIndex].cells![columnIndex] = cell
-            if (
-                Math.random() < subGridChance &&
-                recursionCount < maxRecursionDepth
-            ) {
-                grid.rows![rowIndex].cells![columnIndex].grid = generateGrid(
-                    height,
-                    columnWidth,
-                    [columnLeft, top],
-                    recursionCount + 1,
-                    chooseGridType()
-                )
-            } else {
-                flatGrid.push({ ...cell })
-            }
+const flatten = (organism: Organism): any => {
+    return [organism].concat(
+        organism.children.flatMap((o) => {
+            return [...flatten(o)]
         })
-    })
-    return grid
+    )
 }
 
-const drawCell = (index: number) => {
+const generateChildren = (organism: Organism) => {
+    let children: Organism[] = []
+    const spread = createSpread(getValue(sweetness))
+    const type = chooseGridType()
+    const values = spread.map(
+        (r) => r * (type === GridType.ROW ? organism.height : organism.width)
+    )
+    const getOffset = (index: number): number => {
+        if (index === 0) {
+            return 0
+        }
+        return values.slice(0, index - 1).reduce(sum, 0)
+    }
+    if (type === GridType.ROW) {
+        children = values.map((v, index): Organism => {
+            return {
+                parent: organism,
+                left: organism.left,
+                top: getOffset(index) + organism.top,
+                width: organism.width,
+                height: v,
+                children: [],
+                color: randomColor(),
+            }
+        })
+    } else {
+        children = values.map((v, index): Organism => {
+            return {
+                parent: organism,
+                left: getOffset(index) + organism.left,
+                top: organism.top,
+                width: v,
+                height: organism.height,
+                children: [],
+                color: randomColor(),
+            }
+        })
+    }
+    organism.children = children
+}
+const attack = (organism: Organism) => {
+    // determine what siblings this cell has
+    const children = organism.parent?.children
+    if (!children || children.length < 2) {
+        return
+    }
+    let foeIndex: number
+    // the closest siblings by getting the index of this organism
+    const index = children.findIndex((child: Organism) =>
+        Object.is(child, organism)
+    )
+    if (index === -1) {
+        // something went wrong
+        return
+    }
+    // if the index is the first child
+    if (index === 0) {
+        foeIndex = 1
+    } else if (index === children.length - 1) {
+        foeIndex = children.length - 2
+    } else {
+        foeIndex = Math.random() >= 0.5 ? index + 1 : index - 1
+    }
+    // attack
+    const attackRatio =
+        ((organism.width * organism.height) /
+            (children[foeIndex].width * children[foeIndex].height)) *
+        0.25
+    if (Math.random() < attackRatio) {
+        // success - the organism eats its sibling
+        // determine if the sibling was horizontal or vertical in relation to organism
+        if (organism.top === children[foeIndex].top) {
+            // we know now that this is a column type set of siblings
+            organism.width = organism.width + children[foeIndex].width
+        } else {
+            organism.height = organism.height + children[foeIndex].height
+        }
+        if (index > foeIndex) {
+            organism.top = children[foeIndex].top
+            organism.left = children[foeIndex].left
+        }
+        // delete eaten sibling
+        // TODO: check for memory leaks here. Eaten sibling should be GC'ed, but check to make sure
+        if (organism.parent) {
+            organism.parent.children = children.filter(
+                (child) => !Object.is(child, children[foeIndex])
+            )
+        }
+        // if the organism is the only child left, it eats its parent.
+        // TODO: check for memory leaks here. This should be GC'ed, but check to make sure
+        if (organism.parent?.children.length === 1 && organism.parent.parent) {
+            const newOrganism = {
+                top: organism.top,
+                left: organism.left,
+                width: organism.width,
+                height: organism.height,
+                color: organism.color,
+                parent: null,
+                children: [],
+            }
+            // find the index of the parent in the parent's parent's children:
+            const parentIndex = organism.parent.parent.children.findIndex(
+                (child: Organism) => {
+                    Object.is(child, organism.parent)
+                }
+            )
+            if (parentIndex !== -1) {
+                organism.parent.parent.children[parentIndex] = newOrganism
+                organism.parent = null
+                organism.children = []
+            }
+        }
+    }
+    return
+}
+
+const renderColony = (colony: Organism[], index: number) => {
+    if (colony[index]) {
+        renderCell(colony[index])
+    }
+    index++
+    if (index < colony.length) {
+        setTimeout(() => renderColony(colony, index), renderInterval)
+    }
+}
+
+const renderCell = (cell: Organism) => {
     if (!globalContext) {
         return
     }
-    const cell = flatGrid[index]
-    // globalContext.globalCompositeOperation = 'difference'
     globalContext.fillStyle = cell.color
     globalContext.fillRect(cell.left, cell.top, cell.width, cell.height)
 }
 
-const animateGrid = (timeout: number) => {
-    if (flatGrid[index]) {
-        drawCell(index)
-    }
-    index++
-    if (index < flatGrid.length) {
-        setTimeout(() => animateGrid(timeout), timeout)
-    } else {
-        index = 0
-    }
+const colonize = () => {
+    const flatColony = flatten(colony)
+    // update colony
+    flatColony.forEach((cell: Organism) => {
+        if (
+            !cell.parent?.parent?.parent?.parent &&
+            !cell.children.length &&
+            Math.random() <= 0.5
+        ) {
+            generateChildren(cell)
+        } else {
+            attack(cell)
+        }
+    })
+    const colonyOfChildren = flatten(colony).filter(
+        (cell: Organism) => cell.children.length === 0
+    )
+    // render colony
+    renderColony(colonyOfChildren, 0)
+    setTimeout(
+        () => {
+            colonize()
+        },
+        renderInterval * colonyOfChildren.length + 2000
+    )
 }
-
-function shuffleArray<T>(array: T[]): T[] {
-    const arrayCopy = [...array]
-    for (let i = arrayCopy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1))
-        ;[arrayCopy[i], arrayCopy[j]] = [arrayCopy[j], arrayCopy[i]]
-    }
-    return arrayCopy
-}
-
-/**
- * This function will select a single cell randomly from the array of cells,
- * then zoom the entire canvas until that cell covers the entire canvas.
- */
-const zoomGrid = () => {}
 
 const canvas = document.getElementById(
     'grid-canvas'
@@ -356,27 +378,17 @@ if (canvas?.getContext) {
     globalContext?.scale(dpr, dpr)
     canvas.style.width = `${rect.width}px`
     canvas.style.height = `${rect.height}px`
+    viewportArea = rect.width * rect.height
     if (globalContext) {
-        globalContext.fillStyle = randomColor()
-        globalContext.fillRect(0, 0, rect.width, rect.height)
+        colony = {
+            left: 0,
+            top: 0,
+            width: rect.width,
+            height: rect.height,
+            parent: null,
+            children: [],
+            color: randomColor(),
+        }
+        colonize()
     }
-    globalGrid = generateGrid(rect.height, rect.width, [0, 0], 0)
-    // flatGrid = shuffleArray<Cell>(flatGrid)
-    const area = Math.round(rect.height * rect.width)
-    console.warn('viewport:', area)
-    const sumOfCells = Math.round(
-        flatGrid.map((cell) => cell.width * cell.height).reduce(sum, 0)
-    )
-    console.warn('sum of cells:', sumOfCells)
-    console.warn('EQUAL? ', area === sumOfCells)
-    animateGrid(50)
-    console.warn(globalGrid)
-    // setInterval(() => {
-    //     if (!index) {
-    //         // drawingGrid = true
-    //         globalGrid = generateGrid(rect.height, rect.width, [0, 0], 0)
-    //         shuffleArray<Cell>(flatGrid)
-    //         animateGrid(1500)
-    //     }
-    // }, 100)
 }
