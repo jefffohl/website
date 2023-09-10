@@ -55,8 +55,7 @@ const navigationItems = [
         text: 'archive',
         href: '/archive',
     },
-], sweetness = 20, hueClamp = [20, 50], saturationClamp = [50, 95], lightnessClamp = [10, 90], maxRecursionDepth = 3, animationDuration = 1000; // milliseconds
-let drawingGrid = false;
+], sweetness = 20, hueClamp = [20, 50], saturationClamp = [50, 95], lightnessClamp = [10, 90], maxRecursionDepth = 3;
 // global state
 let globalGrid, globalContext, start, previousTimeStamp, index = 0, flatGrid = [];
 // utilities
@@ -158,7 +157,6 @@ recursionCount, gridType = GridType.DEFAULT) => {
         color: gridColor,
         type: CellType.GRID,
     };
-    // flatGrid.push({ ...gridCell })
     const gridScaffold = createGridScaffold(gridType);
     const breakoutChance = 0.005 * sweetness;
     const subGridChance = 0.0075 * sweetness;
@@ -178,7 +176,6 @@ recursionCount, gridType = GridType.DEFAULT) => {
             type: CellType.ROW,
         };
         grid.rows[rowIndex] = Object.assign(Object.assign({}, rowCell), { cells: [] });
-        // flatGrid.push({ ...rowCell })
         const skipCells = [];
         gridScaffold.columns.forEach((column, columnIndex) => {
             if (skipCells.includes(columnIndex)) {
@@ -228,7 +225,6 @@ const drawCell = (index) => {
         return;
     }
     const cell = flatGrid[index];
-    // globalContext.globalCompositeOperation = 'difference'
     globalContext.fillStyle = cell.color;
     globalContext.fillRect(cell.left, cell.top, cell.width, cell.height);
 };
@@ -242,21 +238,15 @@ const animateGrid = (timeout) => {
     }
     else {
         index = 0;
+        evolveGrid();
     }
 };
-function shuffleArray(array) {
-    const arrayCopy = [...array];
-    for (let i = arrayCopy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arrayCopy[i], arrayCopy[j]] = [arrayCopy[j], arrayCopy[i]];
-    }
-    return arrayCopy;
-}
-/**
- * This function will select a single cell randomly from the array of cells,
- * then zoom the entire canvas until that cell covers the entire canvas.
- */
-const zoomGrid = () => { };
+// TODO: animate the drawing of cells incrementally using requestAnimationFrame
+const drawGrid = () => {
+    flatGrid.forEach((_cell, index) => {
+        drawCell(index);
+    });
+};
 const canvas = document.getElementById('grid-canvas');
 if (canvas === null || canvas === void 0 ? void 0 : canvas.getContext) {
     const dpr = window.devicePixelRatio;
@@ -272,20 +262,15 @@ if (canvas === null || canvas === void 0 ? void 0 : canvas.getContext) {
         globalContext.fillRect(0, 0, rect.width, rect.height);
     }
     globalGrid = generateGrid(rect.height, rect.width, [0, 0], 0);
-    // flatGrid = shuffleArray<Cell>(flatGrid)
     const area = Math.round(rect.height * rect.width);
-    console.warn('viewport:', area);
     const sumOfCells = Math.round(flatGrid.map((cell) => cell.width * cell.height).reduce(sum, 0));
-    console.warn('sum of cells:', sumOfCells);
-    console.warn('EQUAL? ', area === sumOfCells);
     animateGrid(50);
     console.warn(globalGrid);
-    // setInterval(() => {
-    //     if (!index) {
-    //         // drawingGrid = true
-    //         globalGrid = generateGrid(rect.height, rect.width, [0, 0], 0)
-    //         shuffleArray<Cell>(flatGrid)
-    //         animateGrid(1500)
-    //     }
-    // }, 100)
 }
+// step through the grid
+// each neighboring cell goes to battle. Randomly, one will win
+// the losing cell will disappear, and the winning cell will take the space of the losing cell
+// if one of the cells in the battle has a grid, the battle will proceed to those children until a single winner remains
+// at which point the battle will continue at the higher level.
+//
+const evolveGrid = () => { };
