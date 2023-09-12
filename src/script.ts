@@ -1,27 +1,3 @@
-/**
- *  Key concepts:
- *    - Navigation elements should be in a column
- *    - Column needs to be wide enough to accommodate text
- *    - Number of columns can be variable
- *    - Number of rows can be variable
- *    - Colors of text links need to be dark enough to create contrast with the links
- *    - Navigation elements must be in a certain order
- *
- *    Things that are chance:
- *      - Color of cell
- *      - If cell will extend past column (left or right?)
- *      - If cell will extend past row (down or up?)
- *      - If cell extends past boundaries, how far
- *      - If cell will have grid inside of it
- *
- *    Things that are not chance:
- *      - Order of navigation items
- *      - Maximum depth of recursion for grids
- *      - All navigation cells will be in the same column
- *      - Navigation cells cannot have recursive grids inside of them
- *      - Minimum width in pixels (or percentage?) for navigation column
- **/
-
 // types
 interface NavItem {
     text: string
@@ -34,41 +10,17 @@ interface GridScaffold {
 }
 
 enum GridType {
-    DEFAULT = 'default',
     ROW = 'row',
     COLUMN = 'column',
 }
-
-enum CellType {
-    GRID = 'grid',
-    ROW = 'row',
-    CELL = 'cell',
-}
-
-interface Grid {
-    height: number
-    width: number
-    color: string
-    rows?: Row[]
-}
-
-interface Row {
-    top: number
-    left: number
-    width: number
-    height: number
-    color: string
-    cells?: Cell[]
-}
-
 interface Cell {
     left: number
     top: number
     width: number
     height: number
     color: string
-    type?: CellType
-    grid?: Grid
+    depth: number
+    children: Cell[]
 }
 
 // constants
@@ -97,17 +49,14 @@ const navigationItems: NavItem[] = [
     sweetness = 20,
     hueClamp = [20, 50],
     saturationClamp = [50, 95],
-    lightnessClamp = [10, 90],
-    maxRecursionDepth = 3
+    lightnessClamp = [10, 90]
 
 // global state
 
-let globalGrid: Grid,
-    globalContext: CanvasRenderingContext2D | null,
-    start: number,
-    previousTimeStamp: number,
-    index: number = 0,
-    flatGrid: any[] = []
+let globalContext: CanvasRenderingContext2D | null,
+    flatGrid: Cell[] = [],
+    gridScaffold: GridScaffold,
+    index = 0
 
 // utilities
 
@@ -149,33 +98,23 @@ const getValue = (sweet: number) => {
 }
 
 const createSpread = (count: number): number[] => {
-    const spread: number[] = []
-    // now we need to figure out how to create variation of the height of each row,
-    // and the width of each column these values need to add up to 100% of container dimensions
-    // to create variation between rows / columns, we can divide the space evenly.
-    // Then, we can take n - 1 and create a variable for each pair of neighboring elements.
-    // Then, we create a random boolean, to determine if we add this or subtract it from the first element of the pair.
-    // For the second element of the pair, we do the opposite. The result should always add up to 1.
-    const initialValue = 100 / count
-    for (let a = 0; a < count; a++) {
-        spread.push(initialValue / 100)
+    const spread = []
+    let remaining = 1
+    // Create 4 random numbers between 0 and 1 and sort them
+    let randomPoints = []
+    for (let i = 0; i < count - 1; i++) {
+        randomPoints.push(Math.random())
     }
-    for (let b = 0; b < count - 1; b++) {
-        // addSubtract value can't be larger than the initialValue
-        const percentage =
-            b === 0 || b === count - 1
-                ? (Math.random() * initialValue) / 100
-                : (Math.random() * (initialValue / 2)) / 100
-        const addToFirst = Math.random() < 0.5
-        const pair = [spread[b], spread[b + 1]]
-        if (addToFirst) {
-            spread[b] = spread[b] + percentage
-            spread[b + 1] = spread[b + 1] - percentage
-        } else {
-            spread[b] = spread[b] - percentage
-            spread[b + 1] = spread[b + 1] + percentage
-        }
+    randomPoints.sort((a, b) => a - b)
+    // Use these random points to create 5 random chunks
+    let previousPoint = 0
+    for (let point of randomPoints) {
+        let chunkSize = point - previousPoint
+        spread.push(chunkSize)
+        remaining -= chunkSize
+        previousPoint = point
     }
+    spread.push(remaining) // Last chunk is whatever is remaining
     return spread
 }
 
@@ -188,9 +127,9 @@ const createSpread = (count: number): number[] => {
  * The heights of all rows should add up to the total height of the grid.
  * The widths of each column should add up to the total width of the grid.
  */
-const createGridScaffold = (gridType: GridType): GridScaffold => {
-    const columnLength = gridType === GridType.COLUMN ? 1 : getValue(sweetness)
-    const rowLength = gridType === GridType.ROW ? 1 : getValue(sweetness)
+const createGridScaffold = (): GridScaffold => {
+    const columnLength = getValue(sweetness)
+    const rowLength = getValue(sweetness)
     const gridScaffold = {
         columns: createSpread(columnLength),
         rows: createSpread(rowLength),
@@ -203,107 +142,117 @@ const chooseGridType = () => {
     return gridType
 }
 
-const generateGrid = (
-    gridHeight: number,
-    gridWidth: number,
-    offset: [number, number], // [x, y]
-    recursionCount: number,
-    gridType: GridType = GridType.DEFAULT
-): Grid => {
-    const gridColor = randomColor()
-    const grid: Grid = {
-        color: gridColor,
-        rows: [],
-        height: gridHeight,
-        width: gridWidth,
-    }
-    const gridCell: Cell = {
-        left: offset[0],
-        top: offset[1],
-        height: gridHeight,
-        width: gridWidth,
-        color: gridColor,
-        type: CellType.GRID,
-    }
-    const gridScaffold = createGridScaffold(gridType)
-    const breakoutChance = 0.005 * sweetness
-    const subGridChance = 0.0075 * sweetness
-    gridScaffold.rows.forEach((row, rowIndex) => {
-        const height = gridHeight * row
-        const left = offset[0]
+const generateRow = (parentCell: Cell, columns: number[]): Cell[] => {
+    return columns.map((column: number, index) => {
+        const width = parentCell.width * column
+        const top = parentCell.top
+        const left =
+            columns.slice(0, index).reduce(sum, 0) * parentCell.width +
+            parentCell.left
+        return {
+            left,
+            top,
+            width,
+            depth: parentCell.depth + 1,
+            height: parentCell.height,
+            color: randomColor(),
+            children: [],
+        }
+    })
+}
+
+const generateColumn = (parentCell: Cell, rows: number[]) => {
+    return rows.map((row: number, index) => {
+        const height = parentCell.height * row
+        const left = parentCell.left
         const top =
-            gridScaffold.rows.slice(0, rowIndex).reduce(sum, 0) * gridHeight +
-            offset[1]
-        // row
-        const rowColor = randomColor()
-        const rowCell: Cell = {
+            rows.slice(0, index).reduce(sum, 0) * parentCell.height +
+            parentCell.top
+        return {
             left,
             top,
             height,
-            width: gridWidth,
-            color: rowColor,
-            type: CellType.ROW,
+            depth: parentCell.depth + 1,
+            width: parentCell.width,
+            color: randomColor(),
+            children: [],
         }
-        grid.rows![rowIndex] = { ...rowCell, cells: [] }
-        const skipCells: number[] = []
-        gridScaffold.columns.forEach((column, columnIndex) => {
-            if (skipCells.includes(columnIndex)) {
-                return
-            }
-            const columnLeft =
-                gridScaffold.columns.slice(0, columnIndex).reduce(sum, 0) *
-                    gridWidth +
-                offset[0]
-            let columnWidth = column * gridWidth
-            const hasColumnBreakout =
-                Math.random() < breakoutChance &&
-                gridType === GridType.DEFAULT &&
-                columnIndex < gridScaffold.columns.length - 1
-            if (hasColumnBreakout) {
-                const numberOfExtraColumns =
-                    gridScaffold.columns.length - (columnIndex + 1)
-                // randomly select the number of columns we want to span to the right
-                const columnSpan = Math.ceil(
-                    Math.random() * numberOfExtraColumns
-                )
-                columnWidth =
-                    gridScaffold.columns
-                        .slice(columnIndex, columnIndex + columnSpan)
-                        .reduce(sum, 0) * gridWidth
-                for (let c = 0; c < columnSpan - 1; c++) {
-                    skipCells.push(c + columnIndex + 1)
-                }
-            }
-            const cell: Cell = {
-                left: columnLeft,
-                top,
-                height,
-                width: columnWidth,
-                color: randomColor(),
-                type: CellType.CELL,
-            }
-            grid.rows![rowIndex].cells![columnIndex] = cell
-            if (
-                Math.random() < subGridChance &&
-                recursionCount < maxRecursionDepth
-            ) {
-                grid.rows![rowIndex].cells![columnIndex].grid = generateGrid(
-                    height,
-                    columnWidth,
-                    [columnLeft, top],
-                    recursionCount + 1,
-                    chooseGridType()
-                )
-            } else {
-                flatGrid.push({ ...cell })
-            }
-        })
     })
-    return grid
+}
+
+const getLevel2Columns = () => {
+    // we add a little extra spiciness to the columns for fun:
+    const breakoutChance = 0.01 * sweetness
+    const skipCells: number[] = []
+    const newColumns: number[] = []
+    gridScaffold.columns.forEach((column, columnIndex) => {
+        if (skipCells.includes(columnIndex)) {
+            return
+        }
+        if (columnIndex + 1 === gridScaffold.columns.length) {
+            newColumns.push(column)
+            return
+        }
+        // for each cell, determine if it will break out
+        // if it does break out, determine how many cells to break out
+        if (Math.random() < breakoutChance) {
+            const numberOfRemainingColumns =
+                gridScaffold.columns.length - (columnIndex + 1)
+            // randomly select the number of columns we want to span to the right
+            const columnSpan = Math.ceil(
+                Math.random() * numberOfRemainingColumns
+            )
+            const newColumn = gridScaffold.columns
+                .slice(columnIndex, columnIndex + columnSpan)
+                .reduce(sum, 0)
+            for (let c = 0; c < columnSpan - 1; c++) {
+                skipCells.push(c + columnIndex + 1)
+            }
+            newColumns.push(newColumn)
+        } else {
+            newColumns.push(column)
+        }
+    })
+    return newColumns
+}
+
+const generateChildren = (parentCell: Cell): Cell[] => {
+    // Depth level 0 is the top level grid cell - there can be only one!
+    // Depth level 1 are the cells of that make up the top rows
+    // Depth level 2 are the cells that make up the columns
+    // Below level 2 children do not adhere to the grid scaffold
+    if (parentCell.depth === 0) {
+        return generateColumn(parentCell, gridScaffold.rows)
+    } else if (parentCell.depth === 1) {
+        return generateRow(parentCell, getLevel2Columns())
+    } else {
+        const gridType = chooseGridType()
+        const spread = createSpread(getValue(sweetness))
+        return gridType === GridType.COLUMN
+            ? generateColumn(parentCell, spread)
+            : generateRow(parentCell, spread)
+    }
+}
+
+const generate = (cell: Cell) => {
+    flatGrid.push(cell)
+    if (cell.depth < 2) {
+        cell.children = generateChildren(cell)
+        cell.children.forEach((child) => {
+            generate(child)
+        })
+    } else if (cell.depth < 4) {
+        if (Math.random() < 0.0075 * sweetness) {
+            cell.children = generateChildren(cell)
+            cell.children.forEach((child) => {
+                generate(child)
+            })
+        }
+    }
 }
 
 const drawCell = (index: number) => {
-    if (!globalContext) {
+    if (!globalContext || flatGrid[index].children.length > 0) {
         return
     }
     const cell = flatGrid[index]
@@ -320,7 +269,7 @@ const animateGrid = (timeout: number) => {
         setTimeout(() => animateGrid(timeout), timeout)
     } else {
         index = 0
-        evolveGrid()
+        // evolveGrid()
     }
 }
 
@@ -347,13 +296,23 @@ if (canvas?.getContext) {
         globalContext.fillStyle = randomColor()
         globalContext.fillRect(0, 0, rect.width, rect.height)
     }
-    globalGrid = generateGrid(rect.height, rect.width, [0, 0], 0)
-    const area = Math.round(rect.height * rect.width)
-    const sumOfCells = Math.round(
-        flatGrid.map((cell) => cell.width * cell.height).reduce(sum, 0)
-    )
-    animateGrid(50)
-    console.warn(globalGrid)
+    gridScaffold = createGridScaffold()
+    const gridCell: Cell = {
+        height: rect.height,
+        width: rect.width,
+        top: 0,
+        left: 0,
+        children: [],
+        depth: 0,
+        color: randomColor(),
+    }
+    generate(gridCell)
+    animateGrid(100)
+    const totalGridSize = rect.width * rect.height
+    const totalCellSize = flatGrid
+        .filter((cell) => cell.children.length === 0)
+        .map((c) => c.height * c.width)
+        .reduce(sum, 0)
 }
 
 // step through the grid
