@@ -27,7 +27,7 @@ const navigationItems = [
     },
 ], sweetness = 20, hueClamp = [20, 50], saturationClamp = [50, 95], lightnessClamp = [10, 90];
 // global state
-let globalContext, flatGrid = [], gridScaffold, index = 0;
+let globalContext, grid, flatGrid = [], gridScaffold, index = 0;
 // utilities
 const getRandomClamped = (min, max) => {
     min = Math.ceil(min);
@@ -211,6 +211,15 @@ const drawCell = (index) => {
     globalContext.fillStyle = cell.color;
     globalContext.fillRect(cell.left, cell.top, cell.width, cell.height);
 };
+// step through the grid
+// each neighboring cell goes to battle. Randomly, one will win
+// the losing cell will disappear, and the winning cell will take the space of the losing cell
+// if one of the cells in the battle has a grid, the battle will proceed to those children until a single winner remains
+// at which point the battle will continue at the higher level.
+//
+const evolveGrid = () => {
+    console.warn(grid);
+};
 const animateGrid = (timeout) => {
     if (flatGrid[index]) {
         drawCell(index);
@@ -221,7 +230,7 @@ const animateGrid = (timeout) => {
     }
     else {
         index = 0;
-        // evolveGrid()
+        evolveGrid();
     }
 };
 // TODO: animate the drawing of cells incrementally using requestAnimationFrame
@@ -245,7 +254,7 @@ if (canvas === null || canvas === void 0 ? void 0 : canvas.getContext) {
         globalContext.fillRect(0, 0, rect.width, rect.height);
     }
     gridScaffold = createGridScaffold();
-    const gridCell = {
+    grid = {
         height: rect.height,
         width: rect.width,
         top: 0,
@@ -254,7 +263,7 @@ if (canvas === null || canvas === void 0 ? void 0 : canvas.getContext) {
         depth: 0,
         color: randomColor(),
     };
-    generate(gridCell);
+    generate(grid);
     animateGrid(100);
     const totalGridSize = rect.width * rect.height;
     const totalCellSize = flatGrid
@@ -262,10 +271,3 @@ if (canvas === null || canvas === void 0 ? void 0 : canvas.getContext) {
         .map((c) => c.height * c.width)
         .reduce(sum, 0);
 }
-// step through the grid
-// each neighboring cell goes to battle. Randomly, one will win
-// the losing cell will disappear, and the winning cell will take the space of the losing cell
-// if one of the cells in the battle has a grid, the battle will proceed to those children until a single winner remains
-// at which point the battle will continue at the higher level.
-//
-const evolveGrid = () => { };

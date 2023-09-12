@@ -54,6 +54,7 @@ const navigationItems: NavItem[] = [
 // global state
 
 let globalContext: CanvasRenderingContext2D | null,
+    grid: Cell,
     flatGrid: Cell[] = [],
     gridScaffold: GridScaffold,
     index = 0
@@ -260,6 +261,16 @@ const drawCell = (index: number) => {
     globalContext.fillRect(cell.left, cell.top, cell.width, cell.height)
 }
 
+// step through the grid
+// each neighboring cell goes to battle. Randomly, one will win
+// the losing cell will disappear, and the winning cell will take the space of the losing cell
+// if one of the cells in the battle has a grid, the battle will proceed to those children until a single winner remains
+// at which point the battle will continue at the higher level.
+//
+const evolveGrid = () => {
+    console.warn(grid)
+}
+
 const animateGrid = (timeout: number) => {
     if (flatGrid[index]) {
         drawCell(index)
@@ -269,7 +280,7 @@ const animateGrid = (timeout: number) => {
         setTimeout(() => animateGrid(timeout), timeout)
     } else {
         index = 0
-        // evolveGrid()
+        evolveGrid()
     }
 }
 
@@ -297,7 +308,7 @@ if (canvas?.getContext) {
         globalContext.fillRect(0, 0, rect.width, rect.height)
     }
     gridScaffold = createGridScaffold()
-    const gridCell: Cell = {
+    grid = {
         height: rect.height,
         width: rect.width,
         top: 0,
@@ -306,7 +317,7 @@ if (canvas?.getContext) {
         depth: 0,
         color: randomColor(),
     }
-    generate(gridCell)
+    generate(grid)
     animateGrid(100)
     const totalGridSize = rect.width * rect.height
     const totalCellSize = flatGrid
@@ -314,11 +325,3 @@ if (canvas?.getContext) {
         .map((c) => c.height * c.width)
         .reduce(sum, 0)
 }
-
-// step through the grid
-// each neighboring cell goes to battle. Randomly, one will win
-// the losing cell will disappear, and the winning cell will take the space of the losing cell
-// if one of the cells in the battle has a grid, the battle will proceed to those children until a single winner remains
-// at which point the battle will continue at the higher level.
-//
-const evolveGrid = () => {}
