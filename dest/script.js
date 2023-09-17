@@ -72,7 +72,6 @@ const generatePalette = () => {
     saturationClamp = generateClamp(100, saturationRange);
     lightnessClamp = generateClamp(100, lightnessRange);
     backgroundColor = randomColor();
-    console.log(hueClamp);
 };
 const sum = (partialSum, a) => partialSum + a;
 // global state
