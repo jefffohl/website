@@ -25,9 +25,19 @@ const navigationItems = [
         text: 'archive',
         href: '/archive',
     },
-], sweetness = 25, lightnessClamp = [10, 90], interval = 100;
-// global state
-let globalContext, grid, flatGrid = [], gridScaffold, index = 0, gridHeight, gridWidth, hueClamp = [20, 50], saturationClamp = [50, 95];
+], sweetness = 22, interval = 50, hueRange = 30, saturationRange = 45, lightnessRange = 80;
+/**
+ * Generates a random window of given range within given domain
+ * @param domain the maximum (assuming all domains start with 0)
+ * @param range the length of the window
+ */
+const generateClamp = (domain, range) => {
+    // generate random starting point, based on domain minus the range. e.g. with a domain of 0 to 360,
+    // and the range is 50, then we choose a starting number between 0 and 310.
+    // this is the beginning of the clamp.
+    const start = Math.floor(Math.random() * (domain - range));
+    return [start, start + range];
+};
 // utilities
 const getRandomClamped = (min, max) => {
     min = Math.ceil(min);
@@ -37,7 +47,16 @@ const getRandomClamped = (min, max) => {
 const randomColor = () => {
     return `hsl(${getRandomClamped(hueClamp[0], hueClamp[1])} ${getRandomClamped(saturationClamp[0], saturationClamp[1])}% ${getRandomClamped(lightnessClamp[0], lightnessClamp[1])}%)`;
 };
+const generatePalette = () => {
+    hueClamp = generateClamp(360, hueRange);
+    saturationClamp = generateClamp(100, saturationRange);
+    lightnessClamp = generateClamp(100, lightnessRange);
+    backgroundColor = randomColor();
+};
 const sum = (partialSum, a) => partialSum + a;
+// global state
+let globalContext, grid, flatGrid = [], gridScaffold, index = 0, gridHeight, gridWidth, hueClamp, saturationClamp, lightnessClamp, backgroundColor;
+generatePalette();
 /**
  * Function for generating a random number, with an upper bound
  * determined by a diminishing probability.
@@ -244,6 +263,7 @@ const degenerateChildren = (cells) => {
         .map((cell) => {
         return {
             ...cell,
+            color: cell.depth < 3 ? backgroundColor : cell.color,
         };
     });
     if (gridType === GridType.COLUMN) {
@@ -265,15 +285,15 @@ const degenerateChildren = (cells) => {
 const destroyGrid = () => {
     const gridCell = flatGrid[0];
     flatGrid = [];
+    generatePalette();
     while (gridCell.children.length > 0) {
         gridCell.children = degenerateChildren(gridCell.children);
     }
     animateGrid(interval);
 };
 const createGrid = () => {
-    const color = randomColor();
     if (globalContext) {
-        globalContext.fillStyle = color;
+        globalContext.fillStyle = backgroundColor;
         globalContext.fillRect(0, 0, gridWidth, gridHeight);
     }
     gridScaffold = createGridScaffold();
@@ -284,7 +304,7 @@ const createGrid = () => {
         left: 0,
         children: [],
         depth: 0,
-        color: color,
+        color: backgroundColor,
     };
     flatGrid = [];
     generateGrid(grid);
