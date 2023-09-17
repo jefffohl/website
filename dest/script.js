@@ -25,10 +25,7 @@ const navigationItems = [
         text: 'archive',
         href: '/archive',
     },
-], sweetness = 30, 
-// hueClamp = [20, 50],
-// saturationClamp = [50, 95],
-lightnessClamp = [10, 90], interval = 100;
+], sweetness = 25, lightnessClamp = [10, 90], interval = 100;
 // global state
 let globalContext, grid, flatGrid = [], gridScaffold, index = 0, gridHeight, gridWidth, hueClamp = [20, 50], saturationClamp = [50, 95];
 // utilities
@@ -49,9 +46,6 @@ const sum = (partialSum, a) => partialSum + a;
  */
 const getValue = (sweet) => {
     let count = 0;
-    // if ((!sweet && sweet !== 0) || sweet < 0) {
-    //     return 2
-    // }
     let coefficient = 1 / sweet;
     let progress = false;
     while (!progress) {
@@ -61,9 +55,6 @@ const getValue = (sweet) => {
         count++;
         coefficient = coefficient + 1 / sweet;
     }
-    // if (count < 2) {
-    //     count = 2
-    // }
     return count;
 };
 const createSpread = (count) => {
@@ -219,13 +210,6 @@ const drawCell = (index) => {
     globalContext.fillStyle = cell.color;
     globalContext.fillRect(cell.left, cell.top, cell.width, cell.height);
 };
-// const flatten = (cell: Cell): Cell[] => {
-//     return [cell].concat(
-//         cell.children.flatMap((o) => {
-//             return [...flatten(o)]
-//         })
-//     )
-// }
 // step through the grid
 // each neighboring cell goes to battle. Randomly, one will win
 // the losing cell will disappear, and the winning cell will take the space of the losing cell
@@ -354,9 +338,4 @@ if (canvas?.getContext) {
     gridHeight = rect.height;
     gridWidth = rect.width;
     createGrid();
-    const totalGridSize = rect.width * rect.height;
-    const totalCellSize = flatGrid
-        .filter((cell) => cell.children.length === 0)
-        .map((c) => c.height * c.width)
-        .reduce(sum, 0);
 }
