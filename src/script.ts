@@ -46,21 +46,24 @@ const navigationItems: NavItem[] = [
             href: '/archive',
         },
     ],
-    sweetness = 25,
-    lightnessClamp = [10, 90],
-    interval = 100
+    sweetness = 22,
+    interval = 50,
+    hueRange = 30,
+    saturationRange = 45,
+    lightnessRange = 80
 
-// global state
-
-let globalContext: CanvasRenderingContext2D | null,
-    grid: Cell,
-    flatGrid: Cell[] = [],
-    gridScaffold: GridScaffold,
-    index = 0,
-    gridHeight: number,
-    gridWidth: number,
-    hueClamp: [number, number] = [20, 50],
-    saturationClamp: [number, number] = [50, 95]
+/**
+ * Generates a random window of given range within given domain
+ * @param domain the maximum (assuming all domains start with 0)
+ * @param range the length of the window
+ */
+const generateClamp = (domain: number, range: number): [number, number] => {
+    // generate random starting point, based on domain minus the range. e.g. with a domain of 0 to 360,
+    // and the range is 50, then we choose a starting number between 0 and 310.
+    // this is the beginning of the clamp.
+    const start = Math.floor(Math.random() * (domain - range))
+    return [start, start + range]
+}
 
 // utilities
 
@@ -80,7 +83,29 @@ const randomColor = () => {
     )}% ${getRandomClamped(lightnessClamp[0], lightnessClamp[1])}%)`
 }
 
+const generatePalette = () => {
+    hueClamp = generateClamp(360, hueRange)
+    saturationClamp = generateClamp(100, saturationRange)
+    lightnessClamp = generateClamp(100, lightnessRange)
+    backgroundColor = randomColor()
+}
+
 const sum = (partialSum: number, a: number) => partialSum + a
+
+// global state
+let globalContext: CanvasRenderingContext2D | null,
+    grid: Cell,
+    flatGrid: Cell[] = [],
+    gridScaffold: GridScaffold,
+    index = 0,
+    gridHeight: number,
+    gridWidth: number,
+    hueClamp: [number, number],
+    saturationClamp: [number, number],
+    lightnessClamp: [number, number],
+    backgroundColor: string
+
+generatePalette()
 
 /**
  * Function for generating a random number, with an upper bound
@@ -300,6 +325,7 @@ const degenerateChildren = (cells: Cell[]): Cell[] => {
         .map((cell): Cell => {
             return {
                 ...cell,
+                color: cell.depth < 3 ? backgroundColor : cell.color,
             }
         })
     if (gridType === GridType.COLUMN) {
@@ -322,6 +348,7 @@ const degenerateChildren = (cells: Cell[]): Cell[] => {
 const destroyGrid = () => {
     const gridCell = flatGrid[0]
     flatGrid = []
+    generatePalette()
     while (gridCell.children.length > 0) {
         gridCell.children = degenerateChildren(gridCell.children)
     }
@@ -329,9 +356,8 @@ const destroyGrid = () => {
 }
 
 const createGrid = () => {
-    const color = randomColor()
     if (globalContext) {
-        globalContext.fillStyle = color
+        globalContext.fillStyle = backgroundColor
         globalContext.fillRect(0, 0, gridWidth, gridHeight)
     }
     gridScaffold = createGridScaffold()
@@ -342,7 +368,7 @@ const createGrid = () => {
         left: 0,
         children: [],
         depth: 0,
-        color: color,
+        color: backgroundColor,
     }
     flatGrid = []
     generateGrid(grid)
