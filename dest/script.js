@@ -25,16 +25,21 @@ const navigationItems = [
         text: 'archive',
         href: '/archive',
     },
-], sweetness = 20, hueClamp = [20, 50], saturationClamp = [50, 95], lightnessClamp = [10, 90];
+], sweetness = 30, 
+// hueClamp = [20, 50],
+// saturationClamp = [50, 95],
+lightnessClamp = [10, 90], interval = 100;
 // global state
-let globalContext, grid, flatGrid = [], gridScaffold, index = 0;
+let globalContext, grid, flatGrid = [], gridScaffold, index = 0, gridHeight, gridWidth, hueClamp = [20, 50], saturationClamp = [50, 95];
 // utilities
 const getRandomClamped = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
 };
-const randomColor = () => `hsl(${getRandomClamped(hueClamp[0], hueClamp[1])} ${getRandomClamped(saturationClamp[0], saturationClamp[1])}% ${getRandomClamped(lightnessClamp[0], lightnessClamp[1])}%)`;
+const randomColor = () => {
+    return `hsl(${getRandomClamped(hueClamp[0], hueClamp[1])} ${getRandomClamped(saturationClamp[0], saturationClamp[1])}% ${getRandomClamped(lightnessClamp[0], lightnessClamp[1])}%)`;
+};
 const sum = (partialSum, a) => partialSum + a;
 /**
  * Function for generating a random number, with an upper bound
@@ -44,9 +49,9 @@ const sum = (partialSum, a) => partialSum + a;
  */
 const getValue = (sweet) => {
     let count = 0;
-    if ((!sweet && sweet !== 0) || sweet < 0) {
-        return count++;
-    }
+    // if ((!sweet && sweet !== 0) || sweet < 0) {
+    //     return 2
+    // }
     let coefficient = 1 / sweet;
     let progress = false;
     while (!progress) {
@@ -56,6 +61,9 @@ const getValue = (sweet) => {
         count++;
         coefficient = coefficient + 1 / sweet;
     }
+    // if (count < 2) {
+    //     count = 2
+    // }
     return count;
 };
 const createSpread = (count) => {
@@ -186,19 +194,19 @@ const generateChildren = (parentCell) => {
             : generateRow(parentCell, spread);
     }
 };
-const generate = (cell) => {
+const generateGrid = (cell) => {
     flatGrid.push(cell);
     if (cell.depth < 2) {
         cell.children = generateChildren(cell);
         cell.children.forEach((child) => {
-            generate(child);
+            generateGrid(child);
         });
     }
     else if (cell.depth < 4) {
         if (Math.random() < 0.0075 * sweetness) {
             cell.children = generateChildren(cell);
             cell.children.forEach((child) => {
-                generate(child);
+                generateGrid(child);
             });
         }
     }
@@ -211,14 +219,100 @@ const drawCell = (index) => {
     globalContext.fillStyle = cell.color;
     globalContext.fillRect(cell.left, cell.top, cell.width, cell.height);
 };
+// const flatten = (cell: Cell): Cell[] => {
+//     return [cell].concat(
+//         cell.children.flatMap((o) => {
+//             return [...flatten(o)]
+//         })
+//     )
+// }
 // step through the grid
 // each neighboring cell goes to battle. Randomly, one will win
 // the losing cell will disappear, and the winning cell will take the space of the losing cell
 // if one of the cells in the battle has a grid, the battle will proceed to those children until a single winner remains
 // at which point the battle will continue at the higher level.
 //
-const evolveGrid = () => {
-    console.warn(grid);
+const degenerateChildren = (cells) => {
+    // first, both combatants must have no children:
+    if (cells[0].children.length > 0) {
+        cells[0].children = degenerateChildren(cells[0].children);
+        return cells;
+    }
+    if (cells[1]?.children.length > 0) {
+        cells[1].children = degenerateChildren(cells[1].children);
+        return cells;
+    }
+    if (cells.length === 1 && cells[0].children.length === 0) {
+        return [];
+    }
+    const gridType = cells[0].top === cells[1].top ? GridType.ROW : GridType.COLUMN;
+    const winner = Math.random();
+    const newCells = cells
+        .filter((_cell, index) => {
+        if (winner < 0.5 && index === 1) {
+            return false;
+        }
+        if (winner >= 0.5 && index === 0) {
+            return false;
+        }
+        return true;
+    })
+        .map((cell) => {
+        return {
+            ...cell,
+        };
+    });
+    if (gridType === GridType.COLUMN) {
+        newCells[0].height = cells[0].height + cells[1].height;
+        if (winner >= 0.5) {
+            newCells[0].top = cells[0].top;
+        }
+    }
+    if (gridType === GridType.ROW) {
+        newCells[0].width = cells[0].width + cells[1].width;
+        if (winner >= 0.5) {
+            newCells[0].left = cells[0].left;
+        }
+    }
+    // push the winner
+    flatGrid.push(newCells[0]);
+    return newCells;
+};
+const destroyGrid = () => {
+    const gridCell = flatGrid[0];
+    flatGrid = [];
+    while (gridCell.children.length > 0) {
+        gridCell.children = degenerateChildren(gridCell.children);
+    }
+    animateGrid(interval);
+};
+const createGrid = () => {
+    const color = randomColor();
+    if (globalContext) {
+        globalContext.fillStyle = color;
+        globalContext.fillRect(0, 0, gridWidth, gridHeight);
+    }
+    gridScaffold = createGridScaffold();
+    grid = {
+        height: gridHeight,
+        width: gridWidth,
+        top: 0,
+        left: 0,
+        children: [],
+        depth: 0,
+        color: color,
+    };
+    flatGrid = [];
+    generateGrid(grid);
+    animateGrid(interval);
+};
+const checkGrid = () => {
+    const totalGridSize = gridWidth * gridHeight;
+    const totalCellSize = flatGrid
+        .filter((cell) => cell.children.length === 0)
+        .map((c) => c.height * c.width)
+        .reduce(sum, 0);
+    console.warn(totalGridSize, totalCellSize);
 };
 const animateGrid = (timeout) => {
     if (flatGrid[index]) {
@@ -230,7 +324,15 @@ const animateGrid = (timeout) => {
     }
     else {
         index = 0;
-        evolveGrid();
+        // if the last cell in the flat grid is the same dimensions as the gridWidth and gridHeight, then we just finished
+        // destroying the grid, and need to start a new grid
+        if (Math.round(flatGrid[flatGrid.length - 1].width) === gridWidth &&
+            Math.round(flatGrid[flatGrid.length - 1].height) === gridHeight) {
+            createGrid();
+        }
+        else {
+            destroyGrid();
+        }
     }
 };
 // TODO: animate the drawing of cells incrementally using requestAnimationFrame
@@ -240,31 +342,18 @@ const drawGrid = () => {
     });
 };
 const canvas = document.getElementById('grid-canvas');
-if (canvas === null || canvas === void 0 ? void 0 : canvas.getContext) {
+if (canvas?.getContext) {
     const dpr = window.devicePixelRatio;
     const rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
     globalContext = canvas.getContext('2d');
-    globalContext === null || globalContext === void 0 ? void 0 : globalContext.scale(dpr, dpr);
+    globalContext?.scale(dpr, dpr);
     canvas.style.width = `${rect.width}px`;
     canvas.style.height = `${rect.height}px`;
-    if (globalContext) {
-        globalContext.fillStyle = randomColor();
-        globalContext.fillRect(0, 0, rect.width, rect.height);
-    }
-    gridScaffold = createGridScaffold();
-    grid = {
-        height: rect.height,
-        width: rect.width,
-        top: 0,
-        left: 0,
-        children: [],
-        depth: 0,
-        color: randomColor(),
-    };
-    generate(grid);
-    animateGrid(100);
+    gridHeight = rect.height;
+    gridWidth = rect.width;
+    createGrid();
     const totalGridSize = rect.width * rect.height;
     const totalCellSize = flatGrid
         .filter((cell) => cell.children.length === 0)
