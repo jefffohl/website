@@ -1,3 +1,7 @@
+/**
+ *  art is a constant process of escaping the restrictions of past inventions
+ */
+
 // types
 interface NavItem {
     text: string
@@ -65,6 +69,28 @@ const generateClamp = (domain: number, range: number): [number, number] => {
     return [start, start + range]
 }
 
+const generateCircularClamp = (
+    domain: number,
+    range: number
+): [number, number] => {
+    // because hue is a circular range - going from 0 to 360, we could have a clamp
+    // which starts at 300, and ends at 40. So, any number above 300 or below 40 would
+    // be a valid value in this range.
+    const start = Math.floor(Math.random() * domain)
+    let end = start + range
+    if (end > domain) {
+        end = start + range - domain
+    }
+    return [start, end]
+}
+
+const getRandomHue = (): number => {
+    const min = hueClamp[0]
+    const max = hueClamp[1] < hueClamp[0] ? 360 + hueClamp[1] : hueClamp[1]
+    const value = Math.floor(Math.random() * (max - min) + min)
+    return value > 360 ? value - 360 : value
+}
+
 // utilities
 
 const getRandomClamped = (min: number, max: number) => {
@@ -74,20 +100,18 @@ const getRandomClamped = (min: number, max: number) => {
 }
 
 const randomColor = () => {
-    return `hsl(${getRandomClamped(
-        hueClamp[0],
-        hueClamp[1]
-    )} ${getRandomClamped(
+    return `hsl(${getRandomHue()} ${getRandomClamped(
         saturationClamp[0],
         saturationClamp[1]
     )}% ${getRandomClamped(lightnessClamp[0], lightnessClamp[1])}%)`
 }
 
 const generatePalette = () => {
-    hueClamp = generateClamp(360, hueRange)
+    hueClamp = generateCircularClamp(360, hueRange)
     saturationClamp = generateClamp(100, saturationRange)
     lightnessClamp = generateClamp(100, lightnessRange)
     backgroundColor = randomColor()
+    console.log(hueClamp)
 }
 
 const sum = (partialSum: number, a: number) => partialSum + a
