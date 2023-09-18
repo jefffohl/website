@@ -7,6 +7,13 @@ var GridType;
     GridType["ROW"] = "row";
     GridType["COLUMN"] = "column";
 })(GridType || (GridType = {}));
+var CellDrawDirection;
+(function (CellDrawDirection) {
+    CellDrawDirection["UP"] = "up";
+    CellDrawDirection["DOWN"] = "down";
+    CellDrawDirection["LEFT"] = "left";
+    CellDrawDirection["RIGHT"] = "right";
+})(CellDrawDirection || (CellDrawDirection = {}));
 // constants
 const navigationItems = [
     {
@@ -28,7 +35,7 @@ const navigationItems = [
         text: 'archive',
         href: '/archive',
     },
-], sweetness = 22, interval = 50, hueRange = 30, saturationRange = 45, lightnessRange = 80;
+], sweetness = 22, interval = 100, hueRange = 30, saturationRange = 40, lightnessRange = 50;
 /**
  * Generates a random window of given range within given domain
  * @param domain the maximum (assuming all domains start with 0)
@@ -152,6 +159,11 @@ const generateRow = (parentCell, columns) => {
             height: parentCell.height,
             color: randomColor(),
             children: [],
+            drawDirection: CellDrawDirection.RIGHT,
+            originalDimensions: {
+                height: 0,
+                width: 0,
+            },
         };
     });
 };
@@ -169,6 +181,11 @@ const generateColumn = (parentCell, rows) => {
             width: parentCell.width,
             color: randomColor(),
             children: [],
+            drawDirection: CellDrawDirection.DOWN,
+            originalDimensions: {
+                height: 0,
+                width: 0,
+            },
         };
     });
 };
@@ -242,12 +259,106 @@ const generateGrid = (cell) => {
     }
 };
 const drawCell = (index) => {
-    if (!globalContext || flatGrid[index].children.length > 0) {
-        return;
-    }
-    const cell = flatGrid[index];
-    globalContext.fillStyle = cell.color;
-    globalContext.fillRect(cell.left, cell.top, cell.width, cell.height);
+    return new Promise((resolve, reject) => {
+        if (!globalContext) {
+            return reject(false);
+        }
+        if (flatGrid[index].children.length > 0) {
+            return resolve(true);
+        }
+        const cell = flatGrid[index];
+        globalContext.fillStyle = cell.color;
+        let startTimestamp;
+        let limitValue;
+        switch (cell.drawDirection) {
+            case CellDrawDirection.DOWN:
+            case CellDrawDirection.UP:
+                limitValue = cell.height - cell.originalDimensions.height;
+                break;
+            case CellDrawDirection.RIGHT:
+            case CellDrawDirection.LEFT:
+                limitValue = cell.width - cell.originalDimensions.width;
+                break;
+            default:
+                limitValue = 0;
+        }
+        function incrementCell(increment) {
+            // if the drawDirection is:
+            // RIGHT: we incrementally increase the width
+            // LEFT: we incrementally increase the width value and decrement the left.
+            // UP: we incrementally increase the height and decrement the top value.
+            // DOWN: we incrementally increase the height
+            switch (cell.drawDirection) {
+                case CellDrawDirection.DOWN:
+                    return {
+                        top: cell.top,
+                        left: cell.left,
+                        height: increment,
+                        width: cell.width,
+                    };
+                case CellDrawDirection.UP:
+                    return {
+                        top: cell.top +
+                            cell.height -
+                            cell.originalDimensions.height -
+                            increment,
+                        left: cell.left,
+                        height: cell.originalDimensions.height + increment,
+                        width: cell.width,
+                    };
+                case CellDrawDirection.LEFT:
+                    return {
+                        top: cell.top,
+                        left: cell.left +
+                            cell.width -
+                            cell.originalDimensions.width -
+                            increment,
+                        height: cell.height,
+                        width: cell.originalDimensions.width + increment,
+                    };
+                case CellDrawDirection.RIGHT:
+                    return {
+                        top: cell.top,
+                        left: cell.left,
+                        height: cell.height,
+                        width: increment,
+                    };
+                default:
+                    return {
+                        top: 0,
+                        left: 0,
+                        height: 0,
+                        width: 0,
+                    };
+            }
+        }
+        function draw(timeStamp) {
+            if (!startTimestamp) {
+                startTimestamp = timeStamp;
+            }
+            const elapsed = timeStamp - startTimestamp;
+            const relativeProgress = elapsed / interval;
+            // we need to make sure that the entire area is rendered within the interval value.
+            // But, we don't know how many frames that will take - the FPS is determined by the client,
+            // and how fast it can process the next frame. Therefore, we are always only making an attempt
+            // to meet the requested speed - it will never be precise. Therefore, we need to keep track of
+            // how much has been rendered so far. Note that different speed computers will render
+            // the animation at different speeds.
+            // so, if the interval is 500 milliseconds, and the distance to render is 200 pixels,
+            // then we need to render 0.4 pixels per millisecond (distance / time). But, how many milliseconds has it been?
+            // we can figure that out by looking at the timestamps
+            const increment = limitValue * Math.min(relativeProgress, 1);
+            const newDimensions = incrementCell(increment);
+            globalContext.fillRect(newDimensions.left, newDimensions.top, newDimensions.width, newDimensions.height);
+            if (elapsed >= interval) {
+                resolve(true);
+            }
+            else {
+                window.requestAnimationFrame(draw);
+            }
+        }
+        window.requestAnimationFrame(draw);
+    });
 };
 // step through the grid
 // each neighboring cell goes to battle. Randomly, one will win
@@ -281,9 +392,23 @@ const degenerateChildren = (cells) => {
         return true;
     })
         .map((cell) => {
+        // if the cell index is the first, it is the winner
+        // was it the first or the second?
+        // if winner < 0.5 it was the first
+        // if winner >= 0.5 it was the second
+        let drawDirection = winner < 0.5
+            ? cell.drawDirection
+            : gridType === GridType.COLUMN
+                ? CellDrawDirection.UP
+                : CellDrawDirection.LEFT;
         return {
             ...cell,
-            color: cell.depth < 3 ? backgroundColor : cell.color,
+            color: cell.depth < 2 ? backgroundColor : cell.color,
+            drawDirection,
+            originalDimensions: {
+                height: cell.height,
+                width: cell.width,
+            },
         };
     });
     if (gridType === GridType.COLUMN) {
@@ -309,7 +434,7 @@ const destroyGrid = () => {
     while (gridCell.children.length > 0) {
         gridCell.children = degenerateChildren(gridCell.children);
     }
-    animateGrid(interval);
+    animateGrid();
 };
 const createGrid = () => {
     if (globalContext) {
@@ -325,10 +450,15 @@ const createGrid = () => {
         children: [],
         depth: 0,
         color: backgroundColor,
+        drawDirection: CellDrawDirection.RIGHT,
+        originalDimensions: {
+            height: gridHeight,
+            width: gridWidth,
+        },
     };
     flatGrid = [];
     generateGrid(grid);
-    animateGrid(interval);
+    animateGrid();
 };
 const checkGrid = () => {
     const totalGridSize = gridWidth * gridHeight;
@@ -338,13 +468,13 @@ const checkGrid = () => {
         .reduce(sum, 0);
     console.warn(totalGridSize, totalCellSize);
 };
-const animateGrid = (timeout) => {
+const animateGrid = async () => {
     if (flatGrid[index]) {
-        drawCell(index);
+        await drawCell(index);
     }
     index++;
     if (index < flatGrid.length) {
-        setTimeout(() => animateGrid(timeout), timeout);
+        animateGrid();
     }
     else {
         index = 0;
@@ -358,12 +488,6 @@ const animateGrid = (timeout) => {
             destroyGrid();
         }
     }
-};
-// TODO: animate the drawing of cells incrementally using requestAnimationFrame
-const drawGrid = () => {
-    flatGrid.forEach((_cell, index) => {
-        drawCell(index);
-    });
 };
 const canvas = document.getElementById('grid-canvas');
 if (canvas?.getContext) {
