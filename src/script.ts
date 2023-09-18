@@ -65,8 +65,8 @@ const navigationItems: NavItem[] = [
     sweetness = 22,
     interval = 100,
     hueRange = 30,
-    saturationRange = 45,
-    lightnessRange = 40
+    saturationRange = 40,
+    lightnessRange = 50
 
 /**
  * Generates a random window of given range within given domain
