@@ -588,14 +588,5 @@ if (canvas?.getContext) {
     globalContext?.scale(dpr, dpr)
     gridHeight = rect.height
     gridWidth = rect.width
-    console.warn(rect.height, rect.width)
-    console.warn(
-        'BODY',
-        document.getElementsByTagName('body')[0].getBoundingClientRect()
-    )
-    console.warn(
-        'HTML',
-        document.getElementsByTagName('html')[0].getBoundingClientRect()
-    )
     createGrid()
 }
