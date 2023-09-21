@@ -571,7 +571,7 @@ const animateGrid = async () => {
         ) {
             createGrid()
         } else {
-            destroyGrid()
+            setTimeout(() => destroyGrid(), 10_000)
         }
     }
 }
@@ -586,8 +586,6 @@ if (canvas?.getContext) {
     canvas.height = rect.height * dpr
     globalContext = canvas.getContext('2d')
     globalContext?.scale(dpr, dpr)
-    canvas.style.width = `${rect.width}px`
-    canvas.style.height = `${rect.height}px`
     gridHeight = rect.height
     gridWidth = rect.width
     createGrid()
