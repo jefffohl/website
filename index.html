@@ -5,7 +5,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+            href="https://fonts.googleapis.com/css?family=Open Sans"
             rel="stylesheet"
             type="text/css"
         />
@@ -13,65 +13,66 @@
             * {
                 box-sizing: border-box;
             }
-            html {
-                font-size: 14px;
-            }
-            div {
-                transition: width 0.5s;
-            }
+            html,
             body {
                 margin: 0;
                 padding: 0;
-                height: 100vh;
-                width: 100vw;
+                height: 100%;
+            }
+            html {
+                font-size: 16px;
+            }
+            body {
+                background: #333;
+                font-family: 'Open Sans', sans-serif;
+                line-height: 1.75rem;
+                color: #f5f5f5;
             }
             canvas {
                 width: 100%;
                 height: 100%;
+                display: block;
             }
-            .panel {
-                transition: width 1000ms;
+            .sub-panel {
+                transition: left 250ms linear;
+                width: 400px;
                 height: 100%;
+                position: absolute;
+                top: 0;
+                left: -150px;
+                overflow: auto;
+                z-index: 1;
+                color: #f5f5f5;
+                padding: 30px;
+                background: rgb(0 0 0 / 0.85);
+                line-height: 1.5rem;
+                font-size: 1rem;
+            }
+            .sub-panel p {
+                font-weight: 300;
+            }
+            .sub-panel a {
+                color: cornflowerblue;
+                text-decoration: none;
+            }
+            .sub-panel a:hover {
+                text-decoration: underline;
             }
             #layout {
-                height: 100vh;
-                width: 100vw;
+                height: 100%;
+                width: 100%;
+                position: relative;
             }
             #left-panel {
-                width: 180px;
+                width: 250px;
+                height: 100%;
                 background-color: #222;
                 color: #f5f5f5;
-                font-family: 'Roboto', sans-serif;
                 position: absolute;
-            }
-            #right-panel {
-                width: calc(100% - 180px);
-                left: 180px;
-                position: absolute;
-            }
-            #bio {
-                width: 0%;
-                position: absolute;
-                top: 0;
-                left: 180px;
-                overflow: hidden;
-                z-index: 1;
-            }
-            #about {
-                width: 0%;
-                position: absolute;
-                top: 0;
-                left: 180px;
-                overflow: hidden;
-                z-index: 1;
+                z-index: 2;
             }
 
-            h1 {
-                font-weight: 300;
-                font-size: 2rem;
-                padding: 1rem 2rem;
-            }
-            h2 {
+            #left-panel h2 {
                 font-weight: 500;
                 font-size: 1rem;
                 text-transform: uppercase;
@@ -81,53 +82,54 @@
                 letter-spacing: 2px;
             }
 
-            footer {
+            #right-panel {
+                position: absolute;
+                left: 250px;
+                top: 0;
+                width: calc(100% - 250px);
+                height: 100%;
+                z-index: 0;
+            }
+            h1 {
+                font-weight: 300;
+                font-size: 2rem;
+                padding: 1rem 2rem;
+            }
+
+            h2 {
+                font-weight: 400;
+            }
+
+            #left-panel {
                 padding-top: 10px;
             }
 
-            footer ul {
+            #left-panel ul {
                 margin: 0;
                 padding: 20px 0;
                 list-style: none;
             }
-            footer ul li {
+            #left-panel ul li {
                 margin: 0;
                 padding: 0;
                 list-style: none;
             }
-            footer ul li a {
+            #left-panel ul li a,
+            #left-panel ul li span {
+                color: #aaa;
+                text-decoration: none;
                 display: block;
                 padding: 0.5rem 2rem;
                 background-color: rgb(0 0 0 / 0.15);
             }
-            footer ul li a:hover {
+            #left-panel ul li a:hover,
+            #left-panel ul li span:hover {
                 background-color: rgb(0 0 0 / 0.25);
+                color: #f5f5f5;
+                cursor: pointer;
             }
             p {
                 font-size: 1rem;
-            }
-            a {
-                color: #aaa;
-                text-decoration: none;
-            }
-            a:hover {
-                color: #f5f5f5;
-            }
-            .buttons {
-                display: flex;
-                flex-direction: column;
-            }
-            .buttons button {
-                display: block;
-                outline: none;
-                border: none;
-                background: none;
-                color: #aaa;
-                text-align: left;
-                font-size: 1rem;
-                cursor: pointer;
-                padding: 0.5rem 2rem;
-                margin-bottom: 1rem;
             }
         </style>
         <script src="dest/controls.js" defer></script>
@@ -137,56 +139,120 @@
         <div id="layout">
             <div id="left-panel" class="panel">
                 <h1>Jeff Fohl</h1>
-                <div class="buttons">
-                    <button id="about-me">About me</button>
-                    <button id="what-is-this">What is this?</button>
-                </div>
-                <footer>
-                    <h2>Surfaces</h2>
-                    <ul>
-                        <li>
-                            <a href="mailto:jeff@fohl.com">Email</a>
-                        </li>
-                        <li>
-                            <a href="https://medium.com/@jefffohl">Medium</a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/jefffohl">GitHub</a>
-                        </li>
-                        <li>
-                            <a href="https://www.linkedin.com/in/jeffreyfohl"
-                                >LinkedIn</a
-                            >
-                        </li>
-                        <li>
-                            <a href="https://endlesss.fm/spacetimespirit"
-                                >Endlesss</a
-                            >
-                        </li>
-                    </ul>
-                    <h2>Archive</h2>
-                    <ul>
-                        <li><a href="/archive/2011">2011</a></li>
-                    </ul>
-                </footer>
+                <ul>
+                    <li>
+                        <span id="what-is-this">What is this?</span>
+                    </li>
+                    <li>
+                        <span id="about-me">About me</span>
+                    </li>
+                </ul>
+
+                <h2>Surfaces</h2>
+                <ul>
+                    <li>
+                        <a href="mailto:jeff@fohl.com">Email</a>
+                    </li>
+                    <li>
+                        <a href="https://medium.com/@jefffohl">Medium</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/jefffohl">GitHub</a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/jeffreyfohl"
+                            >LinkedIn</a
+                        >
+                    </li>
+                    <li>
+                        <a href="https://endlesss.fm/spacetimespirit"
+                            >Endlesss</a
+                        >
+                    </li>
+                </ul>
+                <h2>Archive</h2>
+                <ul>
+                    <li><a href="/archive/2011">2011</a></li>
+                </ul>
             </div>
-            <div id="bio" class="panel">
+            <div id="bio" class="sub-panel">
                 <h2>About Jeff</h2>
                 <p>
-                    Hi. I'm Jeff, and I try to make it easier for humans to use
-                    computers.
+                    Hi. I'm Jeff. I am interested in how humans use computers,
+                    and the interfaces between them.
                 </p>
+                <p>
+                    I have been working in this area for about 30 years, prior
+                    to the general availability of the World Wide Web. Since
+                    those early days, I have worked as an interface designer,
+                    graphic artist, illustrator, web developer, software
+                    engineer, and user experience designer.
+                </p>
+                <p>
+                    Much of this work has revolved around the Web, though this
+                    is not by any means my sole interest. For the last several
+                    years I have been working in the machine learning / AI
+                    space.
+                </p>
+                <p>
+                    One question I have been asking since I become involved with
+                    AI is, "What is the interface for AI?". With the advent of
+                    Large Language Models, this question has become even more
+                    critical.
+                </p>
+                <p>
+                    In a world of Generative AI, how will humans interact with
+                    systems that become more and more inscrutable? How do we
+                    design systems that produce good outcomes when the
+                    underlying system is non-deterministic? These are the
+                    questions on my mind lately.
+                </p>
+                <p>Oh, I also like music a lot.</p>
             </div>
-            <div id="about" class="panel">
+            <div id="about" class="sub-panel">
                 <h2>What is this page all about?</h2>
                 <p>
                     What you see happening on the right here started out as a
-                    doodle. Initially inspired by abstract works by artists such
-                    as Richard Diebenkorn, I have long been interested in how
-                    our minds interpret basic shapes. When we see an abstraction
-                    our minds invent an story or image, and we will fill in the
-                    gaps and try to match what we see with something we have
-                    seen before.
+                    doodle, initially inspired by abstract works by artists such
+                    as
+                    <a
+                        href="https://diebenkorn.org/collections/6673/objects/"
+                        target="_blank"
+                        >Richard Diebenkorn</a
+                    >. The doodle evolved over time into a kind of grid, dancing
+                    in my mind between the abstract and the concrete.
+                </p>
+                <p>
+                    I became curious if I could write an algorithm to generate
+                    variants on the design. Something perhaps similar to
+                    <a
+                        href="https://mathworld.wolfram.com/Rule110.html"
+                        target="_blank"
+                        >cellular automata</a
+                    >, but turned on its head. Instead of writing an algorithm
+                    to see what it would produce, I started with an idea of what
+                    I wanted the end product to look like, and crafted my
+                    algorithm to produce something akin to that. That idea
+                    evolved in to what you see creating and destroying itself
+                    here. With some relatively simple rules for generating the
+                    design, and then deconstructing it, the system will
+                    endlessly explore these ideas of abstraction.
+                    <a
+                        href="https://github.com/jefffohl/website"
+                        target="_blank"
+                        >You can see the code here.</a
+                    >
+                </p>
+                <p>
+                    What I find fascinating here is how our minds will look at
+                    this random arrangement of rectangles and inevitably attempt
+                    to identify it, to classify it. Is it a landscape? An aerial
+                    view of farmland? A slice of metamorphic schist? What I find
+                    interesting is that what our minds do here seems to be
+                    similar to the behavior of neural nets. Does this mean that
+                    these algorithms are getting closer to the way our own minds
+                    process information and perceive the world? I don't really
+                    know. But it is an interesting question.
                 </p>
             </div>
             <div id="right-panel" class="panel">

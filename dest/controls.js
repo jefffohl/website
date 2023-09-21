@@ -7,29 +7,29 @@ let bioPanelOpen = false;
 let aboutPanelOpen = false;
 whatIsThisButton?.addEventListener('click', (_e) => {
     if (aboutPanelOpen && aboutPanel) {
-        aboutPanel.style.width = '0px';
+        aboutPanel.style.left = '-150px';
         aboutPanelOpen = false;
     }
     else if (!aboutPanelOpen && aboutPanel) {
         if (bioPanelOpen && bioPanel) {
-            bioPanel.style.width = '0px';
+            bioPanel.style.left = '-150px';
             bioPanelOpen = false;
         }
-        aboutPanel.style.width = '800px';
+        aboutPanel.style.left = '250px';
         aboutPanelOpen = true;
     }
 });
 aboutMeButton?.addEventListener('click', (_e) => {
     if (bioPanelOpen && bioPanel) {
-        bioPanel.style.width = '0px';
+        bioPanel.style.left = '-150px';
         bioPanelOpen = false;
     }
     else if (!bioPanelOpen && bioPanel) {
         if (aboutPanelOpen && aboutPanel) {
-            aboutPanel.style.width = '0px';
+            aboutPanel.style.left = '-150px';
             aboutPanelOpen = false;
         }
-        bioPanel.style.width = '800px';
+        bioPanel.style.left = '250px';
         bioPanelOpen = true;
     }
 });
