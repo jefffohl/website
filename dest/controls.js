@@ -1,35 +1,32 @@
 "use strict";
-const aboutMeButton = document.getElementById('about-me');
-const whatIsThisButton = document.getElementById('what-is-this');
+const bioButton = document.getElementById('about-me');
+const aboutButton = document.getElementById('what-is-this');
 const bioPanel = document.getElementById('bio');
 const aboutPanel = document.getElementById('about');
-let bioPanelOpen = false;
-let aboutPanelOpen = false;
-whatIsThisButton?.addEventListener('click', (_e) => {
-    if (aboutPanelOpen && aboutPanel) {
-        aboutPanel.style.left = '-150px';
-        aboutPanelOpen = false;
+const moreButton = document.getElementById('more');
+const navPanel = document.getElementById('nav');
+const closeBioButton = document.getElementById('close-bio');
+const closeAboutButton = document.getElementById('close-about');
+const toggleAboutPanel = (_event) => {
+    aboutPanel?.classList.toggle('hidden');
+    if (!aboutPanel?.classList.contains('hidden') &&
+        !bioPanel?.classList.contains('hidden')) {
+        bioPanel?.classList.toggle('hidden');
     }
-    else if (!aboutPanelOpen && aboutPanel) {
-        if (bioPanelOpen && bioPanel) {
-            bioPanel.style.left = '-150px';
-            bioPanelOpen = false;
-        }
-        aboutPanel.style.left = '250px';
-        aboutPanelOpen = true;
+};
+const toggleBioPanel = (_event) => {
+    bioPanel?.classList.toggle('hidden');
+    if (!bioPanel?.classList.contains('hidden') &&
+        !aboutPanel?.classList.contains('hidden')) {
+        aboutPanel?.classList.toggle('hidden');
     }
-});
-aboutMeButton?.addEventListener('click', (_e) => {
-    if (bioPanelOpen && bioPanel) {
-        bioPanel.style.left = '-150px';
-        bioPanelOpen = false;
-    }
-    else if (!bioPanelOpen && bioPanel) {
-        if (aboutPanelOpen && aboutPanel) {
-            aboutPanel.style.left = '-150px';
-            aboutPanelOpen = false;
-        }
-        bioPanel.style.left = '250px';
-        bioPanelOpen = true;
-    }
+};
+aboutButton?.addEventListener('click', toggleAboutPanel);
+closeAboutButton?.addEventListener('click', toggleAboutPanel);
+bioButton?.addEventListener('click', toggleBioPanel);
+closeBioButton?.addEventListener('click', toggleBioPanel);
+moreButton?.addEventListener('click', (e) => {
+    const button = e.currentTarget;
+    button.classList.toggle('open');
+    navPanel?.classList.toggle('shown');
 });
