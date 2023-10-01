@@ -1,13 +1,8 @@
 /**
- *  art is a constant process of escaping the restrictions of past inventions
+ *  Art is a constant process of inventing ways to escape the restrictions of past inventions.
  */
 
 // types
-interface NavItem {
-    text: string
-    onClick?: () => any
-    href?: string
-}
 interface GridScaffold {
     columns: number[]
     rows: number[]
@@ -41,32 +36,13 @@ enum CellDrawDirection {
 
 // constants
 
-const navigationItems: NavItem[] = [
-        {
-            text: 'jefffohl',
-        },
-        {
-            text: 'resume',
-            onClick: () => {}, // TODO: show resume panel
-        },
-        {
-            text: 'blog',
-            href: 'https://medium.com/@jefffohl',
-        },
-        {
-            text: 'contact',
-            onClick: () => {}, // TODO: show contact panel
-        },
-        {
-            text: 'archive',
-            href: '/archive',
-        },
-    ],
-    sweetness = 22,
+const sweetness = 25,
     interval = 100,
-    hueRange = 30,
-    saturationRange = 40,
-    lightnessRange = 50
+    hueRange = 50,
+    saturationRange = 60,
+    lightnessRange = 60
+
+// utilities
 
 /**
  * Generates a random window of given range within given domain
@@ -102,8 +78,6 @@ const getRandomHue = (): number => {
     const value = Math.floor(Math.random() * (max - min) + min)
     return value > 360 ? value - 360 : value
 }
-
-// utilities
 
 const getRandomClamped = (min: number, max: number) => {
     min = Math.ceil(min)
@@ -182,6 +156,8 @@ const createSpread = (count: number): number[] => {
     spread.push(remaining) // Last chunk is whatever is remaining
     return spread
 }
+
+// run
 
 /**
  *
@@ -545,6 +521,7 @@ const createGrid = () => {
     animateGrid()
 }
 
+// used only for debugging:
 const checkGrid = () => {
     const totalGridSize = gridWidth * gridHeight
     const totalCellSize = flatGrid

@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "A website",
   "main": "script.js",
+  "type": "module",
   "scripts": {
     "start": "tsc --watch",
-    "format": "npx prettier --write src"
+    "format": "npx prettier --write src",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -19,6 +23,7 @@
   },
   "homepage": "https://github.com/jefffohl/website#readme",
   "devDependencies": {
+    "vite": "^4.4.5",
     "prettier": "^3.0.1",
     "typescript": "^5.1.6"
   }
