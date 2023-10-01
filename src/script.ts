@@ -36,11 +36,11 @@ enum CellDrawDirection {
 
 // constants
 
-const sweetness = 25,
+const sweetness = 24,
     interval = 100,
-    hueRange = 50,
-    saturationRange = 60,
-    lightnessRange = 60
+    hueRange = 40,
+    saturationRange = 50,
+    lightnessRange = 50
 
 // utilities
 
