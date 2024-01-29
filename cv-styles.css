@@ -219,6 +219,10 @@ nav .study {
     margin-bottom: 0.5rem;
 }
 
+.timeline-section.last {
+    border-bottom: none;
+}
+
 .firefox {
     display: none;
 }
