@@ -78,6 +78,29 @@ a {
     top: 25px;
 }
 
+.menu h1 a {
+    color: var(--nameColor);
+    text-decoration: none;
+    position: relative;
+}
+
+.menu h1 a:hover:before {
+    position: absolute;
+    content: '';
+    display: block;
+    top: 15px;
+    left: -20px;
+    width: 13px;
+    height: 13px;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: var(--nameColor);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--nameColor);
+    transform: rotate(45deg);
+}
+
 nav {
     line-height: 1.5rem;
     padding: 0 2rem;
