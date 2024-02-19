@@ -40,7 +40,8 @@ const sweetness = 24,
     interval = 100,
     hueRange = 40,
     saturationRange = 50,
-    lightnessRange = 50
+    lightnessRange = 50,
+    pauseBetweenRenders = 10_000
 
 // utilities
 
@@ -416,6 +417,26 @@ const drawCell = (index: number): Promise<boolean> => {
     })
 }
 
+const drawLoaderCell = (pause: number) => {
+    globalContext!.fillStyle = backgroundColor
+    let startTimestamp: number
+    function draw(timeStamp: number) {
+        if (!startTimestamp) {
+            startTimestamp = timeStamp
+        }
+        const elapsed = timeStamp - startTimestamp
+        const relativeProgress = elapsed / pause
+        const increment = gridWidth * Math.min(relativeProgress, 1)
+        globalContext!.fillRect(0, 0, increment, 5)
+        if (elapsed >= pause) {
+            return
+        } else {
+            window.requestAnimationFrame(draw)
+        }
+    }
+    window.requestAnimationFrame(draw)
+}
+
 // step through the grid
 // each neighboring cell goes to battle. Randomly, one will win
 // the losing cell will disappear, and the winning cell will take the space of the losing cell
@@ -489,7 +510,6 @@ const degenerateChildren = (cells: Cell[]): Cell[] => {
 const destroyGrid = () => {
     const gridCell = flatGrid[0]
     flatGrid = []
-    generatePalette()
     while (gridCell.children.length > 0) {
         gridCell.children = degenerateChildren(gridCell.children)
     }
@@ -531,6 +551,13 @@ const checkGrid = () => {
     console.warn(totalGridSize, totalCellSize)
 }
 
+const startTimerBar = (pause: number) => {
+    // create cell at top in same color as new background
+    generatePalette()
+    // create cell
+    drawLoaderCell(pause)
+}
+
 const animateGrid = async () => {
     if (flatGrid[index]) {
         await drawCell(index)
@@ -548,7 +575,8 @@ const animateGrid = async () => {
         ) {
             createGrid()
         } else {
-            setTimeout(() => destroyGrid(), 10_000)
+            startTimerBar(pauseBetweenRenders)
+            setTimeout(() => destroyGrid(), pauseBetweenRenders)
         }
     }
 }
