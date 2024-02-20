@@ -40,8 +40,7 @@ const sweetness = 24,
     interval = 100,
     hueRange = 40,
     saturationRange = 50,
-    lightnessRange = 50,
-    pauseBetweenRenders = 10_000
+    lightnessRange = 50
 
 // utilities
 
@@ -551,13 +550,6 @@ const checkGrid = () => {
     console.warn(totalGridSize, totalCellSize)
 }
 
-const startTimerBar = (pause: number) => {
-    // create cell at top in same color as new background
-    generatePalette()
-    // create cell
-    drawLoaderCell(pause)
-}
-
 const animateGrid = async () => {
     if (flatGrid[index]) {
         await drawCell(index)
@@ -575,8 +567,8 @@ const animateGrid = async () => {
         ) {
             createGrid()
         } else {
-            startTimerBar(pauseBetweenRenders)
-            setTimeout(() => destroyGrid(), pauseBetweenRenders)
+            generatePalette()
+            setTimeout(() => destroyGrid(), 3_000)
         }
     }
 }
