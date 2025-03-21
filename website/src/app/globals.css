@@ -1,0 +1,219 @@
+@import 'tailwindcss/preflight';
+@tailwind utilities;
+
+:root {
+    --background: #333;
+    --foreground: #f5f5f5;
+    --menu-bg: #222;
+    --menu-color: #f5f5f5;
+    --link-color: #aaa;
+    --link-hover: #f5f5f5;
+    --heading-color: #e5e5e5;
+    --panel-bg: rgba(0, 0, 0, 0.85);
+}
+
+* {
+    box-sizing: border-box;
+}
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+html {
+    font-size: 16px;
+}
+body {
+    background: #333;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.4rem;
+    color: #f5f5f5;
+}
+
+.sub-panel {
+    transition: all 250ms linear;
+    -webkit-transition: all 250ms linear;
+    -moz-transition: all 250ms linear;
+    -ms-transition: all 250ms linear;
+    -o-transition: all 250ms linear;
+    width: 400px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 200px;
+    z-index: 1;
+    color: #f5f5f5;
+    padding: 60px 30px 30px 30px;
+    background: rgb(0 0 0 / 0.85);
+    line-height: 1.5rem;
+    font-size: 1rem;
+}
+.sub-panel.hidden {
+    left: -200px;
+}
+.sub-panel p {
+    font-weight: 300;
+}
+.sub-panel a {
+    color: cornflowerblue;
+    text-decoration: none;
+}
+.sub-panel a:hover {
+    text-decoration: underline;
+}
+.sub-panel h2 {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding-left: 30px;
+    font-weight: 500;
+}
+.sub-panel .panel-content {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    overflow: auto;
+    height: calc(100% - 60px);
+    width: 100%;
+    padding: 0 30px 30px 30px;
+}
+p {
+    font-size: 1rem;
+}
+#more {
+    display: none;
+}
+
+.close {
+    display: block;
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    top: -20px;
+    right: 0;
+    cursor: pointer;
+}
+
+.close:before,
+.close:after {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 25px;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    background: #ccc;
+}
+
+.close:hover:before,
+.close:hover:after {
+    background: #fff;
+}
+
+.close:before {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+}
+
+.close:after {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+}
+
+@media (max-width: 1024px) {
+    .sub-panel {
+        background: #222;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        overflow: hidden;
+    }
+    .sub-panel.hidden {
+        left: -100%;
+    }
+    .sub-panel h2 {
+        position: absolute;
+        background: #222;
+        margin: 0;
+        top: 0;
+        left: 0;
+        height: 60px;
+        padding: 0 2rem;
+        line-height: 60px;
+    }
+    .sub-panel .panel-content {
+        padding-bottom: 120px;
+    }
+    .sub-panel.hidden h2 {
+        position: absolute;
+    }
+    .sub-panel h2 .close {
+        top: 0;
+    }
+    #more {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 60px;
+        width: 60px;
+        z-index: 2;
+    }
+
+    #more:before,
+    #more:after {
+        content: '';
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: #ccc;
+        position: absolute;
+        left: 17.5px;
+        transition: all 250ms linear;
+        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -webkit-transition: all 250ms linear;
+        -moz-transition: all 250ms linear;
+        -ms-transition: all 250ms linear;
+        -o-transition: all 250ms linear;
+    }
+
+    #more:before {
+        top: 25px;
+    }
+
+    #more:after {
+        top: 35px;
+    }
+
+    #more.open:before {
+        top: 30px;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+    }
+    #more.open:after {
+        top: 30px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+    }
+}
