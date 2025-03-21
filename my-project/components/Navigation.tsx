@@ -1,40 +1,35 @@
 'use client'
 
 import { useState } from 'react'
-import MenuPanel from '@/components/MenuPanel'
-import BioPanel from '@/components/BioPanel'
-import AboutPanel from '@/components/AboutPanel'
-import GridCanvas from '@/components/GridCanvas'
-
-export default function Home() {
+import BioPanel from './BioPanel'
+import MenuPanel from './MenuPanel'
+import AboutPanel from './AboutPanel'
+export default function Navigation() {
     const [bioHidden, setBioHidden] = useState(true)
     const [aboutHidden, setAboutHidden] = useState(true)
 
     const toggleBioPanel = () => {
         setBioHidden(!bioHidden)
-        if (!bioHidden && !aboutHidden) {
+        if (!aboutHidden) {
             setAboutHidden(true)
         }
     }
 
     const toggleAboutPanel = () => {
         setAboutHidden(!aboutHidden)
-        if (!aboutHidden && !bioHidden) {
+        if (!bioHidden) {
             setBioHidden(true)
         }
     }
 
     return (
-        <div className="h-screen w-full overflow-hidden relative">
+        <div className="bg-[#222] min-h-[100vh] w-[200px] relative">
             <MenuPanel
                 onToggleBio={toggleBioPanel}
                 onToggleAbout={toggleAboutPanel}
             />
             <BioPanel isHidden={bioHidden} onClose={toggleBioPanel} />
             <AboutPanel isHidden={aboutHidden} onClose={toggleAboutPanel} />
-            <div className="grid-panel">
-                <GridCanvas />
-            </div>
         </div>
     )
 }

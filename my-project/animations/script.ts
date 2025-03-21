@@ -510,7 +510,7 @@ const degenerateChildren = (cells: Cell[]): Cell[] => {
 const destroyGrid = () => {
     const gridCell = flatGrid[0]
     flatGrid = []
-    while (gridCell.children.length > 0) {
+    while (gridCell?.children?.length > 0) {
         gridCell.children = degenerateChildren(gridCell.children)
     }
     animateGrid()
@@ -564,8 +564,8 @@ const animateGrid = async () => {
         // if the last cell in the flat grid is the same dimensions as the gridWidth and gridHeight, then we just finished
         // destroying the grid, and need to start a new grid
         if (
-            Math.round(flatGrid[flatGrid.length - 1].width) === gridWidth &&
-            Math.round(flatGrid[flatGrid.length - 1].height) === gridHeight
+            Math.round(flatGrid[flatGrid.length - 1]?.width) === gridWidth &&
+            Math.round(flatGrid[flatGrid.length - 1]?.height) === gridHeight
         ) {
             createGrid()
         } else {

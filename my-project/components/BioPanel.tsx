@@ -7,7 +7,7 @@ interface BioPanelProps {
 
 export default function BioPanel({ isHidden, onClose }: BioPanelProps) {
     return (
-        <div className={`sub-panel ${isHidden ? 'hidden' : ''}`} id="bio">
+        <div className={`sub-panel ${isHidden ? 'outta-sight' : ''}`} id="bio">
             <h2>
                 About Jeff <span className="close" onClick={onClose}></span>
             </h2>
@@ -42,7 +42,6 @@ export default function BioPanel({ isHidden, onClose }: BioPanelProps) {
                     underlying system is largely non-deterministic? These are
                     the questions on my mind lately.
                 </p>
-                <p>Oh, I also like music a lot.</p>
             </div>
         </div>
     )
