@@ -79,11 +79,16 @@ class GridAnimator {
      * Stops animation and cleans up resources
      */
     public stop(): void {
+        // Set flag first to stop any new animations from starting
         this.animationRunning = false
+
+        // Clear any timeouts
         if (this.timeoutId !== null) {
             window.clearTimeout(this.timeoutId)
             this.timeoutId = null
         }
+
+        // Clean up data that might be holding references
         this.flatGrid = []
         this.grid = null
     }
@@ -92,7 +97,22 @@ class GridAnimator {
      * Clean up resources when component unmounts
      */
     public destroy(): void {
+        // Stop the animation first
         this.stop()
+
+        // Release references to DOM elements
+        if (this.canvas) {
+            // Clear the canvas to prevent memory leaks
+            if (this.context) {
+                this.context.clearRect(
+                    0,
+                    0,
+                    this.canvas.width,
+                    this.canvas.height
+                )
+            }
+        }
+
         this.canvas = null
         this.context = null
     }
@@ -365,10 +385,13 @@ class GridAnimator {
             if (this.flatGrid[index].children.length > 0) {
                 return resolve(true)
             }
+
             const cell = this.flatGrid[index]
             this.context.fillStyle = cell.color
             let startTimestamp: number
             let limitValue: number
+            let animationFrameId: number
+
             switch (cell.drawDirection) {
                 case CellDrawDirection.DOWN:
                 case CellDrawDirection.UP:
@@ -444,6 +467,7 @@ class GridAnimator {
 
             const draw = (timeStamp: number) => {
                 if (!this.context || !this.animationRunning) {
+                    cancelAnimationFrame(animationFrameId)
                     reject(false)
                     return
                 }
@@ -464,11 +488,18 @@ class GridAnimator {
                 if (elapsed >= INTERVAL) {
                     resolve(true)
                 } else {
-                    window.requestAnimationFrame(draw)
+                    animationFrameId = window.requestAnimationFrame(draw)
                 }
             }
 
-            window.requestAnimationFrame(draw)
+            animationFrameId = window.requestAnimationFrame(draw)
+
+            // Cleanup function for the promise
+            return () => {
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId)
+                }
+            }
         })
     }
 
@@ -610,34 +641,49 @@ class GridAnimator {
 
     private async animateGrid(): Promise<void> {
         if (!this.animationRunning) return
+
         if (this.flatGrid[this.index]) {
-            await this.drawCell(this.index)
-        }
-        this.index++
-        if (this.index < this.flatGrid.length) {
             try {
-                this.animateGrid()
+                await this.drawCell(this.index)
+                this.index++
+                if (this.index < this.flatGrid.length) {
+                    if (this.animationRunning) {
+                        // Use requestAnimationFrame to avoid stack overflow with deep recursion
+                        window.requestAnimationFrame(() => this.animateGrid())
+                    }
+                } else {
+                    this.index = 0
+                    // if the last cell in the flat grid is the same dimensions as the gridWidth and gridHeight, then we just finished
+                    // destroying the grid, and need to start a new grid
+                    if (
+                        Math.round(
+                            this.flatGrid[this.flatGrid.length - 1]?.width
+                        ) === this.gridWidth &&
+                        Math.round(
+                            this.flatGrid[this.flatGrid.length - 1]?.height
+                        ) === this.gridHeight
+                    ) {
+                        this.createGrid()
+                    } else {
+                        this.generatePalette()
+                        this.timeoutId = window.setTimeout(() => {
+                            if (this.animationRunning) {
+                                this.destroyGrid()
+                            }
+                        }, 3000)
+                    }
+                }
             } catch (error) {
-                console.error('Error animating grid:', error)
+                // If an error occurs (like when component is destroyed), just stop the animation
+                // without logging an error, as this is expected behavior when stopping
+                if (this.animationRunning) {
+                    console.error('Error animating grid:', error)
+                }
             }
         } else {
-            this.index = 0
-            // if the last cell in the flat grid is the same dimensions as the gridWidth and gridHeight, then we just finished
-            // destroying the grid, and need to start a new grid
-            if (
-                Math.round(this.flatGrid[this.flatGrid.length - 1]?.width) ===
-                    this.gridWidth &&
-                Math.round(this.flatGrid[this.flatGrid.length - 1]?.height) ===
-                    this.gridHeight
-            ) {
-                this.createGrid()
-            } else {
-                this.generatePalette()
-                this.timeoutId = window.setTimeout(() => {
-                    if (this.animationRunning) {
-                        this.destroyGrid()
-                    }
-                }, 3000)
+            this.index++
+            if (this.index < this.flatGrid.length && this.animationRunning) {
+                window.requestAnimationFrame(() => this.animateGrid())
             }
         }
     }
