@@ -21,6 +21,11 @@ export default function CV() {
                     advancing technology can be used by creatives and
                     professionals to enhance rather than replace their work.
                 </p>
+                <p>
+                    <a className="download" href="jeff-fohl-cv.pdf">
+                        Download this as a PDF ↓
+                    </a>
+                </p>
             </div>
 
             <p className="timeline-header">Timeline</p>

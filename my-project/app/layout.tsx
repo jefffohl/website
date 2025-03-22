@@ -21,8 +21,12 @@ export default function RootLayout({
         <html lang="en">
             <body className={`${openSans.variable}`}>
                 <div className="lg:flex lg:flex-row lg:items-stretch">
-                    <Navigation />
-                    {children}
+                    <div className="lg:w-[200px] flex-[0_0_200px]">
+                        <Navigation />
+                    </div>
+                    <div className="relative h-screen lg:flex-1">
+                        {children}
+                    </div>
                 </div>
             </body>
         </html>
