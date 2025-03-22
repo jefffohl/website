@@ -2,19 +2,13 @@
 
 interface AboutPanelProps {
     isHidden: boolean
-    onClose: () => void
+    onClose?: () => void
 }
 
-export default function AboutPanel({ isHidden, onClose }: AboutPanelProps) {
+export default function AboutPanel({ isHidden }: AboutPanelProps) {
     return (
-        <div
-            className={`sub-panel ${isHidden ? 'outta-sight' : ''}`}
-            id="about"
-        >
-            <h2>
-                What is this all about?{' '}
-                <span className="close" onClick={onClose}></span>
-            </h2>
+        <div className={`sub-panel right ${isHidden ? 'outta-sight' : ''}`}>
+            <h2>What is this all about? </h2>
             <div className="panel-content">
                 <p>
                     What you see happening on this page started out as a doodle,

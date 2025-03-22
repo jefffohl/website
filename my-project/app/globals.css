@@ -55,6 +55,15 @@ a:hover {
     overflow: auto;
 }
 
+#menu-panel a:hover {
+    text-decoration: none;
+}
+
+#menu-panel a.my-name:hover {
+    text-decoration: none;
+    color: #b5dff9;
+}
+
 #nav {
     height: calc(100% - 90px);
     overflow: auto;
@@ -70,7 +79,7 @@ a:hover {
     font-size: 1rem;
     font-weight: 400;
     text-transform: uppercase;
-    margin-bottom: 0;
+    margin: 0.83rem 0 0 0;
     padding: 0.25rem 2rem 0 2rem;
     color: #aaa;
     letter-spacing: 2px;
@@ -136,6 +145,17 @@ a:hover {
     line-height: 1.5rem;
     font-size: 1rem;
 }
+
+.sub-panel.right {
+    left: auto;
+    right: 0;
+}
+
+.sub-panel.right.outta-sight {
+    left: auto;
+    right: -400px;
+}
+
 .sub-panel.outta-sight {
     left: -200px;
 }

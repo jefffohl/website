@@ -5,13 +5,9 @@ import Link from 'next/link'
 
 interface MenuPanelProps {
     onToggleBio: () => void
-    onToggleAbout: () => void
 }
 
-export default function MenuPanel({
-    onToggleBio,
-    onToggleAbout,
-}: MenuPanelProps) {
+export default function MenuPanel({ onToggleBio }: MenuPanelProps) {
     const [navShown, setNavShown] = useState(false)
 
     const toggleNav = () => {
@@ -22,13 +18,12 @@ export default function MenuPanel({
         <>
             <div id="menu-panel" className="panel">
                 <h1>
-                    <Link href="/">Jeff Fohl</Link>
+                    <Link href="/" className="my-name">
+                        Jeff Fohl
+                    </Link>
                 </h1>
                 <nav id="nav">
                     <ul>
-                        <li onClick={onToggleAbout}>
-                            <span id="what-is-this">What is this?</span>
-                        </li>
                         <li onClick={onToggleBio}>
                             <span id="about-me">About me</span>
                         </li>
