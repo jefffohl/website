@@ -9,7 +9,10 @@ interface BioPanelProps {
 
 export default function BioPanel({ isHidden, onClose }: BioPanelProps) {
     return (
-        <div className={`sub-panel ${isHidden ? 'outta-sight' : ''}`} id="bio">
+        <div
+            className={`z-10 sub-panel ${isHidden ? 'outta-sight' : ''}`}
+            id="bio"
+        >
             <h2>
                 About Jeff <span className="close" onClick={onClose}></span>
             </h2>

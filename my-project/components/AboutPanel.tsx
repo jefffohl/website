@@ -9,7 +9,7 @@ interface AboutPanelProps {
 
 export default function AboutPanel({ isHidden }: AboutPanelProps) {
     return (
-        <div className={`sub-panel right ${isHidden ? 'outta-sight' : ''}`}>
+        <div className={`z-4 sub-panel right ${isHidden ? 'outta-sight' : ''}`}>
             <h2>What is this all about? </h2>
             <div className="panel-content">
                 <p>
