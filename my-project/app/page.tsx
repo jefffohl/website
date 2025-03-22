@@ -12,7 +12,10 @@ export default function GridCanvas() {
     }
 
     useEffect(() => {
-        buildAndAnimateGrid()
+        const animator = buildAndAnimateGrid('grid-canvas')
+        return () => {
+            animator.destroy()
+        }
     }, [])
 
     return (
