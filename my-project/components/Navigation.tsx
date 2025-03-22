@@ -11,7 +11,7 @@ export default function Navigation() {
     }
 
     return (
-        <div className="bg-[#222] min-h-[100vh] w-[200px] relative">
+        <div className="bg-[#222] lg:min-h-[100vh] lg:w-[200px] lg:relative w-full h-[60px] absolute top-0 left-0">
             <MenuPanel onToggleBio={toggleBioPanel} />
             <BioPanel isHidden={bioHidden} onClose={toggleBioPanel} />
         </div>

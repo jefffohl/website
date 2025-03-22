@@ -20,7 +20,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${openSans.variable}`}>
-                <div className="flex flex-row items-stretch">
+                <div className="lg:flex lg:flex-row lg:items-stretch">
                     <Navigation />
                     {children}
                 </div>

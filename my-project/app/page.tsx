@@ -4,8 +4,8 @@ import GridCanvas from '@/components/GridCanvas'
 
 export default function Home() {
     return (
-        <div className="h-screen flex-auto overflow-hidden relative">
-            <div className="top-[60px] left-0 w-full h-[calc(100%-60px)] lg:absolute lg:top-0 lg:h-full lg:z-0">
+        <div className="top-[60px] lg:h-screen h-[calc(100%-60px)] lg:flex-auto overflow-hidden lg:relative absolute left-0 z-1 w-full">
+            <div className="top-0 left-0 w-full h-full lg:h-screen lg:top-0 absolute z-0">
                 <GridCanvas />
             </div>
         </div>

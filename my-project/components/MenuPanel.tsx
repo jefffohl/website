@@ -22,7 +22,7 @@ export default function MenuPanel({ onToggleBio }: MenuPanelProps) {
                         Jeff Fohl
                     </Link>
                 </h1>
-                <nav id="nav">
+                <nav id="nav" className={navShown ? 'shown' : ''}>
                     <ul>
                         <li onClick={onToggleBio}>
                             <span id="about-me">About me</span>
