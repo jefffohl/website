@@ -3,9 +3,9 @@
     --nameColor: #e5e6e5;
     --sidebarLink: #b0deff;
     --sidebarSubItem: #5ca9e0;
-    --lightGray: #bbbbbb;
+    --lightGray: #666666;
     --navbarBackground: #20252e;
-    --yearBackground: #aaaaaa;
+    --yearBackground: #666666;
     --jobTitle: #4ab1fb;
     font-size: 16px;
 }
@@ -179,6 +179,12 @@
 }
 
 @media print {
+    #menu-panel {
+        display: none;
+    }
+    body {
+        color: #000;
+    }
     .year {
         color: #333;
         border-color: var(--lightGray);
