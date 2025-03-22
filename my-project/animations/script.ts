@@ -561,6 +561,7 @@ const animateGrid = async () => {
         animateGrid()
     } else {
         index = 0
+        console.warn('animateGrid')
         // if the last cell in the flat grid is the same dimensions as the gridWidth and gridHeight, then we just finished
         // destroying the grid, and need to start a new grid
         if (

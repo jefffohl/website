@@ -1,5 +1,7 @@
 'use client'
 
+import './SubPanel.css'
+
 interface BioPanelProps {
     isHidden: boolean
     onClose: () => void

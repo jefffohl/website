@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import './MenuPanel.css'
 
 interface MenuPanelProps {
     onToggleBio: () => void

@@ -1,5 +1,7 @@
 'use client'
 
+import './SubPanel.css'
+
 interface AboutPanelProps {
     isHidden: boolean
     onClose?: () => void
