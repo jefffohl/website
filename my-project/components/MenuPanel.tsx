@@ -80,7 +80,7 @@ export default function MenuPanel({ onToggleBio }: MenuPanelProps) {
                             </Link>
                         </li>
                         <li>
-                            <a href="/archive/2011">2011</a>
+                            <a href="/archive/2011">2011 (archived)</a>
                         </li>
                     </ul>
                 </nav>
