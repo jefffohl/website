@@ -42,7 +42,7 @@ export default function PortfolioSection({
     return (
         <section className="p-[4rem_0] border-t border-b border-t-[#555] border-b-[#222]">
             <div className="flex lg:flex-row flex-col">
-                <div className="lg:flex-[0_0_auto] w-[31rem] flex-1 lg:pr-8 pr-0">
+                <div className="lg:flex-[0_0_auto] lg:w-[30rem] flex-1 lg:pr-8 pr-0">
                     <h2>{title}</h2>
                     {description}
                     <dl>
