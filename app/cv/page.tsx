@@ -22,7 +22,7 @@ export default function CV() {
                     professionals to enhance rather than replace their work.
                 </p>
                 <p>
-                    <a className="download" href="jeff-fohl-cv.pdf">
+                    <a className="download" href="/jeff-fohl-cv.pdf">
                         Download this as a PDF ↓
                     </a>
                 </p>
