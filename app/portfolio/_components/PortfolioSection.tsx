@@ -39,9 +39,29 @@ export default function PortfolioSection({
     stack,
 }: PortfolioSectionProps) {
     const [activeAssetIndex, setActiveAssetIndex] = useState(0)
+    const [isLoading, setIsLoading] = useState(false)
+    const [isImageVisible, setIsImageVisible] = useState(true)
+
+    const handleAssetChange = (index: number) => {
+        setIsImageVisible(false)
+        setActiveAssetIndex(index)
+        setIsLoading(true)
+    }
+
+    const handleAssetLoad = () => {
+        setIsLoading(false)
+        setIsImageVisible(true)
+    }
+
     return (
         <section className="p-[4rem_0] border-t border-b border-t-[#555] border-b-[#222]">
-            <div className="flex lg:flex-row flex-col">
+            <div
+                className={`flex lg:flex-row flex-col ${
+                    assets[activeAssetIndex].type === PortfolioAssetType.Image
+                        ? 'items-start'
+                        : 'items-stretch'
+                }`}
+            >
                 <div className="lg:flex-[0_0_auto] lg:w-[30rem] flex-1 lg:pr-8 pr-0">
                     <h2>{title}</h2>
                     {description}
@@ -70,7 +90,7 @@ export default function PortfolioSection({
                                         ? 'ring-2 ring-[var(--link-color)]'
                                         : ''
                                 }`}
-                                onClick={() => setActiveAssetIndex(i)}
+                                onClick={() => handleAssetChange(i)}
                             >
                                 <Image
                                     src={asset.thumbnail.src}
@@ -83,16 +103,30 @@ export default function PortfolioSection({
                         ))}
                     </div>
                 </div>
-                <div className="asset-display-container flex-1">
+                <div className="asset-display-container flex-1 relative bg-[#111] lg:rounded-lg rounded overflow-hidden shadow-[0_5px_10px_rgba(0,0,0,0.35)]">
+                    {isLoading && (
+                        <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300">
+                            <div className="w-[80%] h-1 bg-gray-600 rounded-full overflow-hidden">
+                                <div className="w-full h-full bg-[var(--link-color)] animate-[loading_1.5s_ease-in-out_infinite]"></div>
+                            </div>
+                        </div>
+                    )}
                     {assets[activeAssetIndex].type ===
                     PortfolioAssetType.Image ? (
-                        <Image
-                            src={assets[activeAssetIndex].src}
-                            alt={assets[activeAssetIndex].alt}
-                            width={Number(assets[activeAssetIndex].width)}
-                            height={Number(assets[activeAssetIndex].height)}
-                            quality={100}
-                        />
+                        <div
+                            className={`transition-opacity duration-300 ${
+                                isImageVisible ? 'opacity-100' : 'opacity-0'
+                            }`}
+                        >
+                            <Image
+                                src={assets[activeAssetIndex].src}
+                                alt={assets[activeAssetIndex].alt}
+                                width={Number(assets[activeAssetIndex].width)}
+                                height={Number(assets[activeAssetIndex].height)}
+                                quality={100}
+                                onLoad={handleAssetLoad}
+                            />
+                        </div>
                     ) : (
                         <iframe
                             width={assets[activeAssetIndex].width}
@@ -102,10 +136,21 @@ export default function PortfolioSection({
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerPolicy="strict-origin-when-cross-origin"
                             allowFullScreen
+                            onLoad={handleAssetLoad}
                         ></iframe>
                     )}
                 </div>
             </div>
+            <style jsx global>{`
+                @keyframes loading {
+                    0% {
+                        transform: translateX(-100%);
+                    }
+                    100% {
+                        transform: translateX(100%);
+                    }
+                }
+            `}</style>
         </section>
     )
 }
