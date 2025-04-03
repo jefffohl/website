@@ -23,3 +23,16 @@ h2 {
     font-weight: 400;
     margin-bottom: 1rem;
 }
+
+@keyframes loading {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+.loading-bar {
+    animation: loading 1.5s ease-in-out infinite;
+    will-change: transform;
+}

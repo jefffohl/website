@@ -1,7 +1,7 @@
 'use client'
 
 import Image, { ImageProps } from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export interface PortfolioSectionProps {
     title: string
@@ -39,8 +39,8 @@ export default function PortfolioSection({
     stack,
 }: PortfolioSectionProps) {
     const [activeAssetIndex, setActiveAssetIndex] = useState(0)
-    const [isLoading, setIsLoading] = useState(false)
-    const [isImageVisible, setIsImageVisible] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isImageVisible, setIsImageVisible] = useState(false)
 
     const handleAssetChange = (index: number) => {
         setIsImageVisible(false)
@@ -52,6 +52,19 @@ export default function PortfolioSection({
         setIsLoading(false)
         setIsImageVisible(true)
     }
+
+    // Handle initial image load
+    useEffect(() => {
+        if (assets[0].type === PortfolioAssetType.Image) {
+            const img = new window.Image()
+            img.src = assets[0].src
+            img.onload = handleAssetLoad
+        } else {
+            // For iframes, we'll assume they're loaded when the component mounts
+            handleAssetLoad()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []) // Empty dependency array means this runs once on mount
 
     return (
         <section className="p-[4rem_0] border-t border-b border-t-[#555] border-b-[#222]">
@@ -107,7 +120,7 @@ export default function PortfolioSection({
                     {isLoading && (
                         <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300">
                             <div className="w-[80%] h-1 bg-gray-600 rounded-full overflow-hidden">
-                                <div className="w-full h-full bg-[var(--link-color)] animate-[loading_1.5s_ease-in-out_infinite]"></div>
+                                <div className="w-full h-full bg-[var(--link-color)] loading-bar"></div>
                             </div>
                         </div>
                     )}
@@ -141,16 +154,6 @@ export default function PortfolioSection({
                     )}
                 </div>
             </div>
-            <style jsx global>{`
-                @keyframes loading {
-                    0% {
-                        transform: translateX(-100%);
-                    }
-                    100% {
-                        transform: translateX(100%);
-                    }
-                }
-            `}</style>
         </section>
     )
 }
