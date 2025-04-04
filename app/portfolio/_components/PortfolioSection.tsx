@@ -41,6 +41,9 @@ export default function PortfolioSection({
     const [activeAssetIndex, setActiveAssetIndex] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
     const [isImageVisible, setIsImageVisible] = useState(false)
+    const [thumbnailLoadStates, setThumbnailLoadStates] = useState<boolean[]>(
+        new Array(assets.length).fill(false)
+    )
 
     const handleAssetChange = (index: number) => {
         setIsImageVisible(false)
@@ -51,6 +54,14 @@ export default function PortfolioSection({
     const handleAssetLoad = () => {
         setIsLoading(false)
         setIsImageVisible(true)
+    }
+
+    const handleThumbnailLoad = (index: number) => {
+        setThumbnailLoadStates((prev) => {
+            const newStates = [...prev]
+            newStates[index] = true
+            return newStates
+        })
     }
 
     // Handle initial image load
@@ -98,20 +109,36 @@ export default function PortfolioSection({
                         {assets.map((asset, i) => (
                             <div
                                 key={'asset_' + i}
-                                className={`asset-thumbnail transition-all duration-300 shadow-md rounded overflow-hidden mr-4 mb-4 cursor-pointer ${
+                                className={`asset-thumbnail bg-[#111] transition-all duration-300 shadow-md rounded overflow-hidden mr-4 mb-4 cursor-pointer relative ${
                                     i === activeAssetIndex
                                         ? 'ring-2 ring-[var(--link-color)]'
                                         : ''
                                 }`}
                                 onClick={() => handleAssetChange(i)}
                             >
-                                <Image
-                                    src={asset.thumbnail.src}
-                                    alt={asset.thumbnail.alt}
-                                    width={asset.thumbnail.width}
-                                    height={asset.thumbnail.height}
-                                    quality={100}
-                                />
+                                {!thumbnailLoadStates[i] && (
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="w-[80%] h-1 bg-gray-600 rounded-full overflow-hidden">
+                                            <div className="w-full h-full bg-[var(--link-color)] loading-bar"></div>
+                                        </div>
+                                    </div>
+                                )}
+                                <div
+                                    className={`transition-opacity duration-300 ${
+                                        thumbnailLoadStates[i]
+                                            ? 'opacity-100'
+                                            : 'opacity-0'
+                                    }`}
+                                >
+                                    <Image
+                                        src={asset.thumbnail.src}
+                                        alt={asset.thumbnail.alt}
+                                        width={asset.thumbnail.width}
+                                        height={asset.thumbnail.height}
+                                        quality={100}
+                                        onLoad={() => handleThumbnailLoad(i)}
+                                    />
+                                </div>
                             </div>
                         ))}
                     </div>
