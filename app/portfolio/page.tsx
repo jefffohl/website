@@ -482,9 +482,9 @@ export default function Portfolio() {
                                 Cash.ai is one module of a larger suite of
                                 applications called Audit.ai. Each module
                                 focuses on one aspect of the audit process.
-                                Other modules include Account Payable, Accounts
-                                Receivable, Property, Plant, & Equipment (PP&E),
-                                etc.
+                                Other modules include Accounts Payable, Accounts
+                                Receivable, and Property, Plant, & Equipment
+                                (PP&E).
                             </p>
                         </>
                     }
@@ -547,11 +547,12 @@ export default function Portfolio() {
                         <>
                             <p>
                                 PwC&apos;s GL.ai application is an AI tool which
-                                uses anomaly detection to analyze entire ledgers
-                                using machine learning, providing a great deal
-                                more efficacy than the traditional statistical
-                                sampling method, which only observes a small
-                                portion of the overall general ledger.
+                                uses anomaly detection to analyze ledgers using
+                                machine learning. Using machine learning allows
+                                the audit team to analyize the entire general
+                                legger, as opposed to a statistical sample. This
+                                provides a great deal more efficacy and accuracy
+                                than tradtional methods would allow.
                             </p>
                             <p>
                                 While the AI handles the analysis, the
