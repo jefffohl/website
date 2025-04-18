@@ -1,0 +1,141 @@
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./components/SubPanel.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+.sub-panel {
+    transition: all 250ms linear;
+    -webkit-transition: all 250ms linear;
+    -moz-transition: all 250ms linear;
+    -ms-transition: all 250ms linear;
+    -o-transition: all 250ms linear;
+    width: 400px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 200px;
+    color: #f5f5f5;
+    padding: 60px 30px 30px 30px;
+    background: #111111;
+    line-height: 1.5rem;
+    font-size: 1rem;
+}
+
+.sub-panel.right {
+    left: auto;
+    right: 0;
+}
+
+.sub-panel.right.outta-sight {
+    left: auto;
+    right: -400px;
+}
+
+.sub-panel.outta-sight {
+    left: -200px;
+}
+.sub-panel p {
+    font-weight: 300;
+}
+.sub-panel a {
+    text-decoration: none;
+}
+.sub-panel a:hover {
+    text-decoration: underline;
+}
+.sub-panel h2 {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding-left: 30px;
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+}
+.sub-panel .panel-content {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    overflow: auto;
+    height: calc(100% - 60px);
+    width: 100%;
+    padding: 0 30px 30px 30px;
+}
+
+.close {
+    display: block;
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    top: -20px;
+    right: 0;
+    cursor: pointer;
+}
+
+.close:before,
+.close:after {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 25px;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    background: #ccc;
+}
+
+.close:hover:before,
+.close:hover:after {
+    background: #fff;
+}
+
+.close:before {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+}
+
+.close:after {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+}
+
+@media (max-width: 1024px) {
+    .sub-panel {
+        background: #222;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        overflow: hidden;
+    }
+    .sub-panel.outta-sight {
+        left: -100%;
+    }
+    .sub-panel h2 {
+        position: absolute;
+        background: #222;
+        margin: 0;
+        top: 0;
+        left: 0;
+        height: 60px;
+        padding: 0 2rem;
+        line-height: 60px;
+    }
+    .sub-panel .panel-content {
+        padding-bottom: 120px;
+    }
+    .sub-panel.hidden h2 {
+        position: absolute;
+    }
+    .sub-panel h2 .close {
+        top: 0;
+    }
+}
+

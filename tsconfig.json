@@ -13,21 +13,8 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
-        "plugins": [
-            {
-                "name": "next"
-            }
-        ],
-        "paths": {
-            "@/*": ["./*"]
-        }
+        "composite": true
     },
-    "include": [
-        "**/*.ts",
-        "**/*.tsx",
-        ".next/types/**/*.ts",
-        "next-env.d.ts",
-        "out/types/**/*.ts"
-    ],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules"],
+    "references": [{ "path": "./frontend" }, { "path": "./backend" }]
 }
