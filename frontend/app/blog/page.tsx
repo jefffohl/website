@@ -1,6 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import {
+    BlocksRenderer,
+    type BlocksContent,
+} from '@strapi/blocks-react-renderer'
 
 export default function Blog() {
     const [posts, setPosts] = useState<any[]>([])
@@ -42,7 +46,7 @@ export default function Blog() {
                     {posts.map((post) => (
                         <div key={post.id}>
                             <h2>{post.title}</h2>
-                            <p>{post.body}</p>
+                            <BlocksRenderer content={post.body} />
                         </div>
                     ))}
                 </div>

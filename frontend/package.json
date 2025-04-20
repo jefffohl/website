@@ -10,6 +10,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@strapi/blocks-react-renderer": "^1.0.2",
         "next": "15.2.3",
         "postcss": "^8.5.3",
         "react": "^19.0.0",
