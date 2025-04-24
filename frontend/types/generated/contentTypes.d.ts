@@ -1,7 +1,4 @@
-import type {
-    Schema,
-    Struct,
-} from '../../../backend/node_modules/@strapi/strapi'
+import type { Schema, Struct } from '@strapi/strapi'
 
 export interface AdminApiToken extends Struct.CollectionTypeSchema {
     collectionName: 'strapi_api_tokens'
@@ -403,6 +400,9 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
         > &
             Schema.Attribute.Private
         publishedAt: Schema.Attribute.DateTime
+        slug: Schema.Attribute.String &
+            Schema.Attribute.Required &
+            Schema.Attribute.Unique
         tags: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'>
         title: Schema.Attribute.String & Schema.Attribute.Required
         updatedAt: Schema.Attribute.DateTime

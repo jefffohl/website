@@ -1,10 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import {
-    BlocksRenderer,
-    type BlocksContent,
-} from '@strapi/blocks-react-renderer'
+import Link from 'next/link'
 
 export default function Blog() {
     const [posts, setPosts] = useState<any[]>([])
@@ -45,8 +42,13 @@ export default function Blog() {
                 <div>
                     {posts.map((post) => (
                         <div key={post.id}>
-                            <h2>{post.title}</h2>
-                            <BlocksRenderer content={post.body} />
+                            <Link
+                                href={`/blog/${encodeURIComponent(post.slug)}`}
+                            >
+                                <h2 className="text-neutral900 text-2xl">
+                                    {post.title}
+                                </h2>
+                            </Link>
                         </div>
                     ))}
                 </div>

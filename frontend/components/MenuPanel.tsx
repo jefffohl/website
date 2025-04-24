@@ -35,6 +35,16 @@ export default function MenuPanel({ onToggleBio }: MenuPanelProps) {
                         </li>
                         <li>
                             <Link
+                                href="/blog"
+                                onClick={() => {
+                                    setNavShown(false)
+                                }}
+                            >
+                                Blog
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
                                 href="/portfolio"
                                 onClick={() => {
                                     setNavShown(false)
