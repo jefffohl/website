@@ -42,23 +42,23 @@ export default function BlogPost() {
         fetchPost()
     }, [params.slug])
 
-    if (error) {
-        return <div>Error: {error}</div>
-    }
-
-    if (!post) {
-        return <div>Loading...</div>
-    }
-
     return (
-        <div className="prose max-w-none">
-            <h1 className="text-neutral900 text-4xl">
-                {post.title as unknown as string}
-            </h1>
-            <BlocksRenderer
-                blocks={blocks}
-                content={(post.body as unknown as RootNode[]) || []}
-            />
+        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+            {error ? (
+                <div>Error: {error}</div>
+            ) : post ? (
+                <>
+                    <h1 className="text-neutral900 text-4xl">
+                        {post.title as unknown as string}
+                    </h1>
+                    <BlocksRenderer
+                        blocks={blocks}
+                        content={(post.body as unknown as RootNode[]) || []}
+                    />
+                </>
+            ) : (
+                <div>Loading...</div>
+            )}
         </div>
     )
 }

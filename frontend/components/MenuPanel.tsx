@@ -25,14 +25,6 @@ export default function MenuPanel({ onToggleBio }: MenuPanelProps) {
                 </h1>
                 <nav id="nav" className={navShown ? 'shown' : ''}>
                     <ul>
-                        <li
-                            onClick={() => {
-                                setNavShown(false)
-                                onToggleBio()
-                            }}
-                        >
-                            <span id="about-me">About me</span>
-                        </li>
                         <li>
                             <Link
                                 href="/blog"
@@ -55,12 +47,12 @@ export default function MenuPanel({ onToggleBio }: MenuPanelProps) {
                         </li>
                         <li>
                             <Link
-                                href="/cv"
+                                href="/about-me"
                                 onClick={() => {
                                     setNavShown(false)
                                 }}
                             >
-                                Curriculum vitae
+                                About
                             </Link>
                         </li>
                     </ul>

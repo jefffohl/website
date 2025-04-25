@@ -34,27 +34,40 @@ export default function Blog() {
         return <div>Error: {error}</div>
     }
 
-    console.warn('posts', posts)
-
     return (
-        <>
-            {posts.length > 0 ? (
-                <div>
-                    {posts.map((post) => (
-                        <div key={post.id}>
-                            <Link
-                                href={`/blog/${encodeURIComponent(post.slug)}`}
+        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+            <h1 className="text-2xl font-[400] uppercase text-neutral-500 tracking-widest pb-4">
+                Blog
+            </h1>
+            <div className="border-t border-t-[#222]">
+                {posts.length > 0 ? (
+                    <>
+                        {posts.map((post) => (
+                            <div
+                                key={post.id}
+                                className="border-t border-t-[#555] border-b border-b-[#222] py-4"
                             >
-                                <h2 className="text-neutral900 text-2xl">
-                                    {post.title}
-                                </h2>
-                            </Link>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <div>No posts found</div>
-            )}
-        </>
+                                <Link
+                                    href={`/blog/${encodeURIComponent(
+                                        post.slug
+                                    )}`}
+                                >
+                                    <h2 className="text-neutral900 text-2xl">
+                                        {post.title}
+                                    </h2>
+                                </Link>
+                                <div className="text-neutral-500">
+                                    {new Date(
+                                        post.createdAt
+                                    ).toLocaleDateString()}
+                                </div>
+                            </div>
+                        ))}
+                    </>
+                ) : (
+                    <div>No posts found</div>
+                )}
+            </div>
+        </div>
     )
 }

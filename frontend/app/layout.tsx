@@ -9,7 +9,7 @@ const openSans = Open_Sans({
 
 export const metadata: Metadata = {
     title: 'Design | Code - Jeff Fohl',
-    description: 'A personal website for Jeff Fohl, software desiger',
+    description: 'A personal website for Jeff Fohl, software designer',
 }
 
 export default function RootLayout({
