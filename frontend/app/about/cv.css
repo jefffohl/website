@@ -1,12 +1,7 @@
 :root {
-    --navHeaderColor: #7695aa;
-    --nameColor: #e5e6e5;
-    --sidebarLink: #b0deff;
-    --sidebarSubItem: #5ca9e0;
+    --education: #b0deff;
+    --study: #5ca9e0;
     --lightGray: #666666;
-    --navbarBackground: #20252e;
-    --yearBackground: #666666;
-    --jobTitle: #4ab1fb;
 }
 
 .education {
@@ -28,16 +23,16 @@
 .education ul li a,
 .education ul li span {
     display: block;
-    color: var(--sidebarLink);
+    color: var(--education);
 }
 
 .education .school {
-    color: var(--sidebarLink);
+    color: var(--education);
     font-weight: 600;
 }
 
 .education .study {
-    color: var(--sidebarSubItem);
+    color: var(--study);
 }
 
 .cv-body {
@@ -107,7 +102,7 @@
     border-radius: 60px;
     height: 60px;
     width: 60px;
-    background-color: var(--yearBackground);
+    background-color: #666;
     color: var(--background);
     border: solid 5px var(--background);
     text-align: center;
