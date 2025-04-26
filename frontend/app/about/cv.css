@@ -7,7 +7,6 @@
     --navbarBackground: #20252e;
     --yearBackground: #666666;
     --jobTitle: #4ab1fb;
-    font-size: 16px;
 }
 
 .education {
@@ -54,11 +53,6 @@
 
 .product {
     font-style: italic;
-}
-
-.menu .download {
-    text-decoration: none;
-    color: var(--navHeaderColor);
 }
 
 .intro p:first-child {
@@ -123,15 +117,12 @@
 .timeline-section h2 {
     font-size: 1.5rem;
     font-weight: 400;
+    color: #999;
 }
 
 .timeline-section h2 .position {
     font-weight: 600;
-    color: var(--jobTitle);
-}
-
-.timeline-section h2 .company {
-    font-weight: 600;
+    color: #fff;
 }
 
 .timeline-section h3 {

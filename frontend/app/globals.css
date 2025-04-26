@@ -12,7 +12,7 @@
 
 :root {
     --color-primary: #4ab1fb;
-    --color-primary-light: #73c2fb;
+    --color-primary-light: #b5dff9;
     --background: #333;
     --foreground: #f5f5f5;
     --menu-bg: #222;
@@ -49,6 +49,7 @@ a {
 
 a:hover {
     text-decoration: underline;
+    color: var(--link-hover);
 }
 
 p {
@@ -59,19 +60,19 @@ p {
 a.underline-animation,
 .underline-animation a {
     display: inline-block;
-    @apply relative inline-block transition-colors duration-300;
+    @apply relative inline-block transition-colors duration-250;
 }
 
 a.underline-animation::before,
 .underline-animation a::before {
-    @apply absolute bottom-0 left-0 h-[1px] w-full origin-right scale-x-0 bg-[var(--color-primary)] transition-transform duration-300;
+    @apply absolute bottom-0 left-0 h-[1px] w-full origin-right scale-x-0 bg-[var(--color-primary-light)] transition-transform duration-250;
     content: '';
 }
 
 a.underline-animation:hover,
 .underline-animation a:hover {
     text-decoration: none;
-    @apply text-[var(--color-primary)];
+    @apply text-[var(--color-primary-light)];
 }
 
 a.underline-animation:hover::before,

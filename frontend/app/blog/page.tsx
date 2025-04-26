@@ -55,7 +55,7 @@ export default function Blog() {
                                     )}`}
                                     className="underline-animation relative"
                                 >
-                                    <h2 className="text-neutral900 text-2xl mb-0">
+                                    <h2 className="text-2xl mb-0">
                                         {post.title}
                                     </h2>
                                 </Link>
