@@ -3,9 +3,11 @@
 import { useEffect, useState } from 'react'
 import { buildAndAnimateGrid } from '@/animations/script'
 import AboutPanel from '@/components/AboutPanel'
+import { usePageTitle } from '@/hooks/usePageTitle'
 
 export default function GridCanvas() {
     const [aboutHidden, setAboutHidden] = useState(true)
+    usePageTitle({ title: 'Design | Code' })
 
     const toggleAboutPanel = () => {
         setAboutHidden(!aboutHidden)

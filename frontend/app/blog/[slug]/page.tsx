@@ -5,11 +5,18 @@ import { BlocksRenderer } from '@strapi/blocks-react-renderer'
 import { blocks, RootNode } from '../components/Blocks'
 import { ApiPostPost } from '../../../../backend/types/generated/contentTypes'
 import { useParams } from 'next/navigation'
+import { usePageTitle } from '@/hooks/usePageTitle'
 
 export default function BlogPost() {
     const [post, setPost] = useState<ApiPostPost['attributes'] | null>(null)
     const [error, setError] = useState<string | null>(null)
     const params = useParams()
+
+    const postTitle = post?.title
+        ? (post.title as unknown as string)
+        : 'Blog Post'
+
+    usePageTitle({ title: postTitle })
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -48,9 +55,7 @@ export default function BlogPost() {
                 <div>Error: {error}</div>
             ) : post ? (
                 <>
-                    <h1 className="text-neutral900 text-4xl">
-                        {post.title as unknown as string}
-                    </h1>
+                    <h1 className="text-neutral900 text-4xl">{postTitle}</h1>
                     <BlocksRenderer
                         blocks={blocks}
                         content={(post.body as unknown as RootNode[]) || []}

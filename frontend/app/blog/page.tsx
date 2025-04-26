@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { usePageTitle } from '@/hooks/usePageTitle'
 
 export default function Blog() {
     const [posts, setPosts] = useState<any[]>([])
     const [error, setError] = useState<string | null>(null)
+
+    usePageTitle({ title: 'Blog' })
 
     useEffect(() => {
         const fetchPosts = async () => {

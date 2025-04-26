@@ -1,8 +1,11 @@
 'use client'
 
 import './cv.css'
+import { usePageTitle } from '@/hooks/usePageTitle'
 
 export default function AboutMe() {
+    usePageTitle({ title: 'About' })
+
     return (
         <div className="cv-body">
             <div className="intro border-b border-b-[#222] pb-8">
@@ -195,7 +198,7 @@ export default function AboutMe() {
                             Information Governance Solutions.
                         </li>
                         <li>
-                            Jurist for Numenta’s{' '}
+                            Jurist for Numenta's{' '}
                             <a href="https://htmchallenge.devpost.com/">
                                 2015 HTM Challenge.
                             </a>
