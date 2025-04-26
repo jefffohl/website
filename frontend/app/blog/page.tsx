@@ -14,7 +14,6 @@ export default function Blog() {
         const fetchPosts = async () => {
             try {
                 const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
-                console.log('API URL:', apiUrl) // Debug log
 
                 if (!apiUrl) {
                     throw new Error('NEXT_PUBLIC_STRAPI_API_URL is not defined')
@@ -54,8 +53,9 @@ export default function Blog() {
                                     href={`/blog/${encodeURIComponent(
                                         post.slug
                                     )}`}
+                                    className="underline-animation relative"
                                 >
-                                    <h2 className="text-neutral900 text-2xl">
+                                    <h2 className="text-neutral900 text-2xl mb-0">
                                         {post.title}
                                     </h2>
                                 </Link>

@@ -7,7 +7,7 @@ export default function AboutMe() {
     usePageTitle({ title: 'About' })
 
     return (
-        <div className="cv-body">
+        <div className="cv-body underline-animation">
             <div className="intro border-b border-b-[#222] pb-8">
                 <p>
                     Hi. I&apos;m Jeff. I am interested in how humans use
@@ -37,11 +37,14 @@ export default function AboutMe() {
                 <p></p>
             </div>
             <div className="border-t border-t-[#555] pt-10">
-                <div className="flex justify-between">
+                <div className="flex justify-between items-start">
                     <h2 className="text-2xl font-[400] uppercase text-neutral-500 tracking-widest inline">
                         Curriculum Vitae
                     </h2>
-                    <a className="download" href="/jeff-fohl-cv.pdf">
+                    <a
+                        className="download relative h-[auto] leading-[1.5em]"
+                        href="/jeff-fohl-cv.pdf"
+                    >
                         Download as a PDF ↓
                     </a>
                 </div>

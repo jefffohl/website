@@ -78,7 +78,7 @@ export default function PortfolioSection({
     }, []) // Empty dependency array means this runs once on mount
 
     return (
-        <section className="p-[4rem_0] border-t border-b border-t-[#555] border-b-[#222]">
+        <section className="portfolio-section p-[4rem_0] border-t border-b border-t-[#555] border-b-[#222]">
             <div
                 className={`flex lg:flex-row flex-col ${
                     assets[activeAssetIndex].type === PortfolioAssetType.Image
@@ -87,21 +87,27 @@ export default function PortfolioSection({
                 }`}
             >
                 <div className="lg:flex-[0_0_auto] lg:w-[30rem] flex-1 lg:pr-8 pr-0">
-                    <h2>{title}</h2>
+                    <h2 className="text-2xl font-[400] mb-4">{title}</h2>
                     {description}
-                    <dl>
-                        <dt>Date</dt>
-                        <dd>{date}</dd>
-                        <dt>Company</dt>
-                        <dd>
+                    <dl className="grid grid-cols-[7rem_1fr] gap-0 font-size-085 my-4">
+                        <dt className="text-neutral-500 py-1">Date</dt>
+                        <dd className="py-1 border-b border-b-neutral-800">
+                            {date}
+                        </dd>
+                        <dt className="text-neutral-500 py-1">Company</dt>
+                        <dd className="py-1 border-b border-b-neutral-800">
                             <a href={companyUrl}>{company}</a>
                         </dd>
-                        <dt>Roles</dt>
-                        <dd>{roles.join(', ')}</dd>
+                        <dt className="text-neutral-500 py-1">Roles</dt>
+                        <dd className="py-1 border-b border-b-neutral-800">
+                            {roles.join(', ')}
+                        </dd>
                         {stack && (
                             <>
-                                <dt>Stack</dt>
-                                <dd>{stack.join(', ')}</dd>
+                                <dt className="text-neutral-500 py-1">Stack</dt>
+                                <dd className="py-1 border-b border-b-neutral-800">
+                                    {stack.join(', ')}
+                                </dd>
                             </>
                         )}
                     </dl>

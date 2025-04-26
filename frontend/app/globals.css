@@ -1,21 +1,26 @@
 @import 'tailwindcss';
 
 @theme inline {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
+    --background: var(--background);
+    --foreground: var(--foreground);
     --font-sans: var(--font-open-sans);
+    --primary: var(--color-primary);
+    --primary-light: var(--color-primary-light);
+    --secondary: var(--color-secondary);
+    --tertiary: var(--color-tertiary);
 }
 
 :root {
+    --color-primary: #4ab1fb;
+    --color-primary-light: #73c2fb;
     --background: #333;
     --foreground: #f5f5f5;
     --menu-bg: #222;
     --menu-color: #f5f5f5;
-    --link-color: #aaa;
-    --link-hover: #f5f5f5;
+    --link-color: var(--color-primary);
+    --link-hover: var(--color-primary-light);
     --heading-color: #e5e5e5;
     --panel-bg: rgba(0, 0, 0, 0.85);
-    --link-color: #4ab1fb;
 }
 
 * {
@@ -49,4 +54,40 @@ a:hover {
 p {
     margin-block-start: 1em;
     margin-block-end: 1em;
+}
+
+a.underline-animation,
+.underline-animation a {
+    display: inline-block;
+    @apply relative inline-block transition-colors duration-300;
+}
+
+a.underline-animation::before,
+.underline-animation a::before {
+    @apply absolute bottom-0 left-0 h-[1px] w-full origin-right scale-x-0 bg-[var(--color-primary)] transition-transform duration-300;
+    content: '';
+}
+
+a.underline-animation:hover,
+.underline-animation a:hover {
+    text-decoration: none;
+    @apply text-[var(--color-primary)];
+}
+
+a.underline-animation:hover::before,
+.underline-animation a:hover::before {
+    @apply origin-left scale-x-100;
+}
+
+@keyframes loading {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+.loading-bar {
+    animation: loading 1.5s ease-in-out infinite;
+    will-change: transform;
 }

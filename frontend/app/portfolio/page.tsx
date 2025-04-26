@@ -1,6 +1,5 @@
 'use client'
 
-import './portfolio.css'
 import PortfolioSection, {
     PortfolioAssetType,
 } from './_components/PortfolioSection'
@@ -10,7 +9,7 @@ export default function Portfolio() {
     usePageTitle({ title: 'Portfolio' })
 
     return (
-        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] underline-animation">
             <h1 className="text-2xl font-[400] uppercase text-neutral-500 tracking-widest">
                 Portfolio
             </h1>
