@@ -53,7 +53,7 @@ export default function AboutMe() {
                 Timeline
             </p>
             <div className="grid">
-                <div className="relative ml-[30px] pt-0 pb-[30px] pl-[30px] border-l border-[#666] border-b before:content-[''] before:block before:absolute before:w-[10px] before:h-[10px] before:rotate-[-45deg] before:border-t before:border-[#666] before:border-r before:border-[#666] before:top-[1px] before:left-[-6px]">
+                <div className="relative ml-[30px] pt-0 pb-[30px] pl-[30px] border-l border-[#666] border-b before:content-[''] before:block before:absolute before:w-[10px] before:h-[10px] before:rotate-[-45deg] before:border-t before:border-r before:border-[#666] before:top-[1px] before:left-[-6px]">
                     <h2 className="text-[1.5rem] font-normal text-[#999]">
                         <span className="font-semibold text-white">
                             Principal
