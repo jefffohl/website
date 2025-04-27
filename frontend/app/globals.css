@@ -21,6 +21,8 @@
     --link-hover: var(--color-primary-light);
     --heading-color: #e5e5e5;
     --panel-bg: rgba(0, 0, 0, 0.85);
+    --rule-top: #222;
+    --rule-bottom: #555;
 }
 
 * {

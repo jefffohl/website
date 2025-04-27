@@ -114,8 +114,46 @@ export type Post = Entity & {
     slug: string
     title: string
     tags: Tag[]
+    splash?: Image
 }
 
 export type Tag = Entity & {
     name: string
+}
+
+export type ImageFormat = {
+    ext: string
+    hash: string
+    height: number
+    width: number
+    mime: string
+    name: string
+    path: string | null
+    size: number
+    sizeInBytes: number
+    url: string
+}
+
+export type Image = Entity & {
+    alternativeText: string | null
+    caption: string | null
+    ext: string
+    formats: {
+        large: ImageFormat
+        thumbnail: ImageFormat
+        small: ImageFormat
+        medium: ImageFormat
+    }
+    hash: string
+    height: number
+    mime: string
+    name: string
+    previewUrl: string | null
+    provider: string
+    provider_metadata: unknown | null
+    publishedAt: string
+    size: number
+    updatedAt: string
+    url: string
+    width: number
 }

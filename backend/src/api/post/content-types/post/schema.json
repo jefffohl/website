@@ -28,6 +28,15 @@
       "type": "string",
       "required": true,
       "unique": true
+    },
+    "splash": {
+      "allowedTypes": [
+        "images",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

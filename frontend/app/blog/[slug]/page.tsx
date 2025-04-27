@@ -7,7 +7,7 @@ import { Post } from '../../../types/api'
 import { useParams } from 'next/navigation'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import Link from 'next/link'
-
+import Image from 'next/image'
 export default function BlogPost() {
     const [post, setPost] = useState<Post | null>(null)
     const [error, setError] = useState<string | null>(null)
@@ -49,7 +49,7 @@ export default function BlogPost() {
     }, [params.slug])
 
     return (
-        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] underline-animation">
+        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
             {notFound ? (
                 <>
                     <h1 className="text-neutral-500 text-4xl">
@@ -68,9 +68,9 @@ export default function BlogPost() {
                 <div>Error:{error}</div>
             ) : post ? (
                 <div className="flex">
-                    <div className="w-[15rem] flex-[0 0 15rem] text-neutral-400 mt-14">
-                        <div className="mb-4">
-                            <Link href="/blog">&larr; Back to blog</Link>
+                    <div className="w-[15rem] flex-[0_0_14rem] text-neutral-400 mt-4">
+                        <div className="mb-4 underline-animation">
+                            <Link href="/blog">&larr; Index</Link>
                         </div>
                         <div className="date">
                             Posted on{' '}
@@ -83,17 +83,32 @@ export default function BlogPost() {
                             </div>
                         ) : null}
                         {post.tags ? (
-                            <div className="tags mt-2">
-                                {post.tags.map((tag) => (
-                                    <div key={tag.id}>{tag.name}</div>
+                            <div className="tags mt-4">
+                                {post.tags.map((tag: any) => (
+                                    <Link
+                                        key={tag.id}
+                                        href={`/blog?tag=${tag.name}`}
+                                        className={`text-neutral-300 hover:text-neutral-100 text-xs px-2 py-1 mr-2 rounded cursor-pointer bg-neutral-900 hover:bg-neutral-600`}
+                                    >
+                                        {tag.name}
+                                    </Link>
                                 ))}
                             </div>
                         ) : null}
                     </div>
-                    <div className="flex-[1 1 auto]">
-                        <h1 className="text-neutral900 text-4xl">
+                    <div className="flex-[1_1_auto] underline-animation">
+                        <h1 className="text-neutral900 text-4xl mb-4">
                             {postTitle}
                         </h1>
+                        {post.splash ? (
+                            <Image
+                                src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${post.splash.url}`}
+                                alt={post.splash.alternativeText || 'Splash'}
+                                width={post.splash.width}
+                                height={post.splash.height}
+                                className="w-full h-auto"
+                            />
+                        ) : null}
                         <BlocksRenderer
                             blocks={blocks}
                             content={post.body || []}

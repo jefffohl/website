@@ -3,11 +3,14 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePageTitle } from '@/hooks/usePageTitle'
+import { useSearchParams, useRouter } from 'next/navigation'
 
 export default function Blog() {
     const [posts, setPosts] = useState<any[]>([])
     const [error, setError] = useState<string | null>(null)
-    const [selectedTag, setSelectedTag] = useState<string | null>(null)
+    const searchParams = useSearchParams()
+    const router = useRouter()
+    const selectedTag = searchParams.get('tag')
 
     usePageTitle({ title: 'Blog' })
 
@@ -40,6 +43,18 @@ export default function Blog() {
         fetchPosts()
     }, [selectedTag])
 
+    const handleTagClick = (tag: string) => {
+        const params = new URLSearchParams(searchParams.toString())
+        params.set('tag', tag)
+        router.push(`?${params.toString()}`)
+    }
+
+    const handleClearTag = () => {
+        const params = new URLSearchParams(searchParams.toString())
+        params.delete('tag')
+        router.push(`?${params.toString()}`)
+    }
+
     if (error) {
         return <div>Error: {error}</div>
     }
@@ -53,7 +68,7 @@ export default function Blog() {
                 <div className="mb-4">
                     <span className="text-neutral-400">Filtering by: </span>
                     <button
-                        onClick={() => setSelectedTag(null)}
+                        onClick={handleClearTag}
                         className="text-neutral-300 bg-neutral-900 px-2 py-1 ml-2 rounded hover:bg-neutral-800 cursor-pointer"
                     >
                         {selectedTag}
@@ -63,13 +78,13 @@ export default function Blog() {
                     </button>
                 </div>
             )}
-            <div className="border-t border-t-[#222]">
+            <div className="border-t border-t-[var(--rule-top)] border-b border-b-[var(--rule-bottom)]">
                 {posts.length > 0 ? (
                     <>
                         {posts.map((post) => (
                             <div
                                 key={post.id}
-                                className="border-t border-t-[#555] border-b border-b-[#222] py-4"
+                                className="border-t border-t-[var(--rule-bottom)] border-b border-b-[var(--rule-top)] py-4"
                             >
                                 <Link
                                     href={`/blog/${encodeURIComponent(
@@ -87,7 +102,7 @@ export default function Blog() {
                                             <button
                                                 key={tag.id}
                                                 onClick={() =>
-                                                    setSelectedTag(tag.name)
+                                                    handleTagClick(tag.name)
                                                 }
                                                 className={`text-neutral-300 text-xs px-2 py-1 rounded cursor-pointer ${
                                                     selectedTag === tag.name

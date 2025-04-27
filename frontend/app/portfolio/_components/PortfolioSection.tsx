@@ -78,7 +78,7 @@ export default function PortfolioSection({
     }, []) // Empty dependency array means this runs once on mount
 
     return (
-        <section className="portfolio-section p-[4rem_0] border-t border-b border-t-[#555] border-b-[#222]">
+        <section className="portfolio-section p-[4rem_0] border-t border-b border-t-[var(--rule-bottom)] border-b-[var(--rule-top)]">
             <div
                 className={`flex lg:flex-row flex-col ${
                     assets[activeAssetIndex].type === PortfolioAssetType.Image
