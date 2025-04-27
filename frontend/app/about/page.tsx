@@ -38,7 +38,7 @@ export default function AboutMe() {
                 <p></p>
             </div>
             <div className="border-t border-[#555] pt-10">
-                <div className="flex justify-between items-start">
+                <div className="flex justify-between items-start lg:flex-row flex-col">
                     <h2 className="text-2xl font-normal uppercase text-neutral-500 tracking-widest inline">
                         Curriculum Vitae
                     </h2>
