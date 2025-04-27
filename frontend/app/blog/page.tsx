@@ -19,7 +19,9 @@ export default function Blog() {
                     throw new Error('NEXT_PUBLIC_STRAPI_API_URL is not defined')
                 }
 
-                const response = await fetch(`${apiUrl}/api/posts?populate=*`)
+                const response = await fetch(
+                    `${apiUrl}/api/posts?populate=*&sort=createdAt:desc`
+                )
                 const responseData = await response.json()
                 setPosts(responseData.data)
             } catch (err) {
@@ -55,11 +57,23 @@ export default function Blog() {
                                     )}`}
                                     className="underline-animation relative"
                                 >
-                                    <h2 className="text-2xl mb-0">
+                                    <h2 className="text-2xl mb-1">
                                         {post.title}
                                     </h2>
                                 </Link>
-                                <div className="text-neutral-500">
+                                {post.tags ? (
+                                    <div className="tags flex items-center gap-1 mt-2">
+                                        {post.tags.map((tag: any) => (
+                                            <div
+                                                key={tag.id}
+                                                className="text-neutral-300 text-xs bg-neutral-900 px-2 py-1 rounded"
+                                            >
+                                                {tag.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : null}
+                                <div className="text-neutral-500 mt-2">
                                     {new Date(
                                         post.createdAt
                                     ).toLocaleDateString()}

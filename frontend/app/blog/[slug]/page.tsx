@@ -10,6 +10,7 @@ import { usePageTitle } from '@/hooks/usePageTitle'
 export default function BlogPost() {
     const [post, setPost] = useState<ApiPostPost['attributes'] | null>(null)
     const [error, setError] = useState<string | null>(null)
+    const [notFound, setNotFound] = useState(false)
     const params = useParams()
 
     const postTitle = post?.title
@@ -22,16 +23,18 @@ export default function BlogPost() {
         const fetchPost = async () => {
             try {
                 const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
-                console.log('API URL:', apiUrl) // Debug log
 
                 if (!apiUrl) {
                     throw new Error('NEXT_PUBLIC_STRAPI_API_URL is not defined')
                 }
 
-                const slug = await params.slug
                 const response = await fetch(
                     `${apiUrl}/api/posts/${params.slug}`
                 )
+                if (response.status === 404) {
+                    setNotFound(true)
+                    return
+                }
                 const responseData = await response.json()
 
                 if (responseData.data.length === 0) {
@@ -51,8 +54,22 @@ export default function BlogPost() {
 
     return (
         <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
-            {error ? (
-                <div>Error: {error}</div>
+            {notFound ? (
+                <>
+                    <h1 className="text-neutral-500 text-4xl">
+                        Post not found
+                    </h1>
+                    <p>
+                        Sorry, that post does not seem to exist. Perhaps you are
+                        calling from the incorrect point in time. If you think
+                        that might be the case, please move forward or backward
+                        in time, and try again. Alternatively, you could select
+                        a different spatial-temporal gradient from which to make
+                        the call.
+                    </p>
+                </>
+            ) : error ? (
+                <div>Error:{error}</div>
             ) : post ? (
                 <>
                     <h1 className="text-neutral900 text-4xl">{postTitle}</h1>
