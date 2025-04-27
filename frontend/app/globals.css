@@ -43,15 +43,6 @@ body {
     color: var(--foreground);
 }
 
-a {
-    color: var(--link-color);
-}
-
-a:hover {
-    text-decoration: underline;
-    color: var(--link-hover);
-}
-
 p {
     margin-block-start: 1em;
     margin-block-end: 1em;
@@ -60,7 +51,7 @@ p {
 a.underline-animation,
 .underline-animation a {
     display: inline-block;
-    @apply relative inline-block transition-colors duration-250;
+    @apply relative inline-block transition-colors duration-250 text-[var(--color-primary)];
 }
 
 a.underline-animation::before,
