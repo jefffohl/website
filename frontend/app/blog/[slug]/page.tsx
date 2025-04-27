@@ -6,6 +6,7 @@ import { blocks } from '../components/Blocks'
 import { Post } from '../../../types/api'
 import { useParams } from 'next/navigation'
 import { usePageTitle } from '@/hooks/usePageTitle'
+import Link from 'next/link'
 
 export default function BlogPost() {
     const [post, setPost] = useState<Post | null>(null)
@@ -27,19 +28,16 @@ export default function BlogPost() {
                 }
 
                 const response = await fetch(
-                    `${apiUrl}/api/posts/${params.slug}`
+                    `${apiUrl}/api/posts?filters[slug][$eq]=${params.slug}&populate=*`
                 )
                 if (response.status === 404) {
                     setNotFound(true)
                     return
                 }
                 const responseData = await response.json()
+                const post = responseData.data[0]
 
-                if (responseData.data.length === 0) {
-                    throw new Error('Post not found')
-                }
-
-                setPost(responseData.data)
+                setPost(post)
             } catch (err) {
                 setError(
                     err instanceof Error ? err.message : 'Failed to fetch post.'
@@ -51,7 +49,7 @@ export default function BlogPost() {
     }, [params.slug])
 
     return (
-        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] underline-animation">
             {notFound ? (
                 <>
                     <h1 className="text-neutral-500 text-4xl">
@@ -70,11 +68,27 @@ export default function BlogPost() {
                 <div>Error:{error}</div>
             ) : post ? (
                 <div className="flex">
-                    <div className="w-[15rem] flex-[0 0 15rem]">
+                    <div className="w-[15rem] flex-[0 0 15rem] text-neutral-400 mt-14">
+                        <div className="mb-4">
+                            <Link href="/blog">&larr; Back to blog</Link>
+                        </div>
                         <div className="date">
                             Posted on{' '}
                             {new Date(post.createdAt).toLocaleDateString()}
                         </div>
+                        {post.updatedAt && post.updatedAt !== post.createdAt ? (
+                            <div className="date">
+                                Updated on{' '}
+                                {new Date(post.updatedAt).toLocaleDateString()}
+                            </div>
+                        ) : null}
+                        {post.tags ? (
+                            <div className="tags mt-2">
+                                {post.tags.map((tag) => (
+                                    <div key={tag.id}>{tag.name}</div>
+                                ))}
+                            </div>
+                        ) : null}
                     </div>
                     <div className="flex-[1 1 auto]">
                         <h1 className="text-neutral900 text-4xl">

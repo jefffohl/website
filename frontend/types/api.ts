@@ -101,13 +101,21 @@ export type BlocksComponents = {
     >
 }
 
-export type Post = {
-    id: number
-    body: RootNode[]
-    documentId: number
+export type Entity = {
     createdAt: string
+    documentId: string
+    id: number
     publishedAt: string | null
     updatedAt: string | null
+}
+
+export type Post = Entity & {
+    body: RootNode[]
     slug: string
     title: string
+    tags: Tag[]
+}
+
+export type Tag = Entity & {
+    name: string
 }
