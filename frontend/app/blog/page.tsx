@@ -7,6 +7,7 @@ import { usePageTitle } from '@/hooks/usePageTitle'
 export default function Blog() {
     const [posts, setPosts] = useState<any[]>([])
     const [error, setError] = useState<string | null>(null)
+    const [selectedTag, setSelectedTag] = useState<string | null>(null)
 
     usePageTitle({ title: 'Blog' })
 
@@ -19,8 +20,13 @@ export default function Blog() {
                     throw new Error('NEXT_PUBLIC_STRAPI_API_URL is not defined')
                 }
 
+                // Build the filter query based on selected tag
+                const filterQuery = selectedTag
+                    ? `&filters[tags][name][$eq]=${encodeURIComponent(selectedTag)}`
+                    : ''
+
                 const response = await fetch(
-                    `${apiUrl}/api/posts?populate=*&sort=createdAt:desc`
+                    `${apiUrl}/api/posts?populate=*&sort=createdAt:desc${filterQuery}`
                 )
                 const responseData = await response.json()
                 setPosts(responseData.data)
@@ -32,7 +38,7 @@ export default function Blog() {
             }
         }
         fetchPosts()
-    }, [])
+    }, [selectedTag])
 
     if (error) {
         return <div>Error: {error}</div>
@@ -43,6 +49,20 @@ export default function Blog() {
             <h1 className="text-2xl font-[400] uppercase text-neutral-500 tracking-widest pb-4">
                 Blog
             </h1>
+            {selectedTag && (
+                <div className="mb-4">
+                    <span className="text-neutral-400">Filtering by: </span>
+                    <button
+                        onClick={() => setSelectedTag(null)}
+                        className="text-neutral-300 bg-neutral-900 px-2 py-1 ml-2 rounded hover:bg-neutral-800 cursor-pointer"
+                    >
+                        {selectedTag}
+                        <span className="inline-block ml-4 text-neutral-500">
+                            x
+                        </span>
+                    </button>
+                </div>
+            )}
             <div className="border-t border-t-[#222]">
                 {posts.length > 0 ? (
                     <>
@@ -64,12 +84,19 @@ export default function Blog() {
                                 {post.tags ? (
                                     <div className="tags flex items-center gap-1 mt-2">
                                         {post.tags.map((tag: any) => (
-                                            <div
+                                            <button
                                                 key={tag.id}
-                                                className="text-neutral-300 text-xs bg-neutral-900 px-2 py-1 rounded"
+                                                onClick={() =>
+                                                    setSelectedTag(tag.name)
+                                                }
+                                                className={`text-neutral-300 text-xs px-2 py-1 rounded cursor-pointer ${
+                                                    selectedTag === tag.name
+                                                        ? 'bg-neutral-800'
+                                                        : 'bg-neutral-900 hover:bg-neutral-800'
+                                                }`}
                                             >
                                                 {tag.name}
-                                            </div>
+                                            </button>
                                         ))}
                                     </div>
                                 ) : null}
