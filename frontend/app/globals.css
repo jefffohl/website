@@ -25,7 +25,7 @@
 
 * {
     box-sizing: border-box;
-    transition: all 0.25s ease;
+    transition: all 0.25s linear;
 }
 html,
 body {
@@ -82,4 +82,67 @@ a.underline-animation:hover::before,
 .loading-bar {
     animation: loading 1.5s ease-in-out infinite;
     will-change: transform;
+}
+
+/* This one was a pain to do in Tailwind: */
+#more {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    #more {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 60px;
+        width: 60px;
+        z-index: 2;
+    }
+
+    #more:before,
+    #more:after {
+        content: '';
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: #ccc;
+        position: absolute;
+        left: 17.5px;
+        transition: all 250ms linear;
+        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -webkit-transition: all 250ms linear;
+        -moz-transition: all 250ms linear;
+        -ms-transition: all 250ms linear;
+        -o-transition: all 250ms linear;
+    }
+
+    #more:before {
+        top: 25px;
+    }
+
+    #more:after {
+        top: 35px;
+    }
+
+    #more.open:before {
+        top: 30px;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+    }
+    #more.open:after {
+        top: 30px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+    }
 }

@@ -8,7 +8,7 @@ interface AboutPanelProps {
 export default function AboutPanel({ isHidden, onClose }: AboutPanelProps) {
     return (
         <div
-            className={`w-[400px] h-full absolute top-0 text-[#f5f5f5] p-[60px_30px_30px_30px] bg-[#111] leading-[1.5rem] text-base ${isHidden ? 'right-[-400px] md:right-[-100%]' : 'right-0 md:right-0'} lg:left-auto lg:bg-[#111] lg:w-[400px] lg:h-full lg:absolute lg:overflow-visible md:bg-[#222] md:w-full md:h-screen md:absolute md:overflow-hidden`}
+            className={`w-[400px] h-full absolute top-0 text-[#f5f5f5] p-[60px_30px_30px_30px] bg-[#222] leading-[1.5rem] text-base ${isHidden ? 'right-[-400px] md:right-[-100%]' : 'right-0 md:right-0'} lg:left-auto lg:bg-[#222] lg:w-[400px] lg:h-full lg:absolute lg:overflow-visible md:bg-[#222] md:w-full md:h-screen md:absolute md:overflow-hidden`}
         >
             <h2 className="absolute w-full top-0 left-0 pl-8 font-medium text-[1.5rem] my-[0.83em] md:bg-[#222] md:m-0 md:top-0 md:left-0 md:h-[60px] md:p-0 md:px-8 md:leading-[60px]">
                 What is this all about?

@@ -6,7 +6,7 @@ export default function AboutMe() {
     usePageTitle({ title: 'About' })
 
     return (
-        <div className="underline-animation flex-1 p-8 md:p-12 max-w-[100ch] break-after-page">
+        <div className="underline-animation flex-1 lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] max-w-[100ch] break-after-page">
             <div className="border-b border-[#222] pb-8">
                 <p>
                     Hi. I&apos;m Jeff. I am interested in how humans use
@@ -36,7 +36,7 @@ export default function AboutMe() {
                 <p></p>
             </div>
             <div className="border-t border-[#555] pt-10">
-                <div className="flex justify-between items-start">
+                <div className="flex justify-between items-start flex-col lg:flex-row">
                     <h2 className="text-2xl font-normal uppercase text-neutral-500 tracking-widest inline">
                         Curriculum Vitae
                     </h2>

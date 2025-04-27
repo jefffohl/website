@@ -9,23 +9,23 @@ export default function Navigation() {
     const toggleNav = () => {
         setNavShown(!navShown)
     }
+
     return (
         <div className="bg-[#222] lg:min-h-[100vh] lg:w-[200px] w-full h-[60px] fixed z-10 top-0 left-0">
-            <div
-                id="menu-panel"
-                className="lg:w-[200px] w-full h-full bg-[#222] text-[#f5f5f5] absolute z-[15] overflow-auto"
-            >
+            <div className="top-0 left-0 lg:w-[200px] h-[60px] w-full lg:h-full bg-[#222] text-[#f5f5f5] absolute z-[10] lg:z-[15] overflow-visible lg:overflow-auto">
                 <h1 className="px-8 h-[60px] leading-[60px] text-right z-1 relative bg-[#222] font-[350] text-[2rem] m-0 lg:h-[90px] lg:text-left overflow-hidden">
                     <Link
                         href="/"
                         className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)] hover:no-underline"
+                        onClick={() => {
+                            setNavShown(false)
+                        }}
                     >
                         Jeff Fohl
                     </Link>
                 </h1>
                 <nav
-                    id="nav"
-                    className={`h-[calc(100%-90px)] overflow-auto leading-[1.75rem] transition-all duration-[250ms] ease-linear ${navShown ? 'lg:top-0 top-[60px]' : 'lg:top-0 top-[-100vh]'}`}
+                    className={`h-[calc(100vh-60px)] absolute left-0 w-full overflow-auto bg-[#222] z-[0] lg:height-[calc(100%-90px)] lg:static leading-[1.75rem] ${navShown ? 'top-[60px]' : 'top-[-100vh]'}`}
                 >
                     <ul className="m-0 py-5 list-none">
                         <li className="m-0 p-0 list-none">
@@ -124,7 +124,7 @@ export default function Navigation() {
                 </nav>
                 <span
                     id="more"
-                    className={`lg:hidden block absolute top-0 left-0 h-[60px] w-[60px] z-[2] before:content-[''] before:block before:w-[25px] before:h-[2px] before:bg-[#ccc] before:absolute before:left-[17.5px] before:transition-all before:duration-[250ms] before:ease-linear before:rotate-0 after:content-[''] after:block after:w-[25px] after:h-[2px] after:bg-[#ccc] after:absolute after:left-[17.5px] after:transition-all after:duration-[250ms] after:ease-linear after:rotate-0 before:top-[25px] after:top-[35px] ${navShown ? 'before:top-[30px] before:rotate-45 after:top-[30px] after:rotate-[-45deg]' : ''}`}
+                    className={`${navShown ? 'open' : ''}`}
                     onClick={toggleNav}
                 ></span>
             </div>
