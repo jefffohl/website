@@ -13,7 +13,7 @@ export default function Navigation() {
     return (
         <div className="bg-[#222] lg:min-h-[100vh] lg:w-[200px] w-full h-[60px] fixed z-10 top-0 left-0">
             <div className="top-0 left-0 lg:w-[200px] h-[60px] w-full lg:h-full bg-[#222] text-[#f5f5f5] absolute z-[10] lg:z-[15] overflow-visible lg:overflow-auto">
-                <h1 className="px-8 h-[60px] leading-[60px] text-right z-1 relative bg-[#222] font-[350] text-[2rem] m-0 lg:h-[90px] lg:text-left overflow-hidden">
+                <h1 className="px-8 h-[60px] leading-[60px] lg:leading-[inherit] text-right z-1 relative bg-[#222] font-[350] text-[2rem] m-0 lg:h-[90px] lg:text-left lg:p-8 overflow-hidden">
                     <Link
                         href="/"
                         className="text-[var(--color-primary)] hover:text-[var(--color-primary-light)] hover:no-underline"

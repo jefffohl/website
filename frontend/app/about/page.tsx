@@ -1,6 +1,8 @@
 'use client'
 
 import { usePageTitle } from '@/hooks/usePageTitle'
+import Milestone from '@/components/timeline/Milestone'
+import Position from '@/components/timeline/Position'
 
 export default function AboutMe() {
     usePageTitle({ title: 'About' })
@@ -36,7 +38,7 @@ export default function AboutMe() {
                 <p></p>
             </div>
             <div className="border-t border-[#555] pt-10">
-                <div className="flex justify-between items-start flex-col lg:flex-row">
+                <div className="flex justify-between items-start">
                     <h2 className="text-2xl font-normal uppercase text-neutral-500 tracking-widest inline">
                         Curriculum Vitae
                     </h2>
@@ -53,263 +55,189 @@ export default function AboutMe() {
                 Timeline
             </p>
             <div className="grid">
-                <div className="relative ml-[30px] pt-0 pb-[30px] pl-[30px] border-l border-[#666] border-b before:content-[''] before:block before:absolute before:w-[10px] before:h-[10px] before:rotate-[-45deg] before:border-t before:border-r before:border-[#666] before:top-[1px] before:left-[-6px]">
-                    <h2 className="text-[1.5rem] font-normal text-[#999]">
-                        <span className="font-semibold text-white">
-                            Principal
-                        </span>{' '}
-                        at <span className="company">Infinite Tape</span>
-                    </h2>
-                    <p className="position-description">
-                        Infinite Tape builds AI-powered tools for professionals
-                        and creatives, in a variety of industries from law to
-                        music.
-                    </p>
-                </div>
-                <div className="relative">
-                    <div className="absolute left-0 top-[-30px] rounded-[60px] h-[60px] w-[60px] bg-[#666] text-[var(--background)] border-[5px] border-[var(--background)] text-center leading-[48px]">
-                        2024
-                    </div>
-                </div>
-                <div className="ml-[30px] py-[30px] pl-[30px] border-l border-[#666] border-b">
-                    <h2 className="text-[1.5rem] font-normal text-[#999]">
-                        <span className="font-semibold text-white">
-                            Manager, User Experience Engineering and Design
-                        </span>{' '}
-                        at <span className="company">H2O.ai</span>
-                    </h2>
-                    <p className="position-description">
-                        H2O.ai is a leading AI cloud company, on a mission to
-                        democratize AI. At H2O.ai, I filled multiple roles as a
-                        manager, lead UI Engineer, UX Designer, and UI Designer.
-                    </p>
-                    <h3 className="font-normal text-[1.1rem] uppercase tracking-[1px] my-[0.83rem]">
-                        Highlights
-                    </h3>
-                    <ul className="my-[0.83rem] pl-[2ch] list-disc">
-                        <li className="mb-2">
-                            Managed teams developing multiple products ranging
-                            from <span className="italic">H2O AI Cloud</span>,{' '}
-                            <span className="italic">AI Engine Manager</span>,{' '}
-                            <span className="italic">App Store</span>,{' '}
-                            <span className="italic">Document AI</span>,{' '}
-                            <span className="italic">Feature Store</span>,{' '}
-                            H2O.ai marketing website, and others.
-                        </li>
-                        <li className="mb-2">
-                            Managed teams spanning many time zones, skill sets,
-                            and projects to establish principles of engineering
-                            and design excellence.
-                        </li>
-                        <li className="mb-2">
-                            Led development of component libraries for internal
-                            development to reduce redundancy, and speed UI
-                            development across projects.
-                        </li>
-                        <li className="mb-2">
-                            Led development of internal design system to create
-                            coherent, usable interface designs across multiple
+                <Position
+                    isFirst
+                    title="Principal"
+                    company="Infinite Tape"
+                    description={
+                        <>
+                            Infinite Tape builds AI-powered tools for
+                            professionals and creatives, in a variety of
+                            industries from <span className="italic">law</span>{' '}
+                            to <span className="italic">music</span>.
+                        </>
+                    }
+                />
+                <Milestone year="2024" />
+                <Position
+                    title="Manager, User Experience Engineering and Design"
+                    company="H2O.ai"
+                    description={
+                        <>
+                            H2O.ai is a leading AI cloud company, on a mission
+                            to democratize AI. At H2O.ai, I filled multiple
+                            roles as a <span className="italic">manager</span>,{' '}
+                            <span className="italic">lead UI Engineer</span>,{' '}
+                            <span className="italic">UX Designer</span>, and{' '}
+                            <span className="italic">UI Designer</span>.
+                        </>
+                    }
+                    highlights={{
+                        title: 'Highlights',
+                        items: [
+                            <>
+                                Managed teams developing multiple products
+                                ranging from{' '}
+                                <span className="italic">H2O AI Cloud</span>,{' '}
+                                <span className="italic">
+                                    AI Engine Manager
+                                </span>
+                                , <span className="italic">App Store</span>,{' '}
+                                <span className="italic">Document AI</span>,{' '}
+                                <span className="italic">Feature Store</span>,{' '}
+                                H2O.ai marketing website, and others.
+                            </>,
+                            'Managed teams spanning many time zones, skill sets, and projects to establish principles of engineering and design excellence.',
+                            'Led development of component libraries for internal development to reduce redundancy, and speed UI development across projects.',
+                            'Led development of internal design system to create coherent, usable interface designs across multiple products.',
+                            'Mentored UI Engineers and Designers to develop a collaborative approach to designing and developing software products.',
+                            'Worked with Product and Engineering teams to develop pathways for ideating and defining product visions, defined by clearly designed artifacts that can be easily understood by all stakeholders, from Sales, to Product, to Design, to Engineering.',
+                            'Increased collaboration and communication across all product stakeholder teams.',
+                            <>
+                                Contributed code and design to many projects and
+                                products including{' '}
+                                <span className="italic">H2O AI Cloud</span>,{' '}
+                                <span className="italic">
+                                    AI Engine Manager
+                                </span>
+                                , <span className="italic">App Store</span>,{' '}
+                                <span className="italic">Feature Store</span>,{' '}
+                                <span className="italic">Document AI</span>,{' '}
+                                <span className="italic">h2oGPT</span>,{' '}
+                                <span className="italic">
+                                    Enterprise h2oGPTe
+                                </span>
+                                , and <span className="italic">UI Kit</span>.
+                            </>,
+                        ],
+                    }}
+                />
+                <Milestone year="2022" />
+                <Position
+                    title="UI Engineer / UX Designer"
+                    company="H2O.ai"
+                    highlights={{
+                        items: [
+                            <>
+                                Led a team of UI Engineers developing and
+                                refining the user interface of the{' '}
+                                <span className="italic">H2O AI Cloud</span>{' '}
+                                platform.
+                            </>,
+                            <>
+                                Developed multiple AI-powered auditing
+                                applications for PwC. Lead UI Engineer and
+                                Designer for{' '}
+                                <span className="italic">Journals.ai</span>,{' '}
+                                <span className="italic">GL.ai</span>,{' '}
+                                <span className="italic">Fit.ai</span>,{' '}
+                                <span className="italic">Controller.ai</span>,{' '}
+                                <span className="italic">Cash.ai</span>, and{' '}
+                                <span className="italic">Audit.ai</span>.
+                            </>,
+                            'Designed and built interactive data visualizations for PwC products.',
+                            'Designed and built interactive labeling applications for labeling large data sets for supervised learning models.',
+                        ],
+                    }}
+                />
+                <Milestone year="2016" />
+                <Position
+                    title="Principal"
+                    company="fohldesign"
+                    description="Contract design and software development."
+                    highlights={{
+                        title: 'Highlights',
+                        items: [
+                            'Primary focus was Web application design and development.',
+                            <>
+                                Designed and built front end of{' '}
+                                <a
+                                    className="italic"
+                                    href="https://www.accesscorp.com/information-management/virgo/"
+                                >
+                                    Virgo
+                                </a>{' '}
+                                retention and privacy compliance software for
+                                Information Governance Solutions.
+                            </>,
+                            <>
+                                Jurist for Numenta's{' '}
+                                <a href="https://htmchallenge.devpost.com/">
+                                    2015 HTM Challenge
+                                </a>
+                                .
+                            </>,
+                        ],
+                    }}
+                />
+                <Milestone year="2013" />
+                <Position
+                    title="Creative Director"
+                    company="GTxcel"
+                    description={
+                        <>
+                            GTxcel offers a suite of products and services to
+                            help magazine publishers diversify their revenue
+                            streams.{' '}
+                            <span className="italic">As Creative Director</span>
+                            , I was involved in both developing the core product
+                            offerings, and the professional services tied to the
                             products.
-                        </li>
-                        <li className="mb-2">
-                            Mentored UI Engineers and Designers to develop a
-                            collaborative approach to designing and developing
-                            software products.
-                        </li>
-                        <li className="mb-2">
-                            Worked with Product and Engineering teams to develop
-                            pathways for ideating and defining product visions,
-                            defined by clearly designed artifacts that can be
-                            easily understood by all stakeholders, from Sales,
-                            to Product, to Design, to Engineering.
-                        </li>
-                        <li className="mb-2">
-                            Increased collaboration and communication across all
-                            product stakeholder teams.
-                        </li>
-                        <li className="mb-2">
-                            Contributed code and design to many projects and
-                            products including{' '}
-                            <span className="italic">H2O AI Cloud</span>,{' '}
-                            <span className="italic">AI Engine Manager</span>,{' '}
-                            <span className="italic">App Store</span>,{' '}
-                            <span className="italic">Feature Store</span>,{' '}
-                            <span className="italic">Document AI</span>,{' '}
-                            <span className="italic">h2oGPT</span>,{' '}
-                            <span className="italic">Enterprise h2oGPTe</span>,
-                            and <span className="italic">UI Kit.</span>
-                        </li>
-                    </ul>
-                </div>
-                <div className="relative">
-                    <div className="absolute left-0 top-[-30px] rounded-[60px] h-[60px] w-[60px] bg-[#666] text-[var(--background)] border-[5px] border-[var(--background)] text-center leading-[48px]">
-                        2022
-                    </div>
-                </div>
-                <div className="ml-[30px] py-[30px] pl-[30px] border-l border-[#666] border-b">
-                    <h2 className="text-[1.5rem] font-normal text-[#999]">
-                        <span className="font-semibold text-white">
-                            UI Engineer / UX Designer
-                        </span>{' '}
-                        at <span className="company">H2O.ai</span>
-                    </h2>
-                    <ul className="my-[0.83rem] pl-[2ch] list-disc">
-                        <li className="mb-2">
-                            Led a team of UI Engineers developing and refining
-                            the user interface of the{' '}
-                            <span className="italic">H2O AI Cloud</span>{' '}
-                            platform.
-                        </li>
-                        <li className="mb-2">
-                            Developed multiple AI-powered auditing applications
-                            for PwC. Lead UI Engineer and Designer for{' '}
-                            <span className="italic">Journals.ai</span>,{' '}
-                            <span className="italic">GL.ai</span>,{' '}
-                            <span className="italic">Fit.ai</span>,{' '}
-                            <span className="italic">Controller.ai</span>,{' '}
-                            <span className="italic">Cash.ai</span>, and{' '}
-                            <span className="italic">Audit.ai</span>.
-                        </li>
-                        <li className="mb-2">
-                            Designed and built interactive data visualizations
-                            for PwC products.
-                        </li>
-                        <li className="mb-2">
-                            Designed and built interactive labeling applications
-                            for labeling large data sets for supervised learning
-                            models.
-                        </li>
-                    </ul>
-                </div>
-                <div className="relative">
-                    <div className="absolute left-0 top-[-30px] rounded-[60px] h-[60px] w-[60px] bg-[#666] text-[var(--background)] border-[5px] border-[var(--background)] text-center leading-[48px]">
-                        2016
-                    </div>
-                </div>
-                <div className="ml-[30px] py-[30px] pl-[30px] border-l border-[#666] border-b">
-                    <h2 className="text-[1.5rem] font-normal text-[#999]">
-                        <span className="font-semibold text-white">
-                            Principal
-                        </span>{' '}
-                        at <span className="company">fohldesign</span>
-                    </h2>
-                    <p className="position-description">
-                        Contract design and software development.
-                    </p>
-                    <h3 className="font-normal text-[1.1rem] uppercase tracking-[1px] my-[0.83rem]">
-                        Highlights
-                    </h3>
-                    <ul className="my-[0.83rem] pl-[2ch] list-disc">
-                        <li className="mb-2">
-                            Primary focus was Web application design and
-                            development.
-                        </li>
-                        <li className="mb-2">
-                            Designed and built front end of{' '}
-                            <a
-                                className="italic"
-                                href="https://www.accesscorp.com/information-management/virgo/"
-                            >
-                                Virgo
-                            </a>{' '}
-                            retention and privacy compliance software for
-                            Information Governance Solutions.
-                        </li>
-                        <li className="mb-2">
-                            Jurist for Numenta's{' '}
-                            <a href="https://htmchallenge.devpost.com/">
-                                2015 HTM Challenge.
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="relative">
-                    <div className="absolute left-0 top-[-30px] rounded-[60px] h-[60px] w-[60px] bg-[#666] text-[var(--background)] border-[5px] border-[var(--background)] text-center leading-[48px]">
-                        2013
-                    </div>
-                </div>
-                <div className="ml-[30px] py-[30px] pl-[30px] border-l border-[#666] border-b">
-                    <h2 className="text-[1.5rem] font-normal text-[#999]">
-                        <span className="font-semibold text-white">
-                            Creative Director
-                        </span>{' '}
-                        at <span className="company">GTxcel</span>
-                    </h2>
-                    <p className="position-description">
-                        GTxcel offers a suite of products and services to help
-                        magazine publishers diversify their revenue streams.
-                    </p>
-                    <p>
-                        As Creative Director, I was involved in both developing
-                        the core product offerings, and the professional
-                        services tied to the products.
-                    </p>
-                    <h3 className="font-normal text-[1.1rem] uppercase tracking-[1px] my-[0.83rem]">
-                        Highlights
-                    </h3>
-                    <ul className="my-[0.83rem] pl-[2ch] list-disc">
-                        <li className="mb-2">
-                            First employee. Helped to build the company from the
-                            ground up to a head count of over 100.
-                        </li>
-                        <li className="mb-2">
-                            Technical, creative, and team lead of{' '}
-                            <span className="italic">Rivista</span> product.{' '}
-                            <span className="italic">Rivista</span> allowed
-                            magazine publishers to create a single website that
-                            will work beautifully on any device, from a mobile
-                            phone to a desktop computer, through the use of
-                            responsive design techniques.
-                        </li>
-                        <li className="mb-2">
-                            Oversaw the design of over 50 custom websites, as
-                            well as standardized themes used in the
-                            implementation of over 200 magazine websites,
-                            managed by our own content management system
-                            product.
-                        </li>
-                    </ul>
-                </div>
-                <div className="relative">
-                    <div className="absolute left-0 top-[-30px] rounded-[60px] h-[60px] w-[60px] bg-[#666] text-[var(--background)] border-[5px] border-[var(--background)] text-center leading-[48px]">
-                        2005
-                    </div>
-                </div>
-                <div className="ml-[30px] py-[30px] pl-[30px] border-l border-[#666]">
-                    <h2 className="text-[1.5rem] font-normal text-[#999]">
-                        <span className="font-semibold text-white">
-                            Principal
-                        </span>{' '}
-                        at <span className="company">fohldesign</span>
-                    </h2>
-                    <p className="position-description">
-                        Contract design and illustration.
-                    </p>
-                    <ul className="my-[0.83rem] pl-[2ch] list-disc">
-                        <li className="mb-2">
-                            Clients included Rainfinity, Envive, Taos Mountain,
-                            Mondo Media, Meyer Cookware, Intuit, Verio, Sun
-                            Microsystems, Seagram, Meyer Cookware, Envive,
-                            PlasmaSeal, and Hanuman Medical, Fast Company
-                            Magazine, Red Herring Magazine, PC Magazine, Chicago
-                            Tribune, Washington Post, Games Business Magazine.
-                        </li>
-                        <li className="mb-2">
-                            President of{' '}
-                            <a href="https://graphicartistsguild.org/">
-                                Graphic Artists Guild
-                            </a>{' '}
-                            Northern California Chapter.
-                        </li>
-                        <li className="mb-2">
-                            Board President at{' '}
-                            <a href="https://theintersection.org/">
-                                Intersection for the Arts
-                            </a>
-                            .
-                        </li>
-                    </ul>
-                </div>
+                        </>
+                    }
+                    highlights={{
+                        title: 'Highlights',
+                        items: [
+                            'First employee. Helped to build the company from the ground up to a head count of over 100.',
+                            <>
+                                Technical, creative, and team lead of{' '}
+                                <span className="italic">Rivista</span> product.{' '}
+                                <span className="italic">Rivista</span> allowed
+                                magazine publishers to create a single website
+                                that will work beautifully on any device, from a
+                                mobile phone to a desktop computer, through the
+                                use of responsive design techniques.
+                            </>,
+                            'Oversaw the design of over 50 custom websites, as well as standardized themes used in the implementation of over 200 magazine websites, managed by our own content management system product.',
+                        ],
+                    }}
+                />
+                <Milestone year="2005" />
+                <Position
+                    isLast
+                    title="Principal"
+                    company="fohldesign"
+                    description="Contract design and illustration."
+                    highlights={{
+                        items: [
+                            'Clients included Rainfinity, Envive, Taos Mountain, Mondo Media, Meyer Cookware, Intuit, Verio, Sun Microsystems, Seagram, Meyer Cookware, Envive, PlasmaSeal, and Hanuman Medical, Fast Company Magazine, Red Herring Magazine, PC Magazine, Chicago Tribune, Washington Post, Games Business Magazine.',
+                            <>
+                                President of{' '}
+                                <a href="https://graphicartistsguild.org/">
+                                    Graphic Artists Guild
+                                </a>{' '}
+                                Northern California Chapter.
+                            </>,
+                            <>
+                                Board President at{' '}
+                                <a href="https://theintersection.org/">
+                                    Intersection for the Arts
+                                </a>
+                                .
+                            </>,
+                        ],
+                    }}
+                />
             </div>
             <div className="mt-8">
                 <h2 className="uppercase tracking-[2px] mb-8 text-[1.1rem]">
