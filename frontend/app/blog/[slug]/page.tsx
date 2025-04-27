@@ -67,8 +67,8 @@ export default function BlogPost() {
             ) : error ? (
                 <div>Error:{error}</div>
             ) : post ? (
-                <div className="flex">
-                    <div className="w-[15rem] flex-[0_0_14rem] text-neutral-400 mt-4">
+                <div className="flex flex-col lg:flex-row">
+                    <div className="w-full lg:w-[15rem] lg:flex-[0_0_12em] text-neutral-400 pt-4 pb-4 order-3 border-b border-b-[var(--rule-top)] lg:border-b-0 border-t border-t-[var(--rule-bottom)] lg:border-t-0 lg:order-1 lg:border-r lg:border-r-[var(--rule-top)] lg:pr-8">
                         <div className="mb-4 underline-animation">
                             <Link href="/blog">&larr; Index</Link>
                         </div>
@@ -96,23 +96,29 @@ export default function BlogPost() {
                             </div>
                         ) : null}
                     </div>
-                    <div className="flex-[1_1_auto] underline-animation">
+                    <div className="contents lg:block flex-[1_1_auto] underline-animation order-1 lg:order-2 lg:border-l lg:border-l-[var(--rule-bottom)] lg:pl-8">
                         <h1 className="text-neutral900 text-4xl mb-4">
                             {postTitle}
                         </h1>
                         {post.splash ? (
-                            <Image
-                                src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${post.splash.url}`}
-                                alt={post.splash.alternativeText || 'Splash'}
-                                width={post.splash.width}
-                                height={post.splash.height}
-                                className="w-full h-auto"
-                            />
+                            <div className="order-2 border-b border-b-[var(--rule-top)] lg:border-b-0 pb-4 lg:pb-0">
+                                <Image
+                                    src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${post.splash.url}`}
+                                    alt={
+                                        post.splash.alternativeText || 'Splash'
+                                    }
+                                    width={post.splash.width}
+                                    height={post.splash.height}
+                                    className="w-full h-auto"
+                                />
+                            </div>
                         ) : null}
-                        <BlocksRenderer
-                            blocks={blocks}
-                            content={post.body || []}
-                        />
+                        <div className="order-4 border-t border-t-[var(--rule-bottom)] lg:border-t-0">
+                            <BlocksRenderer
+                                blocks={blocks}
+                                content={post.body || []}
+                            />
+                        </div>
                     </div>
                 </div>
             ) : (
