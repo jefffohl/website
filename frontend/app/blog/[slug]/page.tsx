@@ -2,20 +2,18 @@
 
 import { useEffect, useState } from 'react'
 import { BlocksRenderer } from '@strapi/blocks-react-renderer'
-import { blocks, RootNode } from '../components/Blocks'
-import { ApiPostPost } from '../../../../backend/types/generated/contentTypes'
+import { blocks } from '../components/Blocks'
+import { Post } from '../../../types/api'
 import { useParams } from 'next/navigation'
 import { usePageTitle } from '@/hooks/usePageTitle'
 
 export default function BlogPost() {
-    const [post, setPost] = useState<ApiPostPost['attributes'] | null>(null)
+    const [post, setPost] = useState<Post | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [notFound, setNotFound] = useState(false)
     const params = useParams()
 
-    const postTitle = post?.title
-        ? (post.title as unknown as string)
-        : 'Blog Post'
+    const postTitle = post?.title ? post.title : 'Blog Post'
 
     usePageTitle({ title: postTitle })
 
@@ -71,13 +69,23 @@ export default function BlogPost() {
             ) : error ? (
                 <div>Error:{error}</div>
             ) : post ? (
-                <>
-                    <h1 className="text-neutral900 text-4xl">{postTitle}</h1>
-                    <BlocksRenderer
-                        blocks={blocks}
-                        content={(post.body as unknown as RootNode[]) || []}
-                    />
-                </>
+                <div className="flex">
+                    <div className="w-[15rem] flex-[0 0 15rem]">
+                        <div className="date">
+                            Posted on{' '}
+                            {new Date(post.createdAt).toLocaleDateString()}
+                        </div>
+                    </div>
+                    <div className="flex-[1 1 auto]">
+                        <h1 className="text-neutral900 text-4xl">
+                            {postTitle}
+                        </h1>
+                        <BlocksRenderer
+                            blocks={blocks}
+                            content={post.body || []}
+                        />
+                    </div>
+                </div>
             ) : (
                 <div>Loading...</div>
             )}
