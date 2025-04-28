@@ -15,7 +15,7 @@ export const blocks: BlocksComponents = {
         )
     },
     paragraph: ({ children }) => (
-        <p className="text-neutral900 max-w-prose">{children}</p>
+        <p className="text-neutral900 max-w-prose lg:text-lg">{children}</p>
     ),
     // ...or point to a design system
     heading: ({ children, level }) => {

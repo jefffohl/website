@@ -2,6 +2,13 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import NavigationLinks from './NavigationLinks'
+
+const mainLinks = [
+    { name: 'Blog', path: '/blog' },
+    { name: 'Portfolio', path: '/portfolio' },
+    { name: 'About', path: '/about' },
+]
 
 export default function Navigation() {
     const [navShown, setNavShown] = useState(false)
@@ -25,43 +32,14 @@ export default function Navigation() {
                     </Link>
                 </h1>
                 <nav
-                    className={`h-[calc(100vh-60px)] absolute left-0 w-full overflow-auto bg-[#222] z-[0] lg:height-[calc(100%-90px)] lg:static leading-[1.75rem] ${navShown ? 'top-[60px]' : 'top-[-100vh]'}`}
+                    className={`h-[calc(100vh-60px)] absolute left-0 w-full overflow-auto bg-[#222] z-[0] lg:height-[calc(100%-90px)] lg:static leading-[1.75rem] ${
+                        navShown ? 'top-[60px]' : 'top-[-100vh]'
+                    }`}
                 >
-                    <ul className="m-0 py-5 list-none">
-                        <li className="m-0 p-0 list-none">
-                            <Link
-                                href="/blog"
-                                onClick={() => {
-                                    setNavShown(false)
-                                }}
-                                className="text-[#aaa] no-underline block p-2 px-8 bg-[rgba(0,0,0,0.15)] hover:bg-[rgba(0,0,0,0.5)] hover:text-[#f5f5f5] cursor-pointer"
-                            >
-                                Blog
-                            </Link>
-                        </li>
-                        <li className="m-0 p-0 list-none">
-                            <Link
-                                href="/portfolio"
-                                onClick={() => {
-                                    setNavShown(false)
-                                }}
-                                className="text-[#aaa] no-underline block p-2 px-8 bg-[rgba(0,0,0,0.15)] hover:bg-[rgba(0,0,0,0.5)] hover:text-[#f5f5f5] cursor-pointer"
-                            >
-                                Portfolio
-                            </Link>
-                        </li>
-                        <li className="m-0 p-0 list-none">
-                            <Link
-                                href="/about"
-                                onClick={() => {
-                                    setNavShown(false)
-                                }}
-                                className="text-[#aaa] no-underline block p-2 px-8 bg-[rgba(0,0,0,0.15)] hover:bg-[rgba(0,0,0,0.5)] hover:text-[#f5f5f5] cursor-pointer"
-                            >
-                                About
-                            </Link>
-                        </li>
-                    </ul>
+                    <NavigationLinks
+                        links={mainLinks}
+                        onLinkClick={() => setNavShown(false)}
+                    />
 
                     <h2 className="text-base font-normal uppercase m-0 mt-[0.83rem] px-8 py-0 text-[#aaa] tracking-[2px]">
                         Surfaces
