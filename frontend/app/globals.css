@@ -1,0 +1,150 @@
+@import 'tailwindcss';
+
+@theme inline {
+    --background: var(--background);
+    --foreground: var(--foreground);
+    --font-sans: var(--font-open-sans);
+    --primary: var(--color-primary);
+    --primary-light: var(--color-primary-light);
+    --secondary: var(--color-secondary);
+    --tertiary: var(--color-tertiary);
+}
+
+:root {
+    --color-primary: #4ab1fb;
+    --color-primary-light: #b5dff9;
+    --background: #333;
+    --foreground: #f5f5f5;
+    --menu-bg: #222;
+    --menu-color: #f5f5f5;
+    --link-color: var(--color-primary);
+    --link-hover: var(--color-primary-light);
+    --heading-color: #e5e5e5;
+    --panel-bg: rgba(0, 0, 0, 0.85);
+    --rule-top: #222;
+    --rule-bottom: #555;
+}
+
+* {
+    box-sizing: border-box;
+    transition: all 0.25s linear;
+}
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+html {
+    font-size: 16px;
+}
+body {
+    background: var(--background);
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.4rem;
+    color: var(--foreground);
+}
+
+p {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
+a.underline-animation,
+.underline-animation a {
+    display: inline-block;
+    @apply relative inline-block transition-colors duration-250 text-[var(--color-primary)];
+}
+
+a.underline-animation::before,
+.underline-animation a::before {
+    @apply absolute bottom-0 left-0 h-[1px] w-full origin-right scale-x-0 bg-[var(--color-primary-light)] transition-transform duration-250;
+    content: '';
+}
+
+a.underline-animation:hover,
+.underline-animation a:hover {
+    text-decoration: none;
+    @apply text-[var(--color-primary-light)];
+}
+
+a.underline-animation:hover::before,
+.underline-animation a:hover::before {
+    @apply origin-left scale-x-100;
+}
+
+@keyframes loading {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+.loading-bar {
+    animation: loading 1.5s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* This one was a pain to do in Tailwind: */
+#more {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    #more {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 60px;
+        width: 60px;
+        z-index: 2;
+    }
+
+    #more:before,
+    #more:after {
+        content: '';
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: #ccc;
+        position: absolute;
+        left: 17.5px;
+        transition: all 250ms linear;
+        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -webkit-transition: all 250ms linear;
+        -moz-transition: all 250ms linear;
+        -ms-transition: all 250ms linear;
+        -o-transition: all 250ms linear;
+    }
+
+    #more:before {
+        top: 25px;
+    }
+
+    #more:after {
+        top: 35px;
+    }
+
+    #more.open:before {
+        top: 30px;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+    }
+    #more.open:after {
+        top: 30px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+    }
+}
