@@ -49,7 +49,7 @@ export default function BlogPost() {
     }, [params.slug])
 
     return (
-        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+        <div className="w-full lg:p-[1.3rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
             {notFound ? (
                 <>
                     <h1 className="text-neutral-500 text-4xl">
