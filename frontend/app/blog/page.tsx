@@ -29,7 +29,7 @@ function BlogContent() {
                     : ''
 
                 const response = await fetch(
-                    `${apiUrl}/api/posts?populate=*&sort=createdAt:desc${filterQuery}`
+                    `${apiUrl}/posts?populate=*&sort=createdAt:desc${filterQuery}`
                 )
                 const responseData = await response.json()
                 setPosts(responseData.data)

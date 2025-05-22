@@ -28,7 +28,7 @@ export default function BlogPost() {
                 }
 
                 const response = await fetch(
-                    `${apiUrl}/api/posts?filters[slug][$eq]=${params.slug}&populate=*`
+                    `${apiUrl}/posts?filters[slug][$eq]=${params.slug}&populate=*`
                 )
                 if (response.status === 404) {
                     setNotFound(true)
