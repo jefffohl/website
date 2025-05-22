@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import Link from 'next/link'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { useSearchParams, useRouter } from 'next/navigation'
 
-export default function Blog() {
+function BlogContent() {
     const [posts, setPosts] = useState<any[]>([])
     const [error, setError] = useState<string | null>(null)
     const searchParams = useSearchParams()
@@ -128,5 +128,19 @@ export default function Blog() {
                 )}
             </div>
         </div>
+    )
+}
+
+export default function Blog() {
+    return (
+        <Suspense
+            fallback={
+                <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+                    Loading...
+                </div>
+            }
+        >
+            <BlogContent />
+        </Suspense>
     )
 }
