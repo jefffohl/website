@@ -32,7 +32,7 @@ export default function Navigation() {
                     </Link>
                 </h1>
                 <nav
-                    className={`h-[calc(100vh-60px)] absolute left-0 w-full overflow-auto bg-[#222] z-[0] lg:height-[calc(100%-90px)] lg:static leading-[1.75rem] ${
+                    className={`h-[calc(100vh-90px)] absolute left-0 w-full overflow-auto bg-[#222] z-[0] lg:height-[calc(100%-90px)] lg:static leading-[1.75rem] ${
                         navShown ? 'top-[60px]' : 'top-[-100vh]'
                     }`}
                 >
