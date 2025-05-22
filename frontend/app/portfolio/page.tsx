@@ -648,7 +648,7 @@ export default function Portfolio() {
                 assets={[
                     {
                         type: PortfolioAssetType.Image,
-                        src: '/portfolio/pwc/cash-ai.png',
+                        src: '/portfolio/pwc/final_enhanced_cash_ai.jpg',
                         thumbnail: {
                             src: '/portfolio/pwc/cash-ai_thumb.png',
                             alt: 'Cash.ai Thumbnail',
@@ -661,7 +661,7 @@ export default function Portfolio() {
                     },
                     {
                         type: PortfolioAssetType.Image,
-                        src: '/portfolio/pwc/cash-ai-document.png',
+                        src: '/portfolio/pwc/final_enhanced_cash_ai_document_v3.jpg',
                         thumbnail: {
                             src: '/portfolio/pwc/cash-ai-document_thumb.png',
                             alt: 'Cash.ai Document Thumbnail',
