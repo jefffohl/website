@@ -96,7 +96,9 @@ export default function PortfolioSection({
                         </dd>
                         <dt className="text-neutral-500 py-1">Company</dt>
                         <dd className="py-1 border-b border-b-neutral-800">
-                            <a href={companyUrl}>{company}</a>
+                            <a target="_blank" href={companyUrl}>
+                                {company}
+                            </a>
                         </dd>
                         <dt className="text-neutral-500 py-1">Roles</dt>
                         <dd className="py-1 border-b border-b-neutral-800">

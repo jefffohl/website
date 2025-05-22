@@ -14,7 +14,7 @@ export default function Portfolio() {
                 Portfolio
             </h1>
             <p className="w-full lg:w-[50%]">
-                Recent work, in reverse chronology. Much of this work was
+                Recent work, in reverse chronology. Some of this work was
                 produced by teams of people, in which I played a role. These
                 roles include: engineer, designer, UX designer, leader, manager,
                 or any combination of these. I will attempt to clarify my role
@@ -22,22 +22,141 @@ export default function Portfolio() {
             </p>
             <div className="border-b border-[#222] pb-4"></div>
             <PortfolioSection
+                title="The Reading Chair"
+                description={
+                    <>
+                        <p>
+                            This one is a bit different. It grew out of a design
+                            challenge I participated in. Having spent the last
+                            few decades designing for screens, I decided I
+                            should fully embrace this opportunity and design
+                            something I had never designed before, so I decided
+                            to design a chair. The symbolic world is great and
+                            all, but sometimes it&apos;s nice to consider the
+                            real world.
+                        </p>
+                        <p>
+                            I even made a fake{' '}
+                            <a
+                                target="_blank"
+                                href="https://the-reading-chair.fohl.com"
+                            >
+                                marketing website
+                            </a>{' '}
+                            for it. Take a look!
+                        </p>
+                    </>
+                }
+                company="Infinite Tape"
+                companyUrl="https://infinitetape.net"
+                date="2025"
+                roles={['Designer', 'Engineer']}
+                stack={['Pencil', 'Paper', 'Blender', 'Next.js', 'TypeScript']}
+                assets={[
+                    {
+                        type: PortfolioAssetType.Image,
+                        src: '/portfolio/the-reading-chair/room.jpg',
+                        thumbnail: {
+                            src: '/portfolio/the-reading-chair/room_thumb.jpg',
+                            alt: 'Thumbnail of an elegant chair with built-in lighting in a room with a view',
+                            width: 120,
+                            height: 85,
+                        },
+                        alt: 'An elegant chair with built-in lighting in a room with a view',
+                        width: 2050,
+                        height: 1444,
+                    },
+                    {
+                        type: PortfolioAssetType.Image,
+                        src: '/portfolio/the-reading-chair/cushions.jpg',
+                        thumbnail: {
+                            src: '/portfolio/the-reading-chair/cushions_thumb.jpg',
+                            alt: 'Thumbnail of a closeup of an upholstered chair with built-in lighting',
+                            width: 120,
+                            height: 85,
+                        },
+                        alt: 'Closeup of an upholstered chair with built-in lighting',
+                        width: 1920,
+                        height: 1080,
+                    },
+                    {
+                        type: PortfolioAssetType.Image,
+                        src: '/portfolio/the-reading-chair/tilt.jpg',
+                        thumbnail: {
+                            src: '/portfolio/the-reading-chair/tilt_thumb.jpg',
+                            alt: 'A superposition of three positions the chair can be in',
+                            width: 120,
+                            height: 85,
+                        },
+                        alt: 'A thumbnail of a superposition of three positions the chair can be in',
+                        width: 1920,
+                        height: 892,
+                    },
+                    {
+                        type: PortfolioAssetType.Image,
+                        src: '/portfolio/the-reading-chair/controls.jpg',
+                        thumbnail: {
+                            src: '/portfolio/the-reading-chair/controls_thumb.jpg',
+                            alt: 'Touchscreen controls for the chair',
+                            width: 120,
+                            height: 85,
+                        },
+                        alt: 'A thumbnail of the touchscreen controls for the chair',
+                        width: 1920,
+                        height: 852,
+                    },
+                    {
+                        type: PortfolioAssetType.Image,
+                        src: '/portfolio/the-reading-chair/lighting.jpg',
+                        thumbnail: {
+                            src: '/portfolio/the-reading-chair/lighting_thumb.jpg',
+                            alt: 'Controllable LED lighting built into the chair',
+                            width: 120,
+                            height: 85,
+                        },
+                        alt: 'Thumbnail of controllable LED lighting built into the chair',
+                        width: 1920,
+                        height: 1080,
+                    },
+                    {
+                        type: PortfolioAssetType.Image,
+                        src: '/portfolio/the-reading-chair/items.jpg',
+                        thumbnail: {
+                            src: '/portfolio/the-reading-chair/items_thumb.jpg',
+                            alt: 'Closeup of reading glasses and a yerba mate gourd on the arms of the chair',
+                            width: 120,
+                            height: 85,
+                        },
+                        alt: 'Reading glasses and a yerba mate gourd on the arms of the chair',
+                        width: 1792,
+                        height: 1063,
+                    },
+                ]}
+            />
+            <PortfolioSection
                 title="Lawful Good"
                 description={
                     <>
                         <p>
                             In 2025, I was the founder and principal designer at{' '}
-                            <a href="https://infinitetape.net">Infinite Tape</a>
-                            , a startup that builds AI-powered tools for
-                            professionals and creatives.
+                            <a target="_blank" href="https://infinitetape.net">
+                                Infinite Tape
+                            </a>
+                            , a design and development studio that builds
+                            AI-powered tools for professionals and creatives.
                         </p>
                         <p>
                             One of the projects I developed was called{' '}
-                            <a href="https://lawfulgood.us">Lawful Good</a>.
-                            This project is ongoing as of this writing. Lawful
+                            <a target="_blank" href="https://lawfulgood.us">
+                                Lawful Good
+                            </a>
+                            . This project is ongoing as of this writing. Lawful
                             Good is an AI Agent designed to help independent
                             lawyers manage documents more effectively using a{' '}
-                            <a href="https://en.wikipedia.org/wiki/Retrieval-Augmented_Generation">
+                            <a
+                                target="_blank"
+                                href="https://en.wikipedia.org/wiki/Retrieval-Augmented_Generation"
+                            >
                                 RAG-based approach
                             </a>
                             .
@@ -96,7 +215,10 @@ export default function Portfolio() {
                     <>
                         <p>
                             H2O Actions was the brainchild of{' '}
-                            <a href="https://www.linkedin.com/in/jiripuc">
+                            <a
+                                target="_blank"
+                                href="https://www.linkedin.com/in/jiripuc"
+                            >
                                 Jiri Puc
                             </a>
                             , an AI Engineer at H2O.ai. The idea behind this
@@ -224,7 +346,10 @@ export default function Portfolio() {
                     <>
                         <p>
                             H2O.ai&apos;s{' '}
-                            <a href="https://h2o.ai/platform/ai-cloud/make/document-ai/">
+                            <a
+                                target="_blank"
+                                href="https://h2o.ai/platform/ai-cloud/make/document-ai/"
+                            >
                                 Document AI
                             </a>{' '}
                             is designed to help data scientists create data
@@ -289,44 +414,71 @@ export default function Portfolio() {
                         <p>
                             In 2019, H2O.ai embarked on an ambitious project to
                             build a cloud-based platform for AI. Named simply{' '}
-                            <a href="https://h2o.ai/platform/ai-cloud/">
+                            <a
+                                target="_blank"
+                                href="https://h2o.ai/platform/ai-cloud/"
+                            >
                                 H2O AI Cloud
                             </a>
                             , the project was intended to bring together the
                             best of H2O&apos;s AI products into a single,
                             unified platform. Key components included H2O&apos;s
                             flagship products,{' '}
-                            <a href="https://h2o.ai/platform/ai-cloud/make/h2o-driverless-ai/">
+                            <a
+                                target="_blank"
+                                href="https://h2o.ai/platform/ai-cloud/make/h2o-driverless-ai/"
+                            >
                                 Driverless AI
                             </a>{' '}
                             and{' '}
-                            <a href="https://h2o.ai/platform/ai-cloud/make/h2o/">
+                            <a
+                                target="_blank"
+                                href="https://h2o.ai/platform/ai-cloud/make/h2o/"
+                            >
                                 H2O-3
                             </a>
                             , and a suite of cloud-based products, such as{' '}
-                            <a href="https://h2o.ai/platform/ai-cloud/make/hydrogen-torch/">
+                            <a
+                                target="_blank"
+                                href="https://h2o.ai/platform/ai-cloud/make/hydrogen-torch/"
+                            >
                                 Hydrogen Torch
                             </a>
                             ,{' '}
-                            <a href="https://h2o.ai/platform/ai-cloud/operate/h2o-mlops/">
+                            <a
+                                target="_blank"
+                                href="https://h2o.ai/platform/ai-cloud/operate/h2o-mlops/"
+                            >
                                 MLOps
                             </a>
                             ,{' '}
-                            <a href="https://h2o.ai/platform/ai-cloud/make/feature-store/">
+                            <a
+                                target="_blank"
+                                href="https://h2o.ai/platform/ai-cloud/make/feature-store/"
+                            >
                                 Feature Store
                             </a>
                             , and{' '}
-                            <a href="https://h2o.ai/platform/ai-cloud/make/document-ai/">
+                            <a
+                                target="_blank"
+                                href="https://h2o.ai/platform/ai-cloud/make/document-ai/"
+                            >
                                 Document AI
                             </a>
                             . The idea was to allow H2O&apos;s customers to
                             build apps using these tools and H2O&apos;s low-code
                             app framework,{' '}
-                            <a href="https://h2o.ai/platform/ai-cloud/make/h2o-wave/">
+                            <a
+                                target="_blank"
+                                href="https://h2o.ai/platform/ai-cloud/make/h2o-wave/"
+                            >
                                 Wave
                             </a>
                             , and deploy them on their own{' '}
-                            <a href="https://h2o.ai/platform/ai-cloud/key-features-datasheet/#innovate">
+                            <a
+                                target="_blank"
+                                href="https://h2o.ai/platform/ai-cloud/key-features-datasheet/#innovate"
+                            >
                                 App Store
                             </a>{' '}
                             instance.
@@ -437,7 +589,10 @@ export default function Portfolio() {
             <div className="p-[4rem_0] border-t border-b border-t-[#555] border-b-[#222]">
                 <h3 className="text-[2rem] font-[400]">PwC</h3>
                 <p>
-                    In 2016, <a href="https://pwc.com">PwC</a>{' '}
+                    In 2016,{' '}
+                    <a target="_blank" href="https://pwc.com">
+                        PwC
+                    </a>{' '}
                     (PricewaterhouseCoopers) engaged with H2O.ai to build
                     AI-powered auditing applications. Initially, my role was to
                     design and build these applications in collaboration with
