@@ -636,7 +636,7 @@ export default function Portfolio() {
                 }
                 company="PwC"
                 companyUrl="https://pwc.com"
-                date="2017"
+                date="2019"
                 roles={['Engineer', 'UX Guidance']}
                 stack={[
                     'Angular',
@@ -711,7 +711,7 @@ export default function Portfolio() {
                 }
                 company="PwC"
                 companyUrl="https://pwc.com"
-                date="2019"
+                date="2017"
                 roles={['Engineer', 'Data Visualization', 'UX Guidance']}
                 stack={[
                     'Angular',
@@ -731,7 +731,7 @@ export default function Portfolio() {
                             width: 140,
                             height: 85,
                         },
-                        alt: "PwC's Cash.ai",
+                        alt: "PwC's GL.ai",
                         width: 1978,
                         height: 1200,
                     },
