@@ -55,9 +55,9 @@ export default function Portfolio() {
                 assets={[
                     {
                         type: PortfolioAssetType.Image,
-                        src: '/portfolio/the-reading-chair/room.jpg',
+                        src: '/portfolio/the-reading-chair/the-reading-chair.jpg',
                         thumbnail: {
-                            src: '/portfolio/the-reading-chair/room_thumb.jpg',
+                            src: '/portfolio/the-reading-chair/the-reading-chair_thumb.jpg',
                             alt: 'Thumbnail of an elegant chair with built-in lighting in a room with a view',
                             width: 120,
                             height: 85,
