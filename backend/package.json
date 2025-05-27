@@ -19,6 +19,7 @@
     "dependencies": {
         "@strapi/plugin-cloud": "5.12.5",
         "@strapi/plugin-users-permissions": "5.12.5",
+        "@strapi/provider-upload-local": "^5.13.1",
         "@strapi/strapi": "5.12.5",
         "better-sqlite3": "11.3.0",
         "pg": "^8.16.0",
@@ -31,8 +32,8 @@
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
-        "typescript": "^5",
-        "prettier": "^3.5.3"
+        "prettier": "^3.5.3",
+        "typescript": "^5"
     },
     "engines": {
         "node": ">=18.0.0 <=22.x.x",
