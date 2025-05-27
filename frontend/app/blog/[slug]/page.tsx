@@ -103,7 +103,7 @@ export default function BlogPost() {
                         {post.splash ? (
                             <div className="order-2 border-b border-b-[var(--rule-top)] lg:border-b-0 pb-4 lg:pb-0">
                                 <Image
-                                    src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${post.splash.url}`}
+                                    src={post.splash.url}
                                     alt={
                                         post.splash.alternativeText || 'Splash'
                                     }
