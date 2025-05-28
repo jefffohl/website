@@ -79,7 +79,7 @@ function BlogContent() {
                 </div>
             )}
             <div className="border-t border-t-[var(--rule-top)] border-b border-b-[var(--rule-bottom)]">
-                {posts.length > 0 ? (
+                {posts?.length > 0 ? (
                     <>
                         {posts.map((post) => (
                             <div
