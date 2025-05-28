@@ -3,6 +3,7 @@ import { BlocksRenderer } from '@strapi/blocks-react-renderer'
 import { blocks } from '../components/Blocks'
 import Link from 'next/link'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
 // Generate metadata for the page
 export async function generateMetadata({
@@ -33,6 +34,13 @@ export async function generateMetadata({
 
         const responseData = await response.json()
         const post = responseData.data[0]
+
+        if (!post) {
+            return {
+                title: 'Blog Post Not Found',
+                description: 'The requested blog post could not be found',
+            }
+        }
 
         return {
             title: post.title,
@@ -75,22 +83,15 @@ export default async function BlogPost({
     )
 
     if (!response.ok) {
-        return (
-            <div className="w-full lg:p-[1.3rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
-                <h1 className="text-neutral-500 text-4xl">Post not found</h1>
-                <p>
-                    Sorry, that post does not seem to exist. Perhaps you are
-                    calling from the incorrect point in time. If you think that
-                    might be the case, please move forward or backward in time,
-                    and try again. Alternatively, you could select a different
-                    spatial-temporal gradient from which to make the call.
-                </p>
-            </div>
-        )
+        notFound()
     }
 
     const responseData = await response.json()
     const post = responseData.data[0]
+
+    if (!post) {
+        notFound()
+    }
 
     return (
         <div className="w-full lg:p-[1.3rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
