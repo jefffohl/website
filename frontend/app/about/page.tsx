@@ -1,12 +1,14 @@
-'use client'
-
-import { usePageTitle } from '@/hooks/usePageTitle'
+import { Metadata } from 'next'
 import Milestone from '@/components/timeline/Milestone'
 import Position from '@/components/timeline/Position'
 
-export default function AboutMe() {
-    usePageTitle({ title: 'About' })
+export const metadata: Metadata = {
+    title: 'About',
+    description:
+        'About Jeff Fohl - Product designer, software developer, and UX designer with 30+ years of experience in AI and machine learning.',
+}
 
+export default function AboutMe() {
     return (
         <div className="underline-animation flex-1 lg:p-[1rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] max-w-[100ch] break-after-page">
             <div className="border-b border-[#222] pb-8">
