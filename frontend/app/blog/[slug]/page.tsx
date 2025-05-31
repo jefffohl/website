@@ -9,8 +9,9 @@ import { notFound } from 'next/navigation'
 export async function generateMetadata({
     params,
 }: {
-    params: { slug: string }
+    params: Promise<{ slug: string }>
 }): Promise<Metadata> {
+    const { slug } = await params
     const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
     if (!apiUrl) {
         return {
@@ -21,7 +22,7 @@ export async function generateMetadata({
 
     try {
         const response = await fetch(
-            `${apiUrl}/posts?filters[slug][$eq]=${params.slug}&populate=*`,
+            `${apiUrl}/posts?filters[slug][$eq]=${slug}&populate=*`,
             { next: { revalidate: 3600 } } // Revalidate every hour
         )
 
@@ -65,12 +66,13 @@ export async function generateMetadata({
     }
 }
 
-// Server component
+// Server component for the blog post content
 export default async function BlogPost({
     params,
 }: {
     params: { slug: string }
 }) {
+    const { slug } = await params
     const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
 
     if (!apiUrl) {
@@ -78,7 +80,7 @@ export default async function BlogPost({
     }
 
     const response = await fetch(
-        `${apiUrl}/posts?filters[slug][$eq]=${params.slug}&populate=*`,
+        `${apiUrl}/posts?filters[slug][$eq]=${slug}&populate=*`,
         { next: { revalidate: 3600 } } // Revalidate every hour
     )
 
