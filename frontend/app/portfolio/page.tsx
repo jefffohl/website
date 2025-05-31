@@ -4,7 +4,7 @@ import PortfolioSection from './_components/PortfolioSection'
 export const metadata: Metadata = {
     title: 'Portfolio',
     description:
-        'Recent work by Jeff Fohl - Product designer, software developer, and UX designer with experience in AI, machine learning, and enterprise applications.',
+        'Recent work by Jeff Fohl - Product designer, software developer, and user experience designer with experience in AI, machine learning, and enterprise applications.',
 }
 
 export default function Portfolio() {

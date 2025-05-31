@@ -5,7 +5,7 @@ import Position from '@/components/timeline/Position'
 export const metadata: Metadata = {
     title: 'About',
     description:
-        'About Jeff Fohl - Product designer, software developer, and UX designer with 30+ years of experience in AI and machine learning.',
+        'About Jeff Fohl - Product designer, software developer, and user experience designer for AI and machine learning, with over 30 years of experience.',
 }
 
 export default function AboutMe() {
