@@ -15,17 +15,12 @@ export interface PortfolioSectionProps {
 }
 
 export interface PortfolioAsset {
-    type: PortfolioAssetType
+    type: 'image' | 'video'
     thumbnail: ImageProps
     src: string
     alt: string
     width: number | string
     height: number | string
-}
-
-export enum PortfolioAssetType {
-    Image = 'image',
-    Video = 'video',
 }
 
 export default function PortfolioSection({
@@ -66,7 +61,7 @@ export default function PortfolioSection({
 
     // Handle initial image load
     useEffect(() => {
-        if (assets[0].type === PortfolioAssetType.Image) {
+        if (assets[0].type === 'image') {
             const img = new window.Image()
             img.src = assets[0].src
             img.onload = handleAssetLoad
@@ -81,7 +76,7 @@ export default function PortfolioSection({
         <section className="portfolio-section p-[4rem_0] border-t border-b border-t-[var(--rule-bottom)] border-b-[var(--rule-top)]">
             <div
                 className={`flex lg:flex-row flex-col ${
-                    assets[activeAssetIndex].type === PortfolioAssetType.Image
+                    assets[activeAssetIndex].type === 'image'
                         ? 'items-start'
                         : 'items-stretch'
                 }`}
@@ -159,8 +154,7 @@ export default function PortfolioSection({
                             </div>
                         </div>
                     )}
-                    {assets[activeAssetIndex].type ===
-                    PortfolioAssetType.Image ? (
+                    {assets[activeAssetIndex].type === 'image' ? (
                         <div
                             className={`transition-opacity duration-300 ${
                                 isImageVisible ? 'opacity-100' : 'opacity-0'

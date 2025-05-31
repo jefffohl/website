@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { BlocksRenderer } from '@strapi/blocks-react-renderer'
-import { blocks } from '../components/Blocks'
+import { blocks } from '../_components/Blocks'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
