@@ -8,13 +8,13 @@ interface AboutPanelProps {
 export default function AboutPanel({ isHidden, onClose }: AboutPanelProps) {
     return (
         <div
-            className={`w-[400px] h-full absolute top-0 text-[#f5f5f5] p-[60px_30px_30px_30px] bg-[#222] leading-[1.5rem] text-base ${isHidden ? 'right-[-400px] md:right-[-100%]' : 'right-0 md:right-0'} lg:left-auto lg:bg-[#222] lg:w-[400px] lg:h-full lg:absolute lg:overflow-visible md:bg-[#222] md:w-full md:h-screen md:absolute md:overflow-hidden`}
+            className={`w-full h-full absolute top-0 text-[#f5f5f5] p-[60px_30px_30px_30px] bg-[#222] leading-[1.5rem] text-base ${isHidden ? 'right-[-100%] xl:right-[-400px] md:right-[-100%]' : 'right-0 md:right-0'} xl:left-auto xl:bg-[#222] xl:w-[400px] xl:h-full xl:absolute xl:overflow-visible md:bg-[#222] md:w-full md:h-screen md:absolute md:overflow-hidden`}
         >
             <h2 className="absolute w-full top-0 left-0 pl-8 font-medium text-[1.5rem] my-[0.83em] md:bg-[#222] md:m-0 md:top-0 md:left-0 md:h-[60px] md:p-0 md:px-8 md:leading-[60px]">
                 What is this all about?
                 {onClose && (
                     <span
-                        className="block absolute h-[60px] w-[60px] top-[-20px] lg:top-0 right-[5px] cursor-pointer before:content-[''] before:block before:w-[2px] before:h-[25px] before:absolute before:top-[20px] before:left-[30px] before:bg-[#ccc] before:hover:bg-white before:rotate-45 after:content-[''] after:block after:w-[2px] after:h-[25px] after:absolute after:top-[20px] after:left-[30px] after:bg-[#ccc] after:hover:bg-white after:rotate-[-45deg]"
+                        className="block absolute h-[60px] w-[60px] top-[-20px] xl:top-0 right-[5px] cursor-pointer before:content-[''] before:block before:w-[2px] before:h-[25px] before:absolute before:top-[20px] before:left-[30px] before:bg-[#ccc] before:hover:bg-white before:rotate-45 after:content-[''] after:block after:w-[2px] after:h-[25px] after:absolute after:top-[20px] after:left-[30px] after:bg-[#ccc] after:hover:bg-white after:rotate-[-45deg]"
                         onClick={onClose}
                     ></span>
                 )}

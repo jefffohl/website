@@ -1,14 +1,16 @@
-'use client'
-
-import { usePageTitle } from '@/hooks/usePageTitle'
+import { Metadata } from 'next'
 import Milestone from '@/components/timeline/Milestone'
 import Position from '@/components/timeline/Position'
 
-export default function AboutMe() {
-    usePageTitle({ title: 'About' })
+export const metadata: Metadata = {
+    title: 'About',
+    description:
+        'About Jeff Fohl - Product designer, software developer, and user experience designer for AI and machine learning, with over 30 years of experience.',
+}
 
+export default function AboutMe() {
     return (
-        <div className="underline-animation flex-1 lg:p-[1rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] max-w-[100ch] break-after-page">
+        <div className="underline-animation flex-1 xl:p-[1rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] max-w-[100ch] break-after-page">
             <div className="border-b border-[#222] pb-8">
                 <p>
                     Hi. I&apos;m Jeff. I am interested in how humans use
@@ -38,7 +40,7 @@ export default function AboutMe() {
                 <p></p>
             </div>
             <div className="border-t border-[#555] pt-10">
-                <div className="flex justify-between items-start lg:flex-row flex-col">
+                <div className="flex justify-between items-start xl:flex-row flex-col">
                     <h2 className="text-2xl font-normal uppercase text-neutral-500 tracking-widest inline">
                         Curriculum Vitae
                     </h2>
@@ -63,8 +65,7 @@ export default function AboutMe() {
                         <>
                             Infinite Tape builds AI-powered tools for
                             professionals and creatives, in a variety of
-                            industries from <span className="italic">law</span>{' '}
-                            to <span className="italic">music</span>.
+                            industries from law to music.
                         </>
                     }
                 />

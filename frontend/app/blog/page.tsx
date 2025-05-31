@@ -1,87 +1,77 @@
-'use client'
-
-import { useEffect, useState, Suspense } from 'react'
+import { Post } from '@/types/api'
+import { Metadata } from 'next'
 import Link from 'next/link'
-import { usePageTitle } from '@/hooks/usePageTitle'
-import { useSearchParams, useRouter } from 'next/navigation'
 
-function BlogContent() {
-    const [posts, setPosts] = useState<any[]>([])
-    const [error, setError] = useState<string | null>(null)
-    const searchParams = useSearchParams()
-    const router = useRouter()
-    const selectedTag = searchParams.get('tag')
+// Generate metadata for the page
+export async function generateMetadata({
+    searchParams,
+}: {
+    searchParams: Promise<{ tag?: string }>
+}): Promise<Metadata> {
+    const { tag } = await searchParams
+    const title = tag ? `Blog - ${tag}` : 'Blog'
+    const description = tag
+        ? `Blog posts tagged with ${tag}`
+        : 'Latest blog posts and articles'
 
-    usePageTitle({ title: 'Blog' })
+    return {
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+        },
+    }
+}
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
+export default async function Blog(searchParams: Promise<{ tag?: string }>) {
+    const { tag } = await searchParams
+    const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
 
-                if (!apiUrl) {
-                    throw new Error('NEXT_PUBLIC_STRAPI_API_URL is not defined')
-                }
-
-                // Build the filter query based on selected tag
-                const filterQuery = selectedTag
-                    ? `&filters[tags][name][$eq]=${encodeURIComponent(selectedTag)}`
-                    : ''
-
-                const response = await fetch(
-                    `${apiUrl}/posts?populate=*&sort=createdAt:desc${filterQuery}`
-                )
-                const responseData = await response.json()
-                setPosts(responseData.data)
-            } catch (err) {
-                setError(
-                    err instanceof Error ? err.message : 'Failed to fetch posts'
-                )
-                console.error('Error fetching posts:', err)
-            }
-        }
-        fetchPosts()
-    }, [selectedTag])
-
-    const handleTagClick = (tag: string) => {
-        const params = new URLSearchParams(searchParams.toString())
-        params.set('tag', tag)
-        router.push(`?${params.toString()}`)
+    if (!apiUrl) {
+        throw new Error('NEXT_PUBLIC_STRAPI_API_URL is not defined')
     }
 
-    const handleClearTag = () => {
-        const params = new URLSearchParams(searchParams.toString())
-        params.delete('tag')
-        router.push(`?${params.toString()}`)
+    // Build the filter query based on selected tag
+    const filterQuery = tag
+        ? `&filters[tags][name][$eq]=${encodeURIComponent(tag)}`
+        : ''
+
+    const response = await fetch(
+        `${apiUrl}/posts?populate=*&sort=createdAt:desc${filterQuery}`,
+        { next: { revalidate: 3600 } } // Revalidate every hour
+    )
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch posts')
     }
 
-    if (error) {
-        return <div>Error: {error}</div>
-    }
+    const responseData = await response.json()
+    const posts: Post[] = responseData.data
 
     return (
-        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+        <div className="w-full xl:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
             <h1 className="text-2xl font-[400] uppercase text-neutral-500 tracking-widest pb-4">
                 Blog
             </h1>
-            {selectedTag && (
+            {tag && (
                 <div className="mb-4">
                     <span className="text-neutral-400">Filtering by: </span>
-                    <button
-                        onClick={handleClearTag}
-                        className="text-neutral-300 bg-neutral-900 px-2 py-1 ml-2 rounded hover:bg-neutral-800 cursor-pointer"
+                    <Link
+                        href="/blog"
+                        className="text-neutral-300 bg-neutral-900 px-2 py-1 ml-2 rounded hover:bg-neutral-800 cursor-pointer inline-flex items-center"
                     >
-                        {selectedTag}
+                        {tag}
                         <span className="inline-block ml-4 text-neutral-500">
                             x
                         </span>
-                    </button>
+                    </Link>
                 </div>
             )}
             <div className="border-t border-t-[var(--rule-top)] border-b border-b-[var(--rule-bottom)]">
-                {posts.length > 0 ? (
+                {posts?.length > 0 ? (
                     <>
-                        {posts.map((post) => (
+                        {posts.map((post: Post) => (
                             <div
                                 key={post.id}
                                 className="border-t border-t-[var(--rule-bottom)] border-b border-b-[var(--rule-top)] py-4"
@@ -99,19 +89,19 @@ function BlogContent() {
                                 {post.tags ? (
                                     <div className="tags flex items-center gap-1 mt-2">
                                         {post.tags.map((tag: any) => (
-                                            <button
+                                            <Link
                                                 key={tag.id}
-                                                onClick={() =>
-                                                    handleTagClick(tag.name)
-                                                }
+                                                href={`/blog?tag=${encodeURIComponent(
+                                                    tag.name
+                                                )}`}
                                                 className={`text-neutral-300 text-xs px-2 py-1 rounded cursor-pointer ${
-                                                    selectedTag === tag.name
+                                                    tag === tag.name
                                                         ? 'bg-neutral-800'
                                                         : 'bg-neutral-900 hover:bg-neutral-800'
                                                 }`}
                                             >
                                                 {tag.name}
-                                            </button>
+                                            </Link>
                                         ))}
                                     </div>
                                 ) : null}
@@ -124,23 +114,12 @@ function BlogContent() {
                         ))}
                     </>
                 ) : (
-                    <div>No posts found</div>
+                    <div className="py-4 text-neutral-500">
+                        No posts found
+                        {tag && <span> for tag &quot;{tag}&quot;</span>}
+                    </div>
                 )}
             </div>
         </div>
-    )
-}
-
-export default function Blog() {
-    return (
-        <Suspense
-            fallback={
-                <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
-                    Loading...
-                </div>
-            }
-        >
-            <BlogContent />
-        </Suspense>
     )
 }

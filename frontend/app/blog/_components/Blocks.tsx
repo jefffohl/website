@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -15,7 +17,7 @@ export const blocks: BlocksComponents = {
         )
     },
     paragraph: ({ children }) => (
-        <p className="text-neutral900 max-w-prose lg:text-lg">{children}</p>
+        <p className="text-neutral900 max-w-prose xl:text-lg">{children}</p>
     ),
     // ...or point to a design system
     heading: ({ children, level }) => {

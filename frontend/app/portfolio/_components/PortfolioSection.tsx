@@ -15,17 +15,12 @@ export interface PortfolioSectionProps {
 }
 
 export interface PortfolioAsset {
-    type: PortfolioAssetType
+    type: 'image' | 'video'
     thumbnail: ImageProps
     src: string
     alt: string
     width: number | string
     height: number | string
-}
-
-export enum PortfolioAssetType {
-    Image = 'image',
-    Video = 'video',
 }
 
 export default function PortfolioSection({
@@ -66,7 +61,7 @@ export default function PortfolioSection({
 
     // Handle initial image load
     useEffect(() => {
-        if (assets[0].type === PortfolioAssetType.Image) {
+        if (assets[0].type === 'image') {
             const img = new window.Image()
             img.src = assets[0].src
             img.onload = handleAssetLoad
@@ -80,13 +75,13 @@ export default function PortfolioSection({
     return (
         <section className="portfolio-section p-[4rem_0] border-t border-b border-t-[var(--rule-bottom)] border-b-[var(--rule-top)]">
             <div
-                className={`flex lg:flex-row flex-col ${
-                    assets[activeAssetIndex].type === PortfolioAssetType.Image
+                className={`flex xl:flex-row flex-col ${
+                    assets[activeAssetIndex].type === 'image'
                         ? 'items-start'
                         : 'items-stretch'
                 }`}
             >
-                <div className="lg:flex-[0_0_auto] lg:w-[30rem] flex-1 lg:pr-8 pr-0">
+                <div className="xl:flex-[0_0_auto] xl:w-[30rem] flex-1 xl:pr-8 pr-0">
                     <h2 className="text-2xl font-[400] mb-4">{title}</h2>
                     {description}
                     <dl className="grid grid-cols-[7rem_1fr] gap-0 font-size-085 my-4">
@@ -151,7 +146,7 @@ export default function PortfolioSection({
                         ))}
                     </div>
                 </div>
-                <div className="asset-display-container flex-1 relative bg-[#111] lg:rounded-lg rounded overflow-hidden shadow-[0_5px_10px_rgba(0,0,0,0.35)]">
+                <div className="asset-display-container flex-1 relative bg-[#111] xl:rounded-lg rounded overflow-hidden shadow-[0_5px_10px_rgba(0,0,0,0.35)]">
                     {isLoading && (
                         <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300">
                             <div className="w-[80%] h-1 bg-gray-600 rounded-full overflow-hidden">
@@ -159,8 +154,7 @@ export default function PortfolioSection({
                             </div>
                         </div>
                     )}
-                    {assets[activeAssetIndex].type ===
-                    PortfolioAssetType.Image ? (
+                    {assets[activeAssetIndex].type === 'image' ? (
                         <div
                             className={`transition-opacity duration-300 ${
                                 isImageVisible ? 'opacity-100' : 'opacity-0'

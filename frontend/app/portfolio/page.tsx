@@ -1,19 +1,19 @@
-'use client'
+import { Metadata } from 'next'
+import PortfolioSection from './_components/PortfolioSection'
 
-import PortfolioSection, {
-    PortfolioAssetType,
-} from './_components/PortfolioSection'
-import { usePageTitle } from '@/hooks/usePageTitle'
+export const metadata: Metadata = {
+    title: 'Portfolio',
+    description:
+        'Recent work by Jeff Fohl - Product designer, software developer, and user experience designer with experience in AI, machine learning, and enterprise applications.',
+}
 
 export default function Portfolio() {
-    usePageTitle({ title: 'Portfolio' })
-
     return (
-        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] underline-animation">
+        <div className="w-full xl:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] underline-animation">
             <h1 className="text-2xl font-[400] uppercase text-neutral-500 tracking-widest">
                 Portfolio
             </h1>
-            <p className="w-full lg:w-[50%]">
+            <p className="w-full xl:w-[50%]">
                 Recent work, in reverse chronology. Some of this work was
                 produced by teams of people, in which I played a role. These
                 roles include: engineer, designer, UX designer, leader, manager,
@@ -54,7 +54,7 @@ export default function Portfolio() {
                 stack={['Pencil', 'Paper', 'Blender', 'Next.js', 'TypeScript']}
                 assets={[
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/the-reading-chair/the-reading-chair.jpg',
                         thumbnail: {
                             src: '/portfolio/the-reading-chair/the-reading-chair_thumb.jpg',
@@ -67,7 +67,7 @@ export default function Portfolio() {
                         height: 1444,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/the-reading-chair/cushions.jpg',
                         thumbnail: {
                             src: '/portfolio/the-reading-chair/cushions_thumb.jpg',
@@ -80,7 +80,7 @@ export default function Portfolio() {
                         height: 1080,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/the-reading-chair/tilt.jpg',
                         thumbnail: {
                             src: '/portfolio/the-reading-chair/tilt_thumb.jpg',
@@ -93,7 +93,7 @@ export default function Portfolio() {
                         height: 892,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/the-reading-chair/controls.jpg',
                         thumbnail: {
                             src: '/portfolio/the-reading-chair/controls_thumb.jpg',
@@ -106,7 +106,7 @@ export default function Portfolio() {
                         height: 852,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/the-reading-chair/lighting.jpg',
                         thumbnail: {
                             src: '/portfolio/the-reading-chair/lighting_thumb.jpg',
@@ -119,7 +119,7 @@ export default function Portfolio() {
                         height: 1080,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/the-reading-chair/items.jpg',
                         thumbnail: {
                             src: '/portfolio/the-reading-chair/items_thumb.jpg',
@@ -181,7 +181,7 @@ export default function Portfolio() {
                 ]}
                 assets={[
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/lawful-good/lawful-good-empty-state.png',
                         thumbnail: {
                             src: '/portfolio/lawful-good/lawful-good-empty-state_thumb.png',
@@ -194,7 +194,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/lawful-good/lawful-good-document-view.png',
                         thumbnail: {
                             src: '/portfolio/lawful-good/lawful-good-document-view_thumb.png',
@@ -246,7 +246,7 @@ export default function Portfolio() {
                 ]}
                 assets={[
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/h2o-actions/actions-empty-state.png',
                         thumbnail: {
                             src: '/portfolio/h2o-actions/actions-empty-state_thumb.png',
@@ -259,7 +259,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/h2o-actions/actions-action-selection.png',
                         thumbnail: {
                             src: '/portfolio/h2o-actions/actions-action-selection_thumb.png',
@@ -272,7 +272,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/h2o-actions/actions-navigation.png',
                         thumbnail: {
                             src: '/portfolio/h2o-actions/actions-navigation_thumb.png',
@@ -312,7 +312,7 @@ export default function Portfolio() {
                 stack={['React', 'TypeScript', 'Java', 'PostgreSQL']}
                 assets={[
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/ai-governance/ai-gov-models.png',
                         thumbnail: {
                             src: '/portfolio/ai-governance/ai-gov-models_thumb.png',
@@ -325,7 +325,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/ai-governance/model-health.png',
                         thumbnail: {
                             src: '/portfolio/ai-governance/model-health_thumb.png',
@@ -366,7 +366,7 @@ export default function Portfolio() {
                 stack={['React', 'TypeScript', 'Java', 'PostgreSQL']}
                 assets={[
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/document-ai-dashboard/dashboard.png',
                         thumbnail: {
                             src: '/portfolio/document-ai-dashboard/dashboard_thumb.png',
@@ -379,7 +379,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/document-ai-dashboard/pipelines.png',
                         thumbnail: {
                             src: '/portfolio/document-ai-dashboard/pipelines_thumb.png',
@@ -392,7 +392,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/document-ai-dashboard/pipelines-expanded.png',
                         thumbnail: {
                             src: '/portfolio/document-ai-dashboard/pipelines-expanded_thumb.png',
@@ -507,7 +507,7 @@ export default function Portfolio() {
                 ]}
                 assets={[
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/h2o-ai-cloud/app-store.png',
                         thumbnail: {
                             src: '/portfolio/h2o-ai-cloud/app-store_thumb.png',
@@ -520,7 +520,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/h2o-ai-cloud/app-store-detail.png',
                         thumbnail: {
                             src: '/portfolio/h2o-ai-cloud/app-store-detail_thumb.png',
@@ -533,7 +533,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/h2o-ai-cloud/ai-engines.png',
                         thumbnail: {
                             src: '/portfolio/h2o-ai-cloud/ai-engines_thumb.png',
@@ -546,7 +546,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/h2o-ai-cloud/ai-engines-selection.png',
                         thumbnail: {
                             src: '/portfolio/h2o-ai-cloud/ai-engines-selection_thumb.png',
@@ -559,7 +559,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/h2o-ai-cloud/ai-engines-conf.png',
                         thumbnail: {
                             src: '/portfolio/h2o-ai-cloud/ai-engines-config_thumb.png',
@@ -572,7 +572,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/h2o-ai-cloud/logging-services.png',
                         thumbnail: {
                             src: '/portfolio/h2o-ai-cloud/logging-services_thumb.png',
@@ -647,7 +647,7 @@ export default function Portfolio() {
                 ]}
                 assets={[
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/pwc/final_enhanced_cash_ai.jpg',
                         thumbnail: {
                             src: '/portfolio/pwc/cash-ai_thumb.png',
@@ -660,7 +660,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/pwc/final_enhanced_cash_ai_document_v3.jpg',
                         thumbnail: {
                             src: '/portfolio/pwc/cash-ai-document_thumb.png',
@@ -673,7 +673,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Video,
+                        type: 'video',
                         src: 'https://www.youtube.com/embed/SsCUtOnVJ8c?si=6fXoaofu52JGpWUU',
                         thumbnail: {
                             src: '/portfolio/pwc/cash-ai-video_thumbnail.png',
@@ -723,7 +723,7 @@ export default function Portfolio() {
                 ]}
                 assets={[
                     {
-                        type: PortfolioAssetType.Image,
+                        type: 'image',
                         src: '/portfolio/pwc/gl-ai.png',
                         thumbnail: {
                             src: '/portfolio/pwc/gl-ai_thumb.png',
@@ -736,7 +736,7 @@ export default function Portfolio() {
                         height: 1200,
                     },
                     {
-                        type: PortfolioAssetType.Video,
+                        type: 'video',
                         src: 'https://www.youtube.com/embed/UoYxMqdvcVA?si=weHQFLDv1WFtO5sn',
                         thumbnail: {
                             src: '/portfolio/pwc/gl-ai-video_thumb.png',
