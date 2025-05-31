@@ -70,7 +70,7 @@ export async function generateMetadata({
 export default async function BlogPost({
     params,
 }: {
-    params: { slug: string }
+    params: Promise<{ slug: string }>
 }) {
     const { slug } = await params
     const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL

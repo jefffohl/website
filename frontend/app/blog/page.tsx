@@ -24,7 +24,11 @@ export async function generateMetadata({
     }
 }
 
-export default async function Blog(searchParams: Promise<{ tag?: string }>) {
+export default async function Blog({
+    searchParams,
+}: {
+    searchParams: Promise<{ tag?: string }>
+}) {
     const { tag } = await searchParams
     const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
 
