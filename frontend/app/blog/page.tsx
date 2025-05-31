@@ -50,7 +50,7 @@ export default async function Blog(searchParams: Promise<{ tag?: string }>) {
     const posts: Post[] = responseData.data
 
     return (
-        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+        <div className="w-full xl:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
             <h1 className="text-2xl font-[400] uppercase text-neutral-500 tracking-widest pb-4">
                 Blog
             </h1>

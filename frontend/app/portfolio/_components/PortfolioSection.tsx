@@ -75,13 +75,13 @@ export default function PortfolioSection({
     return (
         <section className="portfolio-section p-[4rem_0] border-t border-b border-t-[var(--rule-bottom)] border-b-[var(--rule-top)]">
             <div
-                className={`flex lg:flex-row flex-col ${
+                className={`flex xl:flex-row flex-col ${
                     assets[activeAssetIndex].type === 'image'
                         ? 'items-start'
                         : 'items-stretch'
                 }`}
             >
-                <div className="lg:flex-[0_0_auto] lg:w-[30rem] flex-1 lg:pr-8 pr-0">
+                <div className="xl:flex-[0_0_auto] xl:w-[30rem] flex-1 xl:pr-8 pr-0">
                     <h2 className="text-2xl font-[400] mb-4">{title}</h2>
                     {description}
                     <dl className="grid grid-cols-[7rem_1fr] gap-0 font-size-085 my-4">
@@ -146,7 +146,7 @@ export default function PortfolioSection({
                         ))}
                     </div>
                 </div>
-                <div className="asset-display-container flex-1 relative bg-[#111] lg:rounded-lg rounded overflow-hidden shadow-[0_5px_10px_rgba(0,0,0,0.35)]">
+                <div className="asset-display-container flex-1 relative bg-[#111] xl:rounded-lg rounded overflow-hidden shadow-[0_5px_10px_rgba(0,0,0,0.35)]">
                     {isLoading && (
                         <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300">
                             <div className="w-[80%] h-1 bg-gray-600 rounded-full overflow-hidden">

@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 
 export default function Portfolio() {
     return (
-        <div className="w-full lg:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] underline-animation">
+        <div className="w-full xl:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] underline-animation">
             <h1 className="text-2xl font-[400] uppercase text-neutral-500 tracking-widest">
                 Portfolio
             </h1>
-            <p className="w-full lg:w-[50%]">
+            <p className="w-full xl:w-[50%]">
                 Recent work, in reverse chronology. Some of this work was
                 produced by teams of people, in which I played a role. These
                 roles include: engineer, designer, UX designer, leader, manager,

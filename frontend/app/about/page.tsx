@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AboutMe() {
     return (
-        <div className="underline-animation flex-1 lg:p-[1rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] max-w-[100ch] break-after-page">
+        <div className="underline-animation flex-1 xl:p-[1rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] max-w-[100ch] break-after-page">
             <div className="border-b border-[#222] pb-8">
                 <p>
                     Hi. I&apos;m Jeff. I am interested in how humans use
@@ -40,7 +40,7 @@ export default function AboutMe() {
                 <p></p>
             </div>
             <div className="border-t border-[#555] pt-10">
-                <div className="flex justify-between items-start lg:flex-row flex-col">
+                <div className="flex justify-between items-start xl:flex-row flex-col">
                     <h2 className="text-2xl font-normal uppercase text-neutral-500 tracking-widest inline">
                         Curriculum Vitae
                     </h2>

@@ -15,7 +15,7 @@ export default function Error({
     }, [error])
 
     return (
-        <div className="w-full lg:p-[1.3rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+        <div className="w-full xl:p-[1.3rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
             <div className="max-w-2xl mx-auto text-center">
                 <h2 className="text-2xl font-bold text-neutral-900 mb-4">
                     Something went wrong!
