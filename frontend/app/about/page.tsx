@@ -65,8 +65,7 @@ export default function AboutMe() {
                         <>
                             Infinite Tape builds AI-powered tools for
                             professionals and creatives, in a variety of
-                            industries from <span className="italic">law</span>{' '}
-                            to <span className="italic">music</span>.
+                            industries from law to music.
                         </>
                     }
                 />
