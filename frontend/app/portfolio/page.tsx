@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Portfolio() {
     return (
         <div className="w-full xl:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] underline-animation">
-            <h1 className="text-2xl font-[400] uppercase text-neutral-500 tracking-widest">
+            <h1 className="text-2xl font-[400] uppercase text-[var(--site-section-title-color)] tracking-widest">
                 Portfolio
             </h1>
             <p className="w-full xl:w-[50%]">

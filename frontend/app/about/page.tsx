@@ -41,7 +41,7 @@ export default function AboutMe() {
             </div>
             <div className="border-t border-[#555] pt-10">
                 <div className="flex justify-between items-start xl:flex-row flex-col">
-                    <h2 className="text-2xl font-normal uppercase text-neutral-500 tracking-widest inline">
+                    <h2 className="text-2xl font-normal uppercase text-[var(--site-section-title-color)] tracking-widest inline">
                         Curriculum Vitae
                     </h2>
                     <a
