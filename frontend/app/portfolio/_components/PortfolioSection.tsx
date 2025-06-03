@@ -86,23 +86,23 @@ export default function PortfolioSection({
                     {description}
                     <dl className="grid grid-cols-[7rem_1fr] gap-0 font-size-085 my-4">
                         <dt className="text-neutral-500 py-1">Date</dt>
-                        <dd className="py-1 border-b border-b-neutral-800">
+                        <dd className="py-1 border-b border-b-[var(--portfolio-detail-rule-color)]">
                             {date}
                         </dd>
                         <dt className="text-neutral-500 py-1">Company</dt>
-                        <dd className="py-1 border-b border-b-neutral-800">
+                        <dd className="py-1 border-b border-b-[var(--portfolio-detail-rule-color)]">
                             <a target="_blank" href={companyUrl}>
                                 {company}
                             </a>
                         </dd>
                         <dt className="text-neutral-500 py-1">Roles</dt>
-                        <dd className="py-1 border-b border-b-neutral-800">
+                        <dd className="py-1 border-b border-b-[var(--portfolio-detail-rule-color)]">
                             {roles.join(', ')}
                         </dd>
                         {stack && (
                             <>
                                 <dt className="text-neutral-500 py-1">Stack</dt>
-                                <dd className="py-1 border-b border-b-neutral-800">
+                                <dd className="py-1 border-b border-b-[var(--portfolio-detail-rule-color)]">
                                     {stack.join(', ')}
                                 </dd>
                             </>
@@ -112,7 +112,7 @@ export default function PortfolioSection({
                         {assets.map((asset, i) => (
                             <div
                                 key={'asset_' + i}
-                                className={`asset-thumbnail bg-[#111] transition-all duration-300 shadow-md rounded overflow-hidden mr-4 mb-4 cursor-pointer relative ${
+                                className={`asset-thumbnail bg-[var(--portfolio-asset-thumbnail-bg)] transition-all duration-300 shadow-md rounded overflow-hidden mr-4 mb-4 cursor-pointer relative ${
                                     i === activeAssetIndex
                                         ? 'ring-2 ring-[var(--link-color)]'
                                         : ''
@@ -146,7 +146,7 @@ export default function PortfolioSection({
                         ))}
                     </div>
                 </div>
-                <div className="asset-display-container flex-1 relative bg-[#111] xl:rounded-lg rounded overflow-hidden shadow-[0_5px_10px_rgba(0,0,0,0.35)]">
+                <div className="asset-display-container flex-1 relative bg-[var(--portfolio-asset-thumbnail-bg)] xl:rounded-lg rounded overflow-hidden shadow-[0_5px_10px_rgba(0,0,0,0.35)]">
                     {isLoading && (
                         <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300">
                             <div className="w-[80%] h-1 bg-gray-600 rounded-full overflow-hidden">

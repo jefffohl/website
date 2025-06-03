@@ -20,7 +20,7 @@ export default function Portfolio() {
                 or any combination of these. I will attempt to clarify my role
                 in each case.
             </p>
-            <div className="border-b border-[#222] pb-4"></div>
+            <div className="border-b border-b-[var(--rule-top)] pb-4"></div>
             <PortfolioSection
                 title="The Reading Chair"
                 description={

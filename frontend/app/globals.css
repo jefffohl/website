@@ -35,6 +35,13 @@
     --tag-color-hover: #000;
     --site-section-title-color: #737373; /* e.g. Blog, Portfolio, etc. */
     --date-color: #737373;
+    --portfolio-asset-thumbnail-bg: #ccc;
+    --portfolio-detail-rule-color: #ccc;
+    --cv-rule-color: #bbb;
+    --cv-position-title-color: #222;
+    --cv-company-color: #222;
+    --cv-college-color: #222;
+    --cv-college-degree-color: #222;
 }
 
 :root[data-theme='dark'] {
@@ -64,6 +71,13 @@
     --tag-color-hover: #fff;
     --site-section-title-color: #737373;
     --date-color: #bbb;
+    --portfolio-asset-thumbnail-bg: #555;
+    --portfolio-detail-rule-color: #222;
+    --cv-rule-color: #666;
+    --cv-position-title-color: #fff;
+    --cv-company-color: #bbb;
+    --cv-college-color: #eee;
+    --cv-college-degree-color: #bbb;
 }
 
 * {
