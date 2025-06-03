@@ -586,7 +586,7 @@ export default function Portfolio() {
                     },
                 ]}
             />
-            <div className="p-[4rem_0] border-t border-b border-t-[#555] border-b-[#222]">
+            <div className="p-[4rem_0] border-t border-b border-t-[var(--rule-bottom)] border-b-[var(--rule-top)]">
                 <h3 className="text-[2rem] font-[400]">PwC</h3>
                 <p>
                     In 2016,{' '}
