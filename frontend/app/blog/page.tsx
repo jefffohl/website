@@ -84,7 +84,7 @@ export default async function Blog({
                                 <div className="flex items-start gap-6">
                                     {post.splash && (
                                         <Image
-                                            src={`http://localhost:1337${post.splash.url}`}
+                                            src={post.splash.url}
                                             alt={post.title}
                                             width="150"
                                             height="150"

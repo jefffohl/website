@@ -145,7 +145,7 @@ export default async function BlogPost({
                     {post.splash ? (
                         <div className="order-2 border-b border-b-[var(--rule-top)] xl:border-b-0 pb-4 xl:pb-0">
                             <Image
-                                src={`http://localhost:1337${post.splash.url}`}
+                                src={post.splash.url}
                                 alt={post.splash.alternativeText || 'Splash'}
                                 width={post.splash.width}
                                 height={post.splash.height}
