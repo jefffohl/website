@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Portfolio() {
     return (
         <div className="w-full xl:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] underline-animation">
-            <h1 className="text-2xl font-[400] uppercase text-neutral-500 tracking-widest">
+            <h1 className="text-2xl font-[400] uppercase text-[var(--site-section-title-color)] tracking-widest">
                 Portfolio
             </h1>
             <p className="w-full xl:w-[50%]">
@@ -20,7 +20,7 @@ export default function Portfolio() {
                 or any combination of these. I will attempt to clarify my role
                 in each case.
             </p>
-            <div className="border-b border-[#222] pb-4"></div>
+            <div className="border-b border-b-[var(--rule-top)] pb-4"></div>
             <PortfolioSection
                 title="The Reading Chair"
                 description={

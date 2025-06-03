@@ -1,6 +1,7 @@
 import { Post } from '@/types/api'
 import { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 
 // Generate metadata for the page
 export async function generateMetadata({
@@ -55,7 +56,7 @@ export default async function Blog({
 
     return (
         <div className="w-full xl:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
-            <h1 className="text-2xl font-[400] uppercase text-neutral-500 tracking-widest pb-4">
+            <h1 className="text-2xl font-[400] uppercase text-[var(--site-section-title-color)] tracking-widest pb-4">
                 Blog
             </h1>
             {tag && (
@@ -63,7 +64,7 @@ export default async function Blog({
                     <span className="text-neutral-400">Filtering by: </span>
                     <Link
                         href="/blog"
-                        className="text-neutral-300 bg-neutral-900 px-2 py-1 ml-2 rounded hover:bg-neutral-800 cursor-pointer inline-flex items-center"
+                        className="bg-[var(--tag-bg)] hover:bg-[var(--tag-bg-hover)] text-[var(--tag-color)] hover:text-[var(--tag-color-hover)] px-2 py-1 ml-2 rounded cursor-pointer inline-flex items-center"
                     >
                         {tag}
                         <span className="inline-block ml-4 text-neutral-500">
@@ -80,39 +81,50 @@ export default async function Blog({
                                 key={post.id}
                                 className="border-t border-t-[var(--rule-bottom)] border-b border-b-[var(--rule-top)] py-4"
                             >
-                                <Link
-                                    href={`/blog/${encodeURIComponent(
-                                        post.slug
-                                    )}`}
-                                    className="underline-animation relative"
-                                >
-                                    <h2 className="text-2xl mb-1">
-                                        {post.title}
-                                    </h2>
-                                </Link>
-                                {post.tags ? (
-                                    <div className="tags flex items-center gap-1 mt-2">
-                                        {post.tags.map((tag: any) => (
+                                <div className="flex items-start gap-6">
+                                    {post.splash && (
+                                        <Image
+                                            src={post.splash.url}
+                                            alt={post.title}
+                                            width="150"
+                                            height="150"
+                                            className="rounded"
+                                        />
+                                    )}
+                                    <div className="flex-1 flex flex-col">
+                                        <span>
                                             <Link
-                                                key={tag.id}
-                                                href={`/blog?tag=${encodeURIComponent(
-                                                    tag.name
+                                                href={`/blog/${encodeURIComponent(
+                                                    post.slug
                                                 )}`}
-                                                className={`text-neutral-300 text-xs px-2 py-1 rounded cursor-pointer ${
-                                                    tag === tag.name
-                                                        ? 'bg-neutral-800'
-                                                        : 'bg-neutral-900 hover:bg-neutral-800'
-                                                }`}
+                                                className="underline-animation relative inline"
                                             >
-                                                {tag.name}
+                                                <h2 className="text-2xl leading-[1.1] mb-2 inline">
+                                                    {post.title}
+                                                </h2>
                                             </Link>
-                                        ))}
+                                        </span>
+                                        {post.tags ? (
+                                            <div className="tags flex items-center gap-1 mt-2">
+                                                {post.tags.map((tag: any) => (
+                                                    <Link
+                                                        key={tag.id}
+                                                        href={`/blog?tag=${encodeURIComponent(
+                                                            tag.name
+                                                        )}`}
+                                                        className="text-xs px-2 py-1 rounded cursor-pointer bg-[var(--tag-bg)] hover:bg-[var(--tag-bg-hover)] text-[var(--tag-color)] hover:text-[var(--tag-color-hover)]"
+                                                    >
+                                                        {tag.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        ) : null}
+                                        <div className="text-[var(--date-color)] mt-2 text-sm">
+                                            {new Date(
+                                                post.createdAt
+                                            ).toLocaleDateString()}
+                                        </div>
                                     </div>
-                                ) : null}
-                                <div className="text-neutral-500 mt-2">
-                                    {new Date(
-                                        post.createdAt
-                                    ).toLocaleDateString()}
                                 </div>
                             </div>
                         ))}

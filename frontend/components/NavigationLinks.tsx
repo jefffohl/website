@@ -25,9 +25,9 @@ export default function NavigationLinks({
 
     const getLinkClass = (path: string) => {
         if (isActive(path)) {
-            return 'text-[#f5f5f5] bg-[rgba(0,0,0,0.5)]'
+            return 'text-[var(--menu-link-color-active)] bg-[var(--menu-link-bg-active)] hover:bg-[var(--menu-link-bg-active)] hover:text-[var(--menu-link-color-active)]'
         }
-        return 'text-[#aaa] bg-[rgba(0,0,0,0.15)]'
+        return 'text-[var(--menu-link-color)] bg-[var(--menu-link-bg)] hover:bg-[var(--menu-link-bg-hover)] hover:text-[var(--menu-link-color-hover)]'
     }
 
     return (
@@ -35,7 +35,7 @@ export default function NavigationLinks({
             {links.map((link) => (
                 <li key={link.path} className="m-0 p-0 list-none relative">
                     <span
-                        className={`absolute top-1/2 -translate-y-1/2 text-[#f5f5f5] ${
+                        className={`absolute top-1/2 -translate-y-1/2 text-[var(--menu-link-color-active)] ${
                             isActive(link.path) ? 'left-[1rem]' : 'left-[-1rem]'
                         }`}
                     >
@@ -44,7 +44,7 @@ export default function NavigationLinks({
                     <Link
                         href={link.path}
                         onClick={onLinkClick}
-                        className={`text-[#aaa] block no-underline p-2 px-8 hover:bg-[rgba(0,0,0,0.5)] hover:text-[#f5f5f5] cursor-pointer ${getLinkClass(
+                        className={`block no-underline p-2 px-8 cursor-pointer ${getLinkClass(
                             link.path
                         )}`}
                     >

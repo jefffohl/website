@@ -98,27 +98,39 @@ export default async function BlogPost({
     return (
         <div className="w-full xl:p-[1.3rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
             <div className="flex flex-col xl:flex-row">
-                <div className="w-full xl:w-[15rem] xl:flex-[0_0_12em] text-neutral-400 pt-4 pb-4 order-3 border-b border-b-[var(--rule-top)] xl:border-b-0 border-t border-t-[var(--rule-bottom)] xl:border-t-0 xl:order-1 xl:border-r xl:border-r-[var(--rule-top)] xl:pr-8">
+                <div className="w-full xl:w-[15rem] xl:flex-[0_0_12em] text-[var(--date-color)] pt-4 pb-4 order-3 border-b border-b-[var(--rule-top)] xl:border-b-0 border-t border-t-[var(--rule-bottom)] xl:border-t-0 xl:order-1 xl:border-r xl:border-r-[var(--rule-top)] xl:pr-8">
                     <div className="mb-4 underline-animation">
                         <Link href="/blog">&larr; Index</Link>
                     </div>
-                    <div className="date">
-                        Posted on{' '}
-                        {new Date(post.createdAt).toLocaleDateString()}
-                    </div>
-                    {post.updatedAt && post.updatedAt !== post.createdAt ? (
-                        <div className="date">
-                            Updated on{' '}
-                            {new Date(post.updatedAt).toLocaleDateString()}
+                    <dl className="flex flex-col gap-4 text-sm">
+                        <div className="flex gap-0 flex-col">
+                            <dt className="text-[var(--date-color)]">
+                                Posted on
+                            </dt>
+                            <dd>
+                                {new Date(post.createdAt).toLocaleDateString()}
+                            </dd>
                         </div>
-                    ) : null}
+                        {post.updatedAt && post.updatedAt !== post.createdAt ? (
+                            <div className="flex gap-0 flex-col">
+                                <dt className="text-[var(--date-color)]">
+                                    Updated on
+                                </dt>
+                                <dd>
+                                    {new Date(
+                                        post.updatedAt
+                                    ).toLocaleDateString()}
+                                </dd>
+                            </div>
+                        ) : null}
+                    </dl>
                     {post.tags ? (
                         <div className="tags mt-4">
                             {post.tags.map((tag: any) => (
                                 <Link
                                     key={tag.id}
                                     href={`/blog?tag=${tag.name}`}
-                                    className={`text-neutral-300 hover:text-neutral-100 text-xs px-2 py-1 mr-2 rounded cursor-pointer bg-neutral-900 hover:bg-neutral-600`}
+                                    className={`text-[var(--tag-color)] hover:text-[var(--tag-color-hover)] text-xs px-2 py-1 mr-2 rounded cursor-pointer bg-[var(--tag-bg)] hover:bg-[var(--tag-bg-hover)]`}
                                 >
                                     {tag.name}
                                 </Link>

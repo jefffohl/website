@@ -22,11 +22,13 @@ export default function Position({
 }: PositionProps) {
     return (
         <div
-            className={`ml-[30px] py-[30px] pl-[30px] border-l border-[#666] ${!isLast ? 'border-b' : ''} ${isFirst ? 'relative pt-0 before:content-[""] before:block before:absolute before:w-[10px] before:h-[10px] before:rotate-[-45deg] before:border-t before:border-r before:border-[#666] before:top-[1px] before:left-[-6px]' : ''}`}
+            className={`ml-[30px] py-[30px] pl-[30px] border-l border-[var(--cv-rule-color)] ${!isLast ? 'border-b' : ''} ${isFirst ? 'relative pt-0 before:content-[""] before:block before:absolute before:w-[10px] before:h-[10px] before:rotate-[-45deg] before:border-t before:border-r before:border-[var(--cv-rule-color)] before:top-[1px] before:left-[-6px]' : ''}`}
         >
-            <h2 className="text-[1.5rem] font-normal text-[#999] leading-[1.85rem]">
-                <span className="font-semibold text-white">{title}</span> at{' '}
-                <span className="company">{company}</span>
+            <h2 className="text-[1.5rem] font-normal leading-[1.85rem] text-[var(--cv-company-color)]">
+                <span className="font-semibold text-[var(--cv-position-title-color)]">
+                    {title}
+                </span>{' '}
+                at <span className="company ">{company}</span>
             </h2>
             {description && (
                 <p className="position-description">{description}</p>

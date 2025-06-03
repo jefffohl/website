@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function AboutMe() {
     return (
         <div className="underline-animation flex-1 xl:p-[1rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] max-w-[100ch] break-after-page">
-            <div className="border-b border-[#222] pb-8">
+            <div className="border-b border-[var(--rule-top)] pb-8">
                 <p>
                     Hi. I&apos;m Jeff. I am interested in how humans use
                     computers, and the interfaces between them.
@@ -39,9 +39,9 @@ export default function AboutMe() {
                 </p>
                 <p></p>
             </div>
-            <div className="border-t border-[#555] pt-10">
+            <div className="border-t border-[var(--rule-bottom)] pt-10">
                 <div className="flex justify-between items-start xl:flex-row flex-col">
-                    <h2 className="text-2xl font-normal uppercase text-neutral-500 tracking-widest inline">
+                    <h2 className="text-2xl font-normal uppercase text-[var(--site-section-title-color)] tracking-widest inline">
                         Curriculum Vitae
                     </h2>
                     <a
@@ -246,24 +246,28 @@ export default function AboutMe() {
                 </h2>
                 <ul className="list-none p-0 m-0 ml-8 mb-8">
                     <li className="list-none p-0 m-0 mb-4">
-                        <div className="text-[#b0deff] font-semibold">
+                        <div className="text-[var(--cv-college-color)] font-semibold">
                             Rhode Island School of Design
                         </div>
-                        <div className="text-[#5ca9e0]">BFA Illustration</div>
+                        <div className="text-[var(--cv-college-degree-color)]">
+                            BFA Illustration
+                        </div>
                     </li>
                     <li className="list-none p-0 m-0 mb-4">
-                        <div className="text-[#b0deff] font-semibold">
+                        <div className="text-[var(--cv-college-color)] font-semibold">
                             Sea Education Association
                         </div>
-                        <div className="text-[#5ca9e0]">
+                        <div className="text-[var(--cv-college-degree-color)]">
                             Oceanography coursework
                         </div>
                     </li>
                     <li className="list-none p-0 m-0 mb-4">
-                        <div className="text-[#b0deff] font-semibold">
+                        <div className="text-[var(--cv-college-color)] font-semibold">
                             Connecticut College
                         </div>
-                        <div className="text-[#5ca9e0]">Physics coursework</div>
+                        <div className="text-[var(--cv-college-degree-color)]">
+                            Physics coursework
+                        </div>
                     </li>
                 </ul>
             </div>
