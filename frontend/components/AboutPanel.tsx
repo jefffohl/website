@@ -1,5 +1,7 @@
 'use client'
 
+import CloseButton from './CloseButton'
+
 interface AboutPanelProps {
     isHidden: boolean
     onClose?: () => void
@@ -13,12 +15,10 @@ export default function AboutPanel({ isHidden, onClose }: AboutPanelProps) {
             <h2 className="absolute w-full top-0 left-0 pl-8 font-medium text-[1.5rem] my-[0.83em] md:m-0 md:top-0 md:left-0 md:h-[60px] md:p-0 md:px-8 md:leading-[60px]">
                 What is this all about?
                 {onClose && (
-                    <button className="group absolute top-[-20px] md:top-0 right-[5px] h-[60px] w-[60px] cursor-pointer">
-                        <span
-                            className="block absolute h-[60px] top-0 w-[60px] before:content-[''] before:block before:w-[2px] before:h-[25px] before:absolute before:top-[20px] before:left-[30px] before:bg-[var(--button-icon-color)] before:rotate-45 before:transition-colors before:duration-250 after:content-[''] after:block after:w-[2px] after:h-[25px] after:absolute after:top-[20px] after:left-[30px] after:bg-[var(--button-icon-color)] after:rotate-[-45deg] after:transition-colors after:duration-250 group-hover:before:bg-[var(--button-icon-hover)] group-hover:after:bg-[var(--button-icon-hover)]"
-                            onClick={onClose}
-                        ></span>
-                    </button>
+                    <CloseButton
+                        clickHandler={onClose}
+                        className="absolute top-[-20px] md:top-0 right-[5px]"
+                    />
                 )}
             </h2>
             <div className="underline-animation absolute top-[60px] left-0 overflow-auto h-[calc(100%-60px)] w-full p-[0_30px_30px_30px] md:pb-[120px]">

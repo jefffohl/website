@@ -42,6 +42,7 @@
     --cv-company-color: #222;
     --cv-college-color: #222;
     --cv-college-degree-color: #222;
+    --scrim-color: rgba(255, 255, 255, 0.95);
 }
 
 :root[data-theme='dark'] {
@@ -78,6 +79,7 @@
     --cv-company-color: #bbb;
     --cv-college-color: #eee;
     --cv-college-degree-color: #bbb;
+    --scrim-color: rgba(0, 0, 0, 0.95);
 }
 
 * {
