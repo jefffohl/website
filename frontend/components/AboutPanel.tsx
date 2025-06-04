@@ -22,7 +22,7 @@ export default function AboutPanel({ isHidden, onClose }: AboutPanelProps) {
                 )}
             </h2>
             <div className="underline-animation absolute top-[60px] left-0 overflow-auto h-[calc(100%-60px)] w-full p-[0_30px_30px_30px] md:pb-[120px]">
-                <p className="font-light">
+                <p>
                     What you see happening on this page started out as a doodle,
                     initially inspired by abstract works by artists such as{' '}
                     <a
@@ -34,7 +34,7 @@ export default function AboutPanel({ isHidden, onClose }: AboutPanelProps) {
                     . The doodle evolved over time into a kind of grid, dancing
                     in my mind between the abstract and the concrete.
                 </p>
-                <p className="font-light">
+                <p>
                     I became curious if I could write an algorithm to generate
                     variants on the design. Something perhaps similar to{' '}
                     <a
@@ -58,7 +58,7 @@ export default function AboutPanel({ isHidden, onClose }: AboutPanelProps) {
                         You can see the code here.
                     </a>
                 </p>
-                <p className="font-light">
+                <p>
                     What I find fascinating here is how our minds will look at
                     this random arrangement of rectangles and inevitably attempt
                     to identify it, to classify it. Is it a landscape? An aerial

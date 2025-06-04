@@ -77,10 +77,8 @@ export default function AboutMe() {
                         <>
                             H2O.ai is a leading AI cloud company, on a mission
                             to democratize AI. At H2O.ai, I filled multiple
-                            roles as a <span className="italic">manager</span>,{' '}
-                            <span className="italic">lead UI Engineer</span>,{' '}
-                            <span className="italic">UX Designer</span>, and{' '}
-                            <span className="italic">UI Designer</span>.
+                            roles as a manager, lead UI Engineer, UX Designer,
+                            and UI Designer.
                         </>
                     }
                     highlights={{

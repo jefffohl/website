@@ -13,6 +13,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { slug } = await params
     const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
+
     if (!apiUrl) {
         return {
             title: 'Blog Post',
@@ -74,7 +75,7 @@ export default async function BlogPost({
 }) {
     const { slug } = await params
     const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
-
+    const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || ''
     if (!apiUrl) {
         throw new Error('NEXT_PUBLIC_STRAPI_API_URL is not defined')
     }
@@ -139,13 +140,11 @@ export default async function BlogPost({
                     ) : null}
                 </div>
                 <div className="contents xl:block flex-[1_1_auto] underline-animation order-1 xl:order-2 xl:border-l xl:border-l-[var(--rule-bottom)] xl:pl-8">
-                    <h1 className="text-neutral900 text-4xl mb-4">
-                        {post.title}
-                    </h1>
+                    <h1 className="text-2xl xl:text-4xl mb-4">{post.title}</h1>
                     {post.splash ? (
                         <div className="order-2 border-b border-b-[var(--rule-top)] xl:border-b-0 pb-4 xl:pb-0">
                             <Image
-                                src={post.splash.url}
+                                src={`${imageUrl}${post.splash.url}`}
                                 alt={post.splash.alternativeText || 'Splash'}
                                 width={post.splash.width}
                                 height={post.splash.height}

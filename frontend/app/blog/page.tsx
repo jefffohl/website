@@ -32,6 +32,7 @@ export default async function Blog({
 }) {
     const { tag } = await searchParams
     const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
+    const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL || ''
 
     if (!apiUrl) {
         throw new Error('NEXT_PUBLIC_STRAPI_API_URL is not defined')
@@ -84,7 +85,7 @@ export default async function Blog({
                                 <div className="flex items-start gap-6">
                                     {post.splash && (
                                         <Image
-                                            src={post.splash.url}
+                                            src={`${imageUrl}${post.splash.url}`}
                                             alt={post.title}
                                             width="150"
                                             height="150"
