@@ -79,26 +79,22 @@ function FullScreenModal({
         }
     }, [isOpen, mounted])
 
-    const handleTouchStart = (e: React.TouchEvent) => {
-        e.stopPropagation()
-        setTouchStart(e.targetTouches[0].clientX)
+    const handleDragStart = (clientX: number) => {
+        setTouchStart(clientX)
         setIsDragging(true)
     }
 
-    const handleTouchMove = (e: React.TouchEvent) => {
-        e.stopPropagation()
+    const handleDragMove = (clientX: number) => {
         if (!touchStart) return
 
-        const currentTouch = e.targetTouches[0].clientX
-        setTouchEnd(currentTouch)
+        setTouchEnd(clientX)
 
         // Calculate the drag distance
-        const dragDistance = currentTouch - touchStart
+        const dragDistance = clientX - touchStart
         setTranslateX(dragDistance)
     }
 
-    const handleTouchEnd = (e: React.TouchEvent) => {
-        e.stopPropagation()
+    const handleDragEnd = () => {
         if (!touchStart || !touchEnd) return
 
         const distance = touchStart - touchEnd
@@ -116,6 +112,46 @@ function FullScreenModal({
         setTouchEnd(null)
         setTranslateX(0)
         setIsDragging(false)
+    }
+
+    // Touch event handlers
+    const handleTouchStart = (e: React.TouchEvent) => {
+        e.stopPropagation()
+        handleDragStart(e.targetTouches[0].clientX)
+    }
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        e.stopPropagation()
+        handleDragMove(e.targetTouches[0].clientX)
+    }
+
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        e.stopPropagation()
+        handleDragEnd()
+    }
+
+    // Mouse event handlers
+    const handleMouseDown = (e: React.MouseEvent) => {
+        e.preventDefault()
+        handleDragStart(e.clientX)
+    }
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!isDragging) return
+        e.preventDefault()
+        handleDragMove(e.clientX)
+    }
+
+    const handleMouseUp = (e: React.MouseEvent) => {
+        if (!isDragging) return
+        e.preventDefault()
+        handleDragEnd()
+    }
+
+    const handleMouseLeave = (e: React.MouseEvent) => {
+        if (!isDragging) return
+        e.preventDefault()
+        handleDragEnd()
     }
 
     if (!isOpen || !mounted) return null
@@ -136,6 +172,10 @@ function FullScreenModal({
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
             >
                 <div
                     className="flex transition-transform duration-300 ease-out items-center"
@@ -146,7 +186,7 @@ function FullScreenModal({
                     {assets.map((asset, index) => (
                         <div
                             key={index}
-                            className="flex-shrink-0 w-full h-full flex items-center justify-center"
+                            className="flex-shrink-0 w-full h-full flex items-center justify-center cursor-grab"
                         >
                             {asset.type === 'image' ? (
                                 <Image
