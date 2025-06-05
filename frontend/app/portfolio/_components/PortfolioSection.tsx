@@ -332,8 +332,8 @@ export default function PortfolioSection({
                             >
                                 {!thumbnailLoadStates[i] && (
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-[80%] h-1 bg-gray-600 rounded-full overflow-hidden">
-                                            <div className="w-full h-full bg-[var(--link-color)] loading-bar"></div>
+                                        <div className="w-[80%] h-1 bg-[var(--loader-bar-bg)] rounded-full overflow-hidden">
+                                            <div className="w-full h-full bg-[var(--loader-bar-color)] loading-bar"></div>
                                         </div>
                                     </div>
                                 )}
@@ -360,8 +360,8 @@ export default function PortfolioSection({
                 <div className="hidden xl:block asset-display-container flex-1 relative bg-[var(--portfolio-asset-thumbnail-bg)] xl:rounded-lg rounded overflow-hidden shadow-[0_3px_8px_rgba(0,0,0,0.35)]">
                     {isLoading && (
                         <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300">
-                            <div className="w-[80%] h-1 bg-gray-600 rounded-full overflow-hidden">
-                                <div className="w-full h-full bg-[var(--link-color)] loading-bar"></div>
+                            <div className="w-[80%] h-1 bg-[var(--loader-bar-bg)] rounded-full overflow-hidden">
+                                <div className="w-full h-full bg-[var(--loader-bar-color)] loading-bar"></div>
                             </div>
                         </div>
                     )}

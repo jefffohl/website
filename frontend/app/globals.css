@@ -43,6 +43,8 @@
     --cv-college-color: #222;
     --cv-college-degree-color: #222;
     --scrim-color: rgba(255, 255, 255, 0.95);
+    --loader-bar-bg: #fff;
+    --loader-bar-color: var(--color-primary);
 }
 
 :root[data-theme='dark'] {
@@ -80,6 +82,8 @@
     --cv-college-color: #eee;
     --cv-college-degree-color: #bbb;
     --scrim-color: rgba(0, 0, 0, 0.95);
+    --loader-bar-bg: #222;
+    --loader-bar-color: var(--color-primary);
 }
 
 * {
