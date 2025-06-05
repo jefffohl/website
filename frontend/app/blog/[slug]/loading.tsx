@@ -1,8 +1,10 @@
 // TODO: figure out why the Loading component for the parent route is loading first, and then rendering this, followed by the page content
 
+import ContentPageWrapper from '@/components/ContentPageWrapper'
+
 export default function Loading() {
     return (
-        <div className="w-full xl:p-[1.3rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+        <ContentPageWrapper className="animate-pulse">
             <div className="flex flex-col xl:flex-row">
                 <div className="w-full xl:w-[15rem] xl:flex-[0_0_12em] text-neutral-400 pt-4 pb-4 order-3 border-b border-b-[var(--rule-top)] xl:border-b-0 border-t border-t-[var(--rule-bottom)] xl:border-t-0 xl:order-1 xl:border-r xl:border-r-[var(--rule-top)] xl:pr-8">
                     <div className="mb-4">
@@ -20,6 +22,6 @@ export default function Loading() {
                     </div>
                 </div>
             </div>
-        </div>
+        </ContentPageWrapper>
     )
 }

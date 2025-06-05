@@ -2,6 +2,7 @@ import { Post } from '@/types/api'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
+import ContentPageWrapper from '@/components/ContentPageWrapper'
 
 // Generate metadata for the page
 export async function generateMetadata({
@@ -56,7 +57,7 @@ export default async function Blog({
     const posts: Post[] = responseData.data
 
     return (
-        <div className="w-full xl:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+        <ContentPageWrapper>
             <h1 className="text-2xl font-[400] uppercase text-[var(--site-section-title-color)] tracking-widest pb-4">
                 Blog
             </h1>
@@ -137,6 +138,6 @@ export default async function Blog({
                     </div>
                 )}
             </div>
-        </div>
+        </ContentPageWrapper>
     )
 }

@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import PortfolioSection from './_components/PortfolioSection'
+import ContentPageWrapper from '@/components/ContentPageWrapper'
 
 export const metadata: Metadata = {
     title: 'Portfolio',
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Portfolio() {
     return (
-        <div className="w-full xl:p-[2rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] underline-animation">
+        <ContentPageWrapper>
             <h1 className="text-2xl font-[400] uppercase text-[var(--site-section-title-color)] tracking-widest">
                 Portfolio
             </h1>
@@ -750,6 +751,6 @@ export default function Portfolio() {
                     },
                 ]}
             />
-        </div>
+        </ContentPageWrapper>
     )
 }
