@@ -122,7 +122,7 @@ function FullScreenModal({
 
     const modalContent = (
         <div
-            className="fixed xl:hidden inset-0 bg-[var(--scrim-color)] bg-opacity-90 z-50 flex items-center justify-center w-[100dvw] h-[100dvh]"
+            className="fixed inset-0 bg-[var(--scrim-color)] bg-opacity-90 z-50 flex items-center justify-center w-[100dvw] h-[100dvh]"
             onTouchStart={(e) => e.stopPropagation()}
             onTouchMove={(e) => e.stopPropagation()}
             onTouchEnd={(e) => e.stopPropagation()}
@@ -146,7 +146,7 @@ function FullScreenModal({
                     {assets.map((asset, index) => (
                         <div
                             key={index}
-                            className="flex-shrink-0 w-full h-full flex items-center justify-center px-4"
+                            className="flex-shrink-0 w-full h-full flex items-center justify-center"
                         >
                             {asset.type === 'image' ? (
                                 <Image
@@ -155,7 +155,7 @@ function FullScreenModal({
                                     width={Number(asset.width)}
                                     height={Number(asset.height)}
                                     quality={100}
-                                    className="max-w-full max-h-full object-contain rounded-md"
+                                    className="max-w-[90dvw] max-h-[90dvh] object-contain rounded-md w-auto h-auto"
                                 />
                             ) : (
                                 <iframe
@@ -225,7 +225,9 @@ export default function PortfolioSection({
     const handleThumbnailClick = (index: number) => {
         setIsImageVisible(false)
         setActiveAssetIndex(index)
-        setIsModalOpen(true)
+        if (window.innerWidth < 1280) {
+            setIsModalOpen(true)
+        }
     }
 
     // Handle initial image load
