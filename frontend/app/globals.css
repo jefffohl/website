@@ -24,7 +24,7 @@
     --link-color: var(--color-primary);
     --link-hover: var(--color-primary-hover);
     --heading-color: #222;
-    --panel-bg: #fff;
+    --panel-bg: rgba(255, 255, 255, 0.9);
     --rule-top: #ddd;
     --rule-bottom: #fff;
     --button-icon-color: #666;
@@ -61,7 +61,7 @@
     --link-color: var(--color-primary);
     --link-hover: var(--color-primary-hover);
     --heading-color: #e5e5e5;
-    --panel-bg: var(--background);
+    --panel-bg: rgba(0, 0, 0, 0.9);
     --rule-top: #222;
     --rule-bottom: #555;
     --button-icon-color: #999;

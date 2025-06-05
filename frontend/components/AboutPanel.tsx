@@ -10,18 +10,18 @@ interface AboutPanelProps {
 export default function AboutPanel({ isHidden, onClose }: AboutPanelProps) {
     return (
         <div
-            className={`w-full h-full absolute top-0 p-[60px_30px_30px_30px] bg-[var(--panel-bg)] leading-[1.5rem] text-base ${isHidden ? 'right-[-100%] xl:right-[-400px]' : 'right-0 md:right-0'} xl:left-auto xl:w-[400px] xl:h-full xl:absolute xl:overflow-visible md:w-full md:h-screen md:absolute md:overflow-hidden`}
+            className={`w-full h-full absolute top-0 bg-[var(--panel-bg)] leading-[1.5rem] text-base ${isHidden ? 'right-[-100%] xl:right-[-400px]' : 'right-0'} xl:left-auto xl:w-[400px]`}
         >
-            <h2 className="absolute w-full top-0 left-0 pl-8 font-medium text-[1.5rem] my-[0.83em] md:m-0 md:top-0 md:left-0 md:h-[60px] md:p-0 md:px-8 md:leading-[60px]">
+            <h2 className="font-medium text-[1.5rem] pl-6 pr-15 h-[60px] leading-[60px]">
                 What is this all about?
                 {onClose && (
                     <CloseButton
                         clickHandler={onClose}
-                        className="absolute top-[-20px] md:top-0 right-[5px]"
+                        className="absolute top-[5px] right-[5px]"
                     />
                 )}
             </h2>
-            <div className="underline-animation absolute top-[60px] left-0 overflow-auto h-[calc(100%-60px)] w-full p-[0_30px_30px_30px] md:pb-[120px]">
+            <div className="underline-animation overflow-auto h-[calc(100%-60px)] px-6 pb-8">
                 <p>
                     What you see happening on this page started out as a doodle,
                     initially inspired by abstract works by artists such as{' '}
