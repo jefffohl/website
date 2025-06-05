@@ -46,6 +46,9 @@ function FullScreenModal({
     const [isDragging, setIsDragging] = useState(false)
     const [mounted, setMounted] = useState(false)
     const [scrollY, setScrollY] = useState<number>(0)
+    const [galleryLoadStates, setGalleryLoadStates] = useState<boolean[]>(
+        new Array(assets.length).fill(false)
+    )
 
     useEffect(() => {
         setMounted(true)
@@ -151,6 +154,14 @@ function FullScreenModal({
         handleDragEnd()
     }
 
+    const handleGalleryImageLoad = (index: number) => {
+        setGalleryLoadStates((prev) => {
+            const newStates = [...prev]
+            newStates[index] = true
+            return newStates
+        })
+    }
+
     if (!isOpen || !mounted) return null
 
     const modalContent = (
@@ -186,14 +197,30 @@ function FullScreenModal({
                             className="flex-shrink-0 w-full h-full flex items-center justify-center cursor-grab"
                         >
                             {asset.type === 'image' ? (
-                                <Image
-                                    src={asset.src}
-                                    alt={asset.alt}
-                                    width={Number(asset.width)}
-                                    height={Number(asset.height)}
-                                    quality={100}
-                                    className="max-w-[90dvw] max-h-[90dvh] object-contain rounded-md w-auto h-auto"
-                                />
+                                <div className="relative min-h-1">
+                                    {!galleryLoadStates[index] && (
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <div className="w-[80%] h-1 bg-[#ccc] dark:bg-[#666] rounded-full overflow-hidden">
+                                                <div className="w-full h-full bg-[var(--loader-bar-color)] loading-bar"></div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <Image
+                                        src={asset.src}
+                                        alt={asset.alt}
+                                        width={Number(asset.width)}
+                                        height={Number(asset.height)}
+                                        quality={100}
+                                        className={`max-w-[90dvw] max-h-[90dvh] object-contain rounded-md w-auto h-auto transition-opacity duration-300 ${
+                                            galleryLoadStates[index]
+                                                ? 'opacity-100'
+                                                : 'opacity-0'
+                                        }`}
+                                        onLoad={() =>
+                                            handleGalleryImageLoad(index)
+                                        }
+                                    />
+                                </div>
                             ) : (
                                 <iframe
                                     width={asset.width}
