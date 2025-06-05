@@ -222,16 +222,28 @@ function FullScreenModal({
                                     />
                                 </div>
                             ) : (
-                                <iframe
-                                    width={asset.width}
-                                    height={asset.height}
-                                    src={asset.src}
-                                    title={asset.alt}
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerPolicy="strict-origin-when-cross-origin"
-                                    allowFullScreen
-                                    className="max-w-[90dvw] max-h-[90dvh] rounded-md aspect-video"
-                                />
+                                <div className="relative aspect-video h-full w-full max-w-[90dvw] max-h-[90dvh]">
+                                    {!galleryLoadStates[index] && (
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <div className="w-[80%] h-1 bg-[#ccc] dark:bg-[#666] rounded-full overflow-hidden">
+                                                <div className="w-full h-full bg-[var(--loader-bar-color)] loading-bar"></div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <iframe
+                                        width={asset.width}
+                                        height={asset.height}
+                                        src={asset.src}
+                                        title={asset.alt}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerPolicy="strict-origin-when-cross-origin"
+                                        allowFullScreen
+                                        className="max-w-[90dvw] max-h-[90dvh] rounded-md aspect-video"
+                                        onLoad={() =>
+                                            handleGalleryImageLoad(index)
+                                        }
+                                    />
+                                </div>
                             )}
                         </div>
                     ))}
@@ -265,7 +277,7 @@ export default function PortfolioSection({
     roles,
     stack,
 }: PortfolioSectionProps) {
-    const [activeAssetIndex, setActiveAssetIndex] = useState(0)
+    const [activeAssetIndex, setActiveAssetIndex] = useState<number>(0)
     const [isLoading, setIsLoading] = useState(true)
     const [isImageVisible, setIsImageVisible] = useState(false)
     const [thumbnailLoadStates, setThumbnailLoadStates] = useState<boolean[]>(
@@ -287,7 +299,9 @@ export default function PortfolioSection({
     }
 
     const handleThumbnailClick = (index: number) => {
-        setIsImageVisible(false)
+        if (index !== activeAssetIndex) {
+            setIsImageVisible(false)
+        }
         setActiveAssetIndex(index)
         if (window.innerWidth < 1280) {
             setIsModalOpen(true)
