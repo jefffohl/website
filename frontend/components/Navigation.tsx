@@ -26,7 +26,7 @@ export default function Navigation() {
     }
 
     return (
-        <div className="bg-[var(--menu-bg)] xl:min-h-[100vh] xl:w-[200px] w-full h-[60px] fixed z-10 top-0 left-0">
+        <div className="bg-[var(--menu-bg)] xl:min-h-[100vh] xl:w-[200px] w-full h-[60px] fixed z-10 top-0 left-0 shadow-md xl:shadow-none">
             <div className="top-0 left-0 xl:w-[200px] h-[60px] w-full xl:h-full bg-[var(--menu-bg)] text-[var(--menu-color)] absolute z-[10] xl:z-[15] overflow-visible xl:overflow-auto">
                 <h1 className="px-8 h-[60px] leading-[60px] xl:leading-[inherit] text-right z-1 relative bg-[var(--menu-bg)] font-[350] text-[2rem] m-0 xl:h-[90px] xl:text-left xl:p-8 overflow-hidden">
                     <Link

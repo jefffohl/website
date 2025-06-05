@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Milestone from '@/components/timeline/Milestone'
 import Position from '@/components/timeline/Position'
+import ContentPageWrapper from '@/components/ContentPageWrapper'
 
 export const metadata: Metadata = {
     title: 'About',
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function AboutMe() {
     return (
-        <div className="underline-animation flex-1 xl:p-[1rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem] max-w-[100ch] break-after-page">
+        <ContentPageWrapper className="max-w-[80ch] break-after-page">
             <div className="border-b border-[var(--rule-top)] pb-8">
                 <p>
                     Hi. I&apos;m Jeff. I am interested in how humans use
@@ -77,10 +78,8 @@ export default function AboutMe() {
                         <>
                             H2O.ai is a leading AI cloud company, on a mission
                             to democratize AI. At H2O.ai, I filled multiple
-                            roles as a <span className="italic">manager</span>,{' '}
-                            <span className="italic">lead UI Engineer</span>,{' '}
-                            <span className="italic">UX Designer</span>, and{' '}
-                            <span className="italic">UI Designer</span>.
+                            roles as a manager, lead UI Engineer, UX Designer,
+                            and UI Designer.
                         </>
                     }
                     highlights={{
@@ -95,7 +94,7 @@ export default function AboutMe() {
                                 </span>
                                 , <span className="italic">App Store</span>,{' '}
                                 <span className="italic">Document AI</span>,{' '}
-                                <span className="italic">Feature Store</span>,{' '}
+                                <span className="italic">Feature Store</span>,
                                 H2O.ai marketing website, and others.
                             </>,
                             'Managed teams spanning many time zones, skill sets, and projects to establish principles of engineering and design excellence.',
@@ -271,6 +270,6 @@ export default function AboutMe() {
                     </li>
                 </ul>
             </div>
-        </div>
+        </ContentPageWrapper>
     )
 }

@@ -21,11 +21,11 @@ export default function RootLayout({
         <html lang="en">
             <body className={openSans.className}>
                 <ThemeProvider>
-                    <div className="xl:flex xl:flex-row xl:items-stretch">
-                        <div className="xl:w-[200px] flex-[0_0_200px]">
+                    <div className="flex flex-col xl:flex-row items-stretch">
+                        <div className="h-[60px] flex-[0_0_60px] xl:w-[200px] xl:flex-[0_0_200px]">
                             <Navigation />
                         </div>
-                        <div className="relative h-screen xl:flex-1">
+                        <div className="relative xl:h-screen flex-1 flex-grow">
                             {children}
                         </div>
                     </div>

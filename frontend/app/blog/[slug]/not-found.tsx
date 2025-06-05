@@ -1,8 +1,9 @@
 import Link from 'next/link'
+import ContentPageWrapper from '@/components/ContentPageWrapper'
 
 export default function NotFound() {
     return (
-        <div className="w-full xl:p-[1.3rem_3rem_3rem_3rem] p-[5rem_1rem_3rem_1rem]">
+        <ContentPageWrapper>
             <div className="max-w-2xl mx-auto text-white underline-animation">
                 <h1 className=" text-4xl mb-6">Post not found</h1>
                 <div className="prose prose-neutral">
@@ -22,6 +23,6 @@ export default function NotFound() {
                     </div>
                 </div>
             </div>
-        </div>
+        </ContentPageWrapper>
     )
 }
