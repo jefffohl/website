@@ -1,7 +1,7 @@
 'use client'
 
 import Image, { ImageProps } from 'next/image'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import CloseButton from '@/components/CloseButton'
 
 export interface PortfolioSectionProps {
@@ -41,16 +41,29 @@ function FullScreenModal({
 }: FullScreenModalProps) {
     const [touchStart, setTouchStart] = useState<number | null>(null)
     const [touchEnd, setTouchEnd] = useState<number | null>(null)
+    const [translateX, setTranslateX] = useState(0)
+    const [isDragging, setIsDragging] = useState(false)
 
     const handleTouchStart = (e: React.TouchEvent) => {
+        e.stopPropagation()
         setTouchStart(e.targetTouches[0].clientX)
+        setIsDragging(true)
     }
 
     const handleTouchMove = (e: React.TouchEvent) => {
-        setTouchEnd(e.targetTouches[0].clientX)
+        e.stopPropagation()
+        if (!touchStart) return
+
+        const currentTouch = e.targetTouches[0].clientX
+        setTouchEnd(currentTouch)
+
+        // Calculate the drag distance
+        const dragDistance = currentTouch - touchStart
+        setTranslateX(dragDistance)
     }
 
-    const handleTouchEnd = () => {
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        e.stopPropagation()
         if (!touchStart || !touchEnd) return
 
         const distance = touchStart - touchEnd
@@ -63,45 +76,79 @@ function FullScreenModal({
             onIndexChange(activeIndex - 1)
         }
 
+        // Reset states
         setTouchStart(null)
         setTouchEnd(null)
+        setTranslateX(0)
+        setIsDragging(false)
     }
 
     if (!isOpen) return null
 
     return (
-        <div className="fixed xl:hidden inset-0 bg-[var(--scrim-color)] bg-opacity-90 z-50 flex items-center justify-center">
+        <div
+            className="fixed xl:hidden inset-0 bg-[var(--scrim-color)] bg-opacity-90 z-50 flex items-center justify-center w-[100dvw] h-[100dvh]"
+            onTouchStart={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+            onTouchEnd={(e) => e.stopPropagation()}
+        >
             <CloseButton
                 clickHandler={onClose}
-                className="absolute top-4 right-4 z-50 bg-[var(--scrim-color)] rounded-4xl"
+                className="absolute top-4 right-4 z-51 bg-[var(--scrim-color)] rounded-4xl"
             />
             <div
-                className="relative w-full h-full flex items-center justify-center"
+                className="relative w-full h-full flex items-center justify-center overflow-hidden"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
             >
-                {assets[activeIndex].type === 'image' ? (
-                    <Image
-                        src={assets[activeIndex].src}
-                        alt={assets[activeIndex].alt}
-                        width={Number(assets[activeIndex].width)}
-                        height={Number(assets[activeIndex].height)}
-                        quality={100}
-                        className="max-w-full max-h-full object-contain"
-                    />
-                ) : (
-                    <iframe
-                        width={assets[activeIndex].width}
-                        height={assets[activeIndex].height}
-                        src={assets[activeIndex].src}
-                        title={assets[activeIndex].alt}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        allowFullScreen
-                        className="max-w-full max-h-full"
-                    />
-                )}
+                <div
+                    className="flex transition-transform duration-300 ease-out items-center"
+                    style={{
+                        transform: `translateX(calc(-${activeIndex * 100}% + ${translateX}px))`,
+                    }}
+                >
+                    {assets.map((asset, index) => (
+                        <div
+                            key={index}
+                            className="flex-shrink-0 w-full h-full flex items-center justify-center px-4"
+                        >
+                            {asset.type === 'image' ? (
+                                <Image
+                                    src={asset.src}
+                                    alt={asset.alt}
+                                    width={Number(asset.width)}
+                                    height={Number(asset.height)}
+                                    quality={100}
+                                    className="max-w-full max-h-full object-contain rounded-md"
+                                />
+                            ) : (
+                                <iframe
+                                    width={asset.width}
+                                    height={asset.height}
+                                    src={asset.src}
+                                    title={asset.alt}
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerPolicy="strict-origin-when-cross-origin"
+                                    allowFullScreen
+                                    className="max-w-full max-h-full"
+                                />
+                            )}
+                        </div>
+                    ))}
+                </div>
+                <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2 z-51">
+                    {assets.map((_, index) => (
+                        <div
+                            key={index}
+                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                                index === activeIndex
+                                    ? 'bg-black dark:bg-white scale-125'
+                                    : 'bg-black/50 dark:bg-white/50'
+                            }`}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     )
@@ -202,7 +249,7 @@ export default function PortfolioSection({
                                 key={'asset_' + i}
                                 className={`asset-thumbnail bg-[var(--portfolio-asset-thumbnail-bg)] transition-all duration-300 shadow rounded overflow-hidden cursor-pointer relative ${
                                     i === activeAssetIndex
-                                        ? 'ring-2 ring-[var(--link-color)]'
+                                        ? 'xl:ring-2 xl:ring-[var(--link-color)]'
                                         : ''
                                 }`}
                                 onClick={() => handleThumbnailClick(i)}
