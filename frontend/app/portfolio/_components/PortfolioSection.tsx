@@ -45,6 +45,7 @@ function FullScreenModal({
     const [translateX, setTranslateX] = useState(0)
     const [isDragging, setIsDragging] = useState(false)
     const [mounted, setMounted] = useState(false)
+    const [scrollY, setScrollY] = useState<number>(0)
 
     useEffect(() => {
         setMounted(true)
@@ -54,21 +55,17 @@ function FullScreenModal({
     // Handle body scroll lock
     useEffect(() => {
         if (!mounted) return
-
         if (isOpen) {
-            // Store the current scroll position
-            const scrollY = window.scrollY
             // Add styles to prevent scrolling
+            setScrollY(window.scrollY)
+            document.body.style.top = `-${window.scrollY}px`
             document.body.style.position = 'fixed'
-            document.body.style.top = `-${scrollY}px`
-            document.body.style.width = '100%'
         } else {
             // Restore scroll position
-            const scrollY = document.body.style.top
             document.body.style.position = ''
             document.body.style.top = ''
             document.body.style.width = ''
-            window.scrollTo(0, parseInt(scrollY || '0') * -1)
+            window.scrollTo(0, scrollY || 0)
         }
 
         return () => {
@@ -206,7 +203,7 @@ function FullScreenModal({
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     referrerPolicy="strict-origin-when-cross-origin"
                                     allowFullScreen
-                                    className="max-w-full max-h-full"
+                                    className="max-w-[90dvw] max-h-[90dvh] rounded-md aspect-video"
                                 />
                             )}
                         </div>
