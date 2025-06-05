@@ -2,6 +2,7 @@
 
 import Image, { ImageProps } from 'next/image'
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import CloseButton from '@/components/CloseButton'
 
 export interface PortfolioSectionProps {
@@ -43,6 +44,40 @@ function FullScreenModal({
     const [touchEnd, setTouchEnd] = useState<number | null>(null)
     const [translateX, setTranslateX] = useState(0)
     const [isDragging, setIsDragging] = useState(false)
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+        return () => setMounted(false)
+    }, [])
+
+    // Handle body scroll lock
+    useEffect(() => {
+        if (!mounted) return
+
+        if (isOpen) {
+            // Store the current scroll position
+            const scrollY = window.scrollY
+            // Add styles to prevent scrolling
+            document.body.style.position = 'fixed'
+            document.body.style.top = `-${scrollY}px`
+            document.body.style.width = '100%'
+        } else {
+            // Restore scroll position
+            const scrollY = document.body.style.top
+            document.body.style.position = ''
+            document.body.style.top = ''
+            document.body.style.width = ''
+            window.scrollTo(0, parseInt(scrollY || '0') * -1)
+        }
+
+        return () => {
+            // Cleanup in case the component unmounts while modal is open
+            document.body.style.position = ''
+            document.body.style.top = ''
+            document.body.style.width = ''
+        }
+    }, [isOpen, mounted])
 
     const handleTouchStart = (e: React.TouchEvent) => {
         e.stopPropagation()
@@ -83,9 +118,9 @@ function FullScreenModal({
         setIsDragging(false)
     }
 
-    if (!isOpen) return null
+    if (!isOpen || !mounted) return null
 
-    return (
+    const modalContent = (
         <div
             className="fixed xl:hidden inset-0 bg-[var(--scrim-color)] bg-opacity-90 z-50 flex items-center justify-center w-[100dvw] h-[100dvh]"
             onTouchStart={(e) => e.stopPropagation()}
@@ -152,6 +187,8 @@ function FullScreenModal({
             </div>
         </div>
     )
+
+    return createPortal(modalContent, document.body)
 }
 
 export default function PortfolioSection({
