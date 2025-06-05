@@ -22,6 +22,82 @@ export default function Portfolio() {
                 in each case.
             </p>
             <div className="border-b border-b-[var(--rule-top)] pb-4"></div>
+
+            <PortfolioSection
+                title="Lawful Good"
+                description={
+                    <>
+                        <p>
+                            In 2025, I was the founder and principal designer at{' '}
+                            <a target="_blank" href="https://infinitetape.net">
+                                Infinite Tape
+                            </a>
+                            , a design and development studio that builds
+                            AI-powered tools for professionals and creatives.
+                        </p>
+                        <p>
+                            One of the projects I developed was called{' '}
+                            <a target="_blank" href="https://lawfulgood.us">
+                                Lawful Good
+                            </a>
+                            . This project is ongoing as of this writing. Lawful
+                            Good is an AI Agent designed to help independent
+                            lawyers manage documents more effectively using a{' '}
+                            <a
+                                target="_blank"
+                                href="https://en.wikipedia.org/wiki/Retrieval-Augmented_Generation"
+                            >
+                                RAG-based approach
+                            </a>
+                            .
+                        </p>
+                    </>
+                }
+                company="Infinite Tape"
+                companyUrl="https://infinitetape.net"
+                date="2025"
+                roles={['Engineer', 'Designer']}
+                stack={[
+                    'React',
+                    'TypeScript',
+                    'Python',
+                    'FastAPI',
+                    'LangChain',
+                    'OpenAI',
+                    'Gemini',
+                    'PostgreSQL',
+                    'ChromaDB',
+                    'Google Cloud Platform',
+                ]}
+                assets={[
+                    {
+                        type: 'image',
+                        src: '/portfolio/lawful-good/lawful-good-empty-state.png',
+                        thumbnail: {
+                            src: '/portfolio/lawful-good/lawful-good-empty-state_thumb.png',
+                            alt: 'Lawful Good Empty State',
+                            width: 149,
+                            height: 85,
+                        },
+                        alt: 'Lawful Good Empty State',
+                        width: 2109,
+                        height: 1200,
+                    },
+                    {
+                        type: 'image',
+                        src: '/portfolio/lawful-good/lawful-good-document-view.png',
+                        thumbnail: {
+                            src: '/portfolio/lawful-good/lawful-good-document-view_thumb.png',
+                            alt: 'Lawful Good Workflow',
+                            width: 145,
+                            height: 85,
+                        },
+                        alt: 'Lawful Good Workflow',
+                        width: 2109,
+                        height: 1200,
+                    },
+                ]}
+            />
             <PortfolioSection
                 title="The Reading Chair"
                 description={
@@ -36,6 +112,23 @@ export default function Portfolio() {
                             all, but sometimes it&apos;s nice to consider the
                             real world.
                         </p>
+                        <p>
+                            The purpose of this design is to solve some of the
+                            most common problems I have when sitting down to
+                            read a good book. Namely:
+                        </p>
+                        <ul className="list-disc list-outside pl-4 [&>li]:mb-2">
+                            <li>Comfortable for long periods</li>
+                            <li>
+                                Built-in lighting that illuminates the pages of
+                                the book perfectly
+                            </li>
+                            <li>
+                                Plenty of space for drinks, snacks, glasses, and
+                                other items
+                            </li>
+                        </ul>
+
                         <p>
                             I even made a fake{' '}
                             <a
@@ -134,82 +227,6 @@ export default function Portfolio() {
                     },
                 ]}
             />
-            <PortfolioSection
-                title="Lawful Good"
-                description={
-                    <>
-                        <p>
-                            In 2025, I was the founder and principal designer at{' '}
-                            <a target="_blank" href="https://infinitetape.net">
-                                Infinite Tape
-                            </a>
-                            , a design and development studio that builds
-                            AI-powered tools for professionals and creatives.
-                        </p>
-                        <p>
-                            One of the projects I developed was called{' '}
-                            <a target="_blank" href="https://lawfulgood.us">
-                                Lawful Good
-                            </a>
-                            . This project is ongoing as of this writing. Lawful
-                            Good is an AI Agent designed to help independent
-                            lawyers manage documents more effectively using a{' '}
-                            <a
-                                target="_blank"
-                                href="https://en.wikipedia.org/wiki/Retrieval-Augmented_Generation"
-                            >
-                                RAG-based approach
-                            </a>
-                            .
-                        </p>
-                    </>
-                }
-                company="Infinite Tape"
-                companyUrl="https://infinitetape.net"
-                date="2025"
-                roles={['Engineer', 'Designer']}
-                stack={[
-                    'React',
-                    'TypeScript',
-                    'Python',
-                    'FastAPI',
-                    'LangChain',
-                    'OpenAI',
-                    'Gemini',
-                    'PostgreSQL',
-                    'ChromaDB',
-                    'Google Cloud Platform',
-                ]}
-                assets={[
-                    {
-                        type: 'image',
-                        src: '/portfolio/lawful-good/lawful-good-empty-state.png',
-                        thumbnail: {
-                            src: '/portfolio/lawful-good/lawful-good-empty-state_thumb.png',
-                            alt: 'Lawful Good Empty State',
-                            width: 149,
-                            height: 85,
-                        },
-                        alt: 'Lawful Good Empty State',
-                        width: 2109,
-                        height: 1200,
-                    },
-                    {
-                        type: 'image',
-                        src: '/portfolio/lawful-good/lawful-good-document-view.png',
-                        thumbnail: {
-                            src: '/portfolio/lawful-good/lawful-good-document-view_thumb.png',
-                            alt: 'Lawful Good Workflow',
-                            width: 145,
-                            height: 85,
-                        },
-                        alt: 'Lawful Good Workflow',
-                        width: 2109,
-                        height: 1200,
-                    },
-                ]}
-            />
-
             <PortfolioSection
                 title="H2O Actions"
                 description={
