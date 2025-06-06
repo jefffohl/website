@@ -52,7 +52,7 @@ export default function AboutPanel({ isHidden, onClose }: AboutPanelProps) {
                     design, and then deconstructing it, the system will
                     endlessly explore these ideas of abstraction.{' '}
                     <a
-                        href="https://github.com/jefffohl/website"
+                        href="https://github.com/jefffohl/website/blob/main/frontend/animations/script.ts"
                         target="_blank"
                     >
                         You can see the code here.

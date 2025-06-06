@@ -86,7 +86,7 @@ export default async function Blog({
                                 <div className="flex items-start gap-6">
                                     {post.splash && (
                                         <Image
-                                            src={`${imageUrl}${post.splash.url}`}
+                                            src={`${imageUrl}${post.splash.formats.small.url}`}
                                             alt={post.title}
                                             width="150"
                                             height="150"
