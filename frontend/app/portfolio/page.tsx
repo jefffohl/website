@@ -28,7 +28,8 @@ export default function Portfolio() {
                 description={
                     <>
                         <p>
-                            In 2025, I was the founder and principal designer at{' '}
+                            As of late 2024, I have been the founder and
+                            principal designer at{' '}
                             <a target="_blank" href="https://infinitetape.net">
                                 Infinite Tape
                             </a>
@@ -36,7 +37,7 @@ export default function Portfolio() {
                             AI-powered tools for professionals and creatives.
                         </p>
                         <p>
-                            One of the projects I developed was called{' '}
+                            One of the projects is called{' '}
                             <a target="_blank" href="https://lawfulgood.us">
                                 Lawful Good
                             </a>
