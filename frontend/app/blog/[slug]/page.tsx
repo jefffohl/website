@@ -143,7 +143,7 @@ export default async function BlogPost({
                 <div className="contents xl:block flex-[1_1_auto] underline-animation order-1 xl:order-2 xl:border-l xl:border-l-[var(--rule-bottom)] xl:pl-8">
                     <h1 className="text-2xl xl:text-4xl mb-4">{post.title}</h1>
                     {post.splash ? (
-                        <div className="order-2 border-b border-b-[var(--rule-top)] xl:border-b-0 pb-4 xl:pb-0">
+                        <div className="order-2 border-b border-b-[var(--rule-top)] xl:border-b-0 pb-4">
                             <Image
                                 src={`${imageUrl}${post.splash.url}`}
                                 alt={post.splash.alternativeText || 'Splash'}
