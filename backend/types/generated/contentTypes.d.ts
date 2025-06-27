@@ -404,6 +404,8 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
             Schema.Attribute.Required &
             Schema.Attribute.Unique
         splash: Schema.Attribute.Media<'images' | 'videos' | 'audios'>
+        splash_caption: Schema.Attribute.String
+        splash_materials: Schema.Attribute.String
         tags: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'>
         title: Schema.Attribute.String & Schema.Attribute.Required
         updatedAt: Schema.Attribute.DateTime

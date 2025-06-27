@@ -1,38 +1,49 @@
 {
-    "kind": "collectionType",
-    "collectionName": "posts",
-    "info": {
-        "singularName": "post",
-        "pluralName": "posts",
-        "displayName": "Post",
-        "description": ""
+  "kind": "collectionType",
+  "collectionName": "posts",
+  "info": {
+    "singularName": "post",
+    "pluralName": "posts",
+    "displayName": "Post",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
     },
-    "options": {
-        "draftAndPublish": true
+    "body": {
+      "type": "blocks",
+      "required": true
     },
-    "attributes": {
-        "title": {
-            "type": "string",
-            "required": true
-        },
-        "body": {
-            "type": "blocks",
-            "required": true
-        },
-        "tags": {
-            "type": "relation",
-            "relation": "oneToMany",
-            "target": "api::tag.tag"
-        },
-        "slug": {
-            "type": "string",
-            "required": true,
-            "unique": true
-        },
-        "splash": {
-            "allowedTypes": ["images", "videos", "audios"],
-            "type": "media",
-            "multiple": false
-        }
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag"
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "splash": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "videos",
+        "audios"
+      ]
+    },
+    "splash_caption": {
+      "type": "string"
+    },
+    "splash_materials": {
+      "type": "string"
     }
+  }
 }
