@@ -16,10 +16,7 @@ export const blocks: BlocksComponents = {
             />
         )
     },
-    paragraph: ({ children }) => (
-        <p className="max-w-prose xl:text-lg">{children}</p>
-    ),
-    // ...or point to a design system
+    paragraph: ({ children }) => <p className="xl:text-lg">{children}</p>,
     heading: ({ children, level }) => {
         switch (level) {
             case 1:
@@ -40,4 +37,8 @@ export const blocks: BlocksComponents = {
     },
     // For links, you may want to use the component from your router or framework
     link: ({ children, url }) => <Link href={url}>{children}</Link>,
+    list: ({ children }) => <ul>{children}</ul>,
+    'list-item': ({ children }) => (
+        <li className="mb-4 list-disc ml-4">{children}</li>
+    ),
 }

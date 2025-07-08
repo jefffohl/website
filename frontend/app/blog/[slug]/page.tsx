@@ -149,7 +149,7 @@ export default async function BlogPost({
                                 alt={post.splash.alternativeText || 'Splash'}
                                 width={post.splash.width}
                                 height={post.splash.height}
-                                className="w-full h-auto"
+                                className="max-h-[75vh] w-auto"
                             />
                             {post.splash_caption || post.splash_materials ? (
                                 <figcaption className="my-4 text-sm text-right">
@@ -162,7 +162,7 @@ export default async function BlogPost({
                             ) : null}
                         </figure>
                     ) : null}
-                    <div className="order-4 border-t border-t-[var(--rule-bottom)] xl:border-t-0">
+                    <div className="max-w-prose order-4 border-t border-t-[var(--rule-bottom)] xl:border-t-0 ">
                         <BlocksRenderer
                             blocks={blocks}
                             content={post.body || []}
