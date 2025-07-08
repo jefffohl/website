@@ -132,7 +132,7 @@ export default async function BlogPost({
                                 <Link
                                     key={tag.id}
                                     href={`/blog?tag=${tag.name}`}
-                                    className={`text-[var(--tag-color)] hover:text-[var(--tag-color-hover)] text-xs px-2 py-1 mr-2 rounded cursor-pointer bg-[var(--tag-bg)] hover:bg-[var(--tag-bg-hover)]`}
+                                    className={`tag text-[var(--tag-color)] hover:text-[var(--tag-color-hover)] text-xs px-2 py-1 mr-2 rounded cursor-pointer bg-[var(--tag-bg)] hover:bg-[var(--tag-bg-hover)]`}
                                 >
                                     {tag.name}
                                 </Link>

@@ -17,7 +17,7 @@ export default function Error({
 
     return (
         <ContentPageWrapper>
-            <div className="max-w-2xl mx-auto text-center">
+            <div className="max-w-2xl mx-auto text-center underline-animation">
                 <h2 className="text-2xl font-bold text-neutral-900 mb-4">
                     Something went wrong!
                 </h2>

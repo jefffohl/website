@@ -7,7 +7,7 @@ export default function ContentPageWrapper({
 }) {
     return (
         <div
-            className={`w-full xl:p-[2rem_3rem_3rem_3rem] p-[1rem_1rem_3rem_1rem] underline-animation ${className || ''}`}
+            className={`w-full xl:p-[2rem_3rem_3rem_3rem] p-[1rem_1rem_3rem_1rem] ${className || ''}`}
         >
             {children}
         </div>

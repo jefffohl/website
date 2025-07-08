@@ -10,7 +10,7 @@ const openSans = Open_Sans({ subsets: ['latin'] })
 export const metadata: Metadata = {
     title: 'Jeff Fohl',
     description:
-        'Jeff Fohl - Product designer, software developer, and user experience designer for AI and machine learning, with over 30 years of experience.',
+        'Jeff Fohl - Software designer for AI and machine learning, with over 30 years of experience.',
     metadataBase: new URL('https://fohl.com'),
 }
 
