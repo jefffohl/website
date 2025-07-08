@@ -149,7 +149,7 @@ export default async function BlogPost({
                                 alt={post.splash.alternativeText || 'Splash'}
                                 width={post.splash.width}
                                 height={post.splash.height}
-                                className="max-h-[75vh] w-auto"
+                                className="max-h-[75svh] w-auto"
                             />
                             {post.splash_caption || post.splash_materials ? (
                                 <figcaption className="my-4 text-sm text-right">
