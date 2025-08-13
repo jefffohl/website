@@ -722,10 +722,14 @@ export default function Portfolio() {
                         to design and build these applications in collaboration
                         with H2O.ai&apos;s data science team. Since the PwC
                         group we were working with was based in London, the
-                        leadership team there eventually chose to work with a
-                        design team based in London. Thereafter, my role was
-                        primarily as Lead UI Engineer, but I occasionally gave
-                        UX feedback to the London-based design team.
+                        leadership team there eventually chose to work with the
+                        fantastic London-based design firm,{' '}
+                        <a href="https://manasianandco.com" target="_blank">
+                            Manasian&Co
+                        </a>
+                        . Thereafter, my role was primarily as Lead UI Engineer,
+                        but I occasionally gave UX feedback to the London-based
+                        design team.
                     </p>
                     <p>
                         Between 2016 and 2021, I worked on a number of projects
@@ -734,6 +738,11 @@ export default function Portfolio() {
                         internal projects, so much of this work I am not able to
                         share publicly. What I am able to share, I have included
                         below.
+                    </p>
+                    <p>
+                        During this engagement with PwC, the H2O.ai team
+                        generated over $30M USD in revenue over 5 years, with a
+                        30% margin on professional services.
                     </p>
                 </div>
 
