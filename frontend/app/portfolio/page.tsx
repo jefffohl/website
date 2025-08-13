@@ -524,6 +524,92 @@ export default function Portfolio() {
                                 the UI engineering effort. Eventually, I also
                                 became involved with leading the UX team.
                             </p>
+                            <p>
+                                There were quite a lot of people involved with
+                                the H2O AI Cloud project, far too many to list
+                                here, but I do want to give credit here to the
+                                UX and UI teams that delivered on this product
+                                while I was a part of it:
+                            </p>
+                            <h3 className="font-bold">Credits</h3>
+                            <h4 className="mt-2 mb-1">UX/UI Design</h4>
+                            <ul>
+                                <li>
+                                    <a
+                                        href="https://www.linkedin.com/in/sandaru-paranahewa-96120180/"
+                                        target="_blank"
+                                    >
+                                        Sandaru Paranahewa
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://shihanmalik.com"
+                                        target="_blank"
+                                    >
+                                        Shihan Malik
+                                    </a>
+                                </li>
+                            </ul>
+                            <h4 className="mt-2 mb-1">UI Engineering</h4>
+                            <ul>
+                                <li>
+                                    <a
+                                        href="https://mturoci.github.io"
+                                        target="_blank"
+                                    >
+                                        Martin Turoci
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://medium.com/@vclav"
+                                        target="_blank"
+                                    >
+                                        Václav Gröhling
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://www.linkedin.com/in/neochae/"
+                                        target="_blank"
+                                    >
+                                        Minchul Chae
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://www.linkedin.com/in/brmscheiner/"
+                                        target="_blank"
+                                    >
+                                        Ben Scheiner
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://www.linkedin.com/in/ladislav-ligart/"
+                                        target="_blank"
+                                    >
+                                        Ladislav Ligárt
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://www.linkedin.com/in/marcosantana77/"
+                                        target="_blank"
+                                    >
+                                        Marco Santana
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://www.linkedin.com/in/alencardev/"
+                                        target="_blank"
+                                    >
+                                        Alex Alencar
+                                    </a>
+                                </li>
+                            </ul>
                         </>
                     }
                     company="H2O.ai"
@@ -533,12 +619,15 @@ export default function Portfolio() {
                     stack={[
                         'React',
                         'TypeScript',
-                        'Kubernetes',
+                        'H2O-3',
+                        'Driverless AI',
+                        'H2O Wave',
                         'Go',
-                        'Protocol Buffers',
+                        'Protobuf',
                         'Python',
                         'Java',
                         'PostgreSQL',
+                        'Kubernetes',
                     ]}
                     assets={[
                         {
