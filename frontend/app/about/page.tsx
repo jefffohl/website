@@ -15,31 +15,14 @@ export default function AboutMe() {
             <div className="underline-animation">
                 <div className="border-b border-[var(--rule-top)] pb-8">
                     <p>
-                        Hi. I&apos;m Jeff. I am interested in how humans use
-                        computers, and the interfaces between them.
+                        I am a product designer specializing in designing and
+                        building AI software. My current focus is in
+                        conversational and agentic design using Large Language
+                        Models. I am mapping the way forward as we shift into a
+                        new paradigm of human-computer interaction from the
+                        graphic user interface to conversational and
+                        language-based interactions.
                     </p>
-                    <p>
-                        I am a product designer, software developer, user
-                        experience designer, and visual designer with more than
-                        30 years of experience as a practitioner and leader in
-                        these fields. For the last decade, I have been working
-                        in the machine learning / AI space.
-                    </p>
-                    <p>
-                        One question I have been asking since I become involved
-                        with AI is, &ldquo;What is the appropriate user
-                        experience for AI?&rdquo;. With the advent of Generative
-                        AI, and Large Language Models, this question has become
-                        even more critical.
-                    </p>
-                    <p>
-                        In a world of Generative AI, how will humans interact
-                        with systems that become more and more inscrutable? How
-                        do we design systems that produce good outcomes when the
-                        underlying system is largely non-deterministic? These
-                        are the questions on my mind lately.
-                    </p>
-                    <p></p>
                 </div>
                 <div className="border-t border-[var(--rule-bottom)] pt-10">
                     <div className="flex justify-between items-start xl:flex-row flex-col">
@@ -61,13 +44,38 @@ export default function AboutMe() {
                 <div className="grid">
                     <Position
                         isFirst
+                        title="Founder"
+                        company="Lawful Good"
+                        description={
+                            <>
+                                <a href="https://lawfulgood.us">Lawful Good</a>{' '}
+                                is a secure AI assistant for attorneys to
+                                collaborate with AI on legal research and
+                                document drafting.
+                            </>
+                        }
+                        highlights={{
+                            title: 'Highlights',
+                            items: [
+                                'Designed, developed, and launched the Lawful Good application, handling the entire stack from backend to frontend through production deployment.',
+                                'Designed the agentic system for Lawful Good using LangChain and LangGraph.',
+                                'Architected full-stack application on GCP (Cloud Run, Cloud SQL, Vertex AI) with Python backend, TypeScript/React frontend, PostgreSQL state management, and ChromaDB vector database for semantic search.',
+                                'Designed and implemented intuitive document understanding and editing interfaces allowing attorneys to work naturally with AI through conversation and collaborative document refinement.',
+                                'Prioritized security and trust as core product values—all data encrypted in transit and at rest, with clear commitments around attorney-client privilege and model training policies.',
+                                'Developed a cohort of attorneys to test and validate the application in a pilot program.',
+                                'Designed and developed all marketing materials.',
+                            ],
+                        }}
+                    />
+                    <Milestone year="2025" />
+                    <Position
                         title="Principal"
                         company="Infinite Tape"
                         description={
                             <>
-                                Infinite Tape builds AI-powered tools for
-                                professionals and creatives, in a variety of
-                                industries from law to music.
+                                Infinite Tape is a software design and
+                                development studio that builds AI-powered
+                                applications on a contract basis.
                             </>
                         }
                     />
