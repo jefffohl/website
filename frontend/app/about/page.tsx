@@ -265,6 +265,46 @@ export default function AboutMe() {
                 </div>
                 <div className="mt-8">
                     <h2 className="uppercase tracking-[2px] mb-8 text-[1.1rem]">
+                        Skills
+                    </h2>
+                    <ul className="list-disc p-0 m-0 ml-8 mb-8">
+                        <li>Building products around Large Language Models</li>
+                        <li>
+                            LangChain and LangGraph for building agentic AI
+                            applications
+                        </li>
+                        <li>Typescript, Javascript, Python, Java, Go, PHP</li>
+                        <li>
+                            Web Standards, and the entire Web application stack
+                        </li>
+                        <li>
+                            Web frontend frameworks such as React, Angular, and
+                            NextJS
+                        </li>
+                        <li>
+                            Unit testing, integration testing, and end-to-end
+                            testing frameworks such React Testing Framework,
+                            Jest, Jasmine, Karma, Playwright, Cypress and
+                            Storybook
+                        </li>
+                        <li>
+                            Application and API development frameworks such as
+                            FastAPI and Spring Boot and Protobuf for data and
+                            API definitions
+                        </li>
+                        <li>PostgreSQL, MySQL, ChromaDB</li>
+                        <li>Data visualization</li>
+                        <li>Google Cloud Platform</li>
+                        <li>Docker and containerization</li>
+                        <li>User interface design</li>
+                        <li>User experience design</li>
+                        <li>Illustration, graphic design</li>
+                        <li>Adobe Creative Cloud, Figma, and Sketch</li>
+                        <li>Leadership and management</li>
+                    </ul>
+                </div>
+                <div className="mt-8">
+                    <h2 className="uppercase tracking-[2px] mb-8 text-[1.1rem]">
                         Education
                     </h2>
                     <ul className="list-none p-0 m-0 ml-8 mb-8">
