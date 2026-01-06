@@ -15,13 +15,16 @@ export default function AboutMe() {
             <div className="underline-animation">
                 <div className="border-b border-[var(--rule-top)] pb-8">
                     <p>
-                        I am a product designer specializing in designing and
-                        building AI software. My current focus is in
-                        conversational and agentic design using Large Language
-                        Models. I am mapping the way forward as we shift into a
-                        new paradigm of human-computer interaction from the
-                        graphic user interface to conversational and
-                        language-based interactions.
+                        I am a product designer who designs and ships AI-powered
+                        systems by working deeply across design and engineering.
+                        My focus is on conversational and agentic experiences
+                        built on large language models, where system behavior,
+                        interaction design, and technical constraints are
+                        inseparable. I help teams navigate the shift from
+                        graphical interfaces to language-based interaction
+                        models by turning ambiguous, emerging paradigms into
+                        products that work in production and scale in the real
+                        world.
                     </p>
                 </div>
                 <div className="border-t border-[var(--rule-bottom)] pt-10">
