@@ -17,14 +17,15 @@ export default function AboutMe() {
                     <p>
                         I am a product designer who designs and ships AI-powered
                         systems by working deeply across design and engineering.
-                        My focus is on conversational and agentic experiences
-                        built on large language models, where system behavior,
-                        interaction design, and technical constraints are
-                        inseparable. I help teams navigate the shift from
-                        graphical interfaces to language-based interaction
-                        models by turning ambiguous, emerging paradigms into
-                        products that work in production and scale in the real
-                        world.
+                        I have over 30 years of experience and over 10 years of
+                        experience in the AI space. My focus is on
+                        conversational and agentic experiences built on large
+                        language models, where system behavior, interaction
+                        design, and technical constraints are inseparable. I am
+                        mapping the way forward as we shift into a new paradigm
+                        of human-computer interaction from the graphic user
+                        interface to conversational and language-based
+                        interactions.
                     </p>
                 </div>
                 <div className="border-t border-[var(--rule-bottom)] pt-10">
