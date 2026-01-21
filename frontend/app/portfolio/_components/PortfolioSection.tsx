@@ -398,7 +398,7 @@ export default function PortfolioSection({
                         ))}
                     </div>
                 </div>
-                <div className="hidden xl:block asset-display-container flex-1 relative bg-[var(--portfolio-asset-thumbnail-bg)] xl:rounded-lg rounded overflow-hidden shadow-[0_3px_8px_rgba(0,0,0,0.35)]">
+                <div className="hidden xl:block asset-display-container flex-1  relative bg-[var(--portfolio-asset-thumbnail-bg)] xl:rounded-lg rounded overflow-hidden shadow-[0_3px_8px_rgba(0,0,0,0.35)]">
                     {isLoading && (
                         <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300">
                             <div className="w-[80%] h-1 bg-[var(--loader-bar-bg)] rounded-full overflow-hidden">
@@ -408,7 +408,7 @@ export default function PortfolioSection({
                     )}
                     {assets[activeAssetIndex].type === 'image' ? (
                         <div
-                            className={`transition-opacity duration-300 ${
+                            className={`transition-opacity border-none duration-300 ${
                                 isImageVisible ? 'opacity-100' : 'opacity-0'
                             }`}
                         >

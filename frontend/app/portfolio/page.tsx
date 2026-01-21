@@ -28,40 +28,19 @@ export default function Portfolio() {
                     title="Lawful Good"
                     description={
                         <>
-                            <p>
-                                As of late 2024, I have been the founder and
-                                principal designer at{' '}
-                                <a
-                                    target="_blank"
-                                    href="https://infinitetape.net"
-                                >
-                                    Infinite Tape
-                                </a>
-                                , a design and development studio that builds
-                                AI-powered tools for professionals and
-                                creatives.
-                            </p>
-                            <p>
-                                One of the projects is called{' '}
-                                <a target="_blank" href="https://lawfulgood.us">
+                            <p>In 2025 I founded a company called <a target="_blank" href="https://lawfulgood.us">
                                     Lawful Good
-                                </a>
-                                . This project is ongoing as of this writing.
-                                Lawful Good is an AI Agent designed to help
-                                independent lawyers manage documents more
-                                effectively using a{' '}
-                                <a
+                                </a>. Lawful Good is a secure AI assistant for attorneys to collaborate with AI on legal research and document drafting. It is designed specifically for the needs of independent lawyers, and uses a <a
                                     target="_blank"
                                     href="https://en.wikipedia.org/wiki/Retrieval-Augmented_Generation"
                                 >
                                     RAG-based approach
-                                </a>
-                                .
+                                </a>, natural language interface to provide accurate and up-to-date legal information. It features a collaborative document editor, and legal research with grounded results.
                             </p>
                         </>
                     }
-                    company="Infinite Tape"
-                    companyUrl="https://infinitetape.net"
+                    company="Lawful Good"
+                    companyUrl="https://lawfulgood.us"
                     date="2025"
                     roles={['Engineer', 'Designer']}
                     stack={[
@@ -70,39 +49,96 @@ export default function Portfolio() {
                         'Python',
                         'FastAPI',
                         'LangChain',
-                        'OpenAI',
+                        'LangGraph',
                         'Gemini',
+                        'Anthropic',
+                        'OpenAI',
                         'PostgreSQL',
                         'ChromaDB',
+                        'Redis',
                         'Google Cloud Platform',
                     ]}
                     assets={[
                         {
                             type: 'image',
-                            src: '/portfolio/lawful-good/lawful-good-empty-state.png',
+                            src: '/portfolio/lawful-good/lawful-good-in-situ.webp',
                             thumbnail: {
-                                src: '/portfolio/lawful-good/lawful-good-empty-state_thumb.png',
+                                src: '/portfolio/lawful-good/lawful-good-in-situ_thumb.webp',
+                                alt: 'An attorney sitting at a desk using Lawful Good on a laptop',
+                                width: 149,
+                                height: 85,
+                            },
+                            alt: 'An attorney sitting at a desk using Lawful Good on a laptop',
+                            width: 2752,
+                            height: 1568,
+                        },
+                        {
+                            type: 'image',
+                            src: '/portfolio/lawful-good/lawful-good-marketing-1.webp',
+                            thumbnail: {
+                                src: '/portfolio/lawful-good/lawful-good-marketing-1_thumb.webp',
+                                alt: 'Lawful Good Marketing',
+                                width: 149,
+                                height: 85,
+                            },
+                            alt: 'Lawful Good Marketing',
+                            width: 3374,
+                            height: 1922,
+                        },
+                        {
+                            type: 'image',
+                            src: '/portfolio/lawful-good/lawful-good-logos.webp',
+                            thumbnail: {
+                                src: '/portfolio/lawful-good/lawful-good-logos_thumb.webp',
+                                alt: 'Lawful Good Logos',
+                                width: 149,
+                                height: 85,
+                            },
+                            alt: 'Lawful Good Logos',
+                            width: 3374,
+                            height: 1924,
+                        },
+                        {
+                            type: 'image',
+                            src: '/portfolio/lawful-good/lawful-good-empty-state.webp',
+                            thumbnail: {
+                                src: '/portfolio/lawful-good/lawful-good-empty-state_thumb.webp',
                                 alt: 'Lawful Good Empty State',
                                 width: 149,
                                 height: 85,
                             },
-                            alt: 'Lawful Good Empty State',
-                            width: 2109,
-                            height: 1200,
+                            alt: 'Lawful Good AI Empty State',
+                            width: 3374,
+                            height: 1924,
                         },
                         {
                             type: 'image',
-                            src: '/portfolio/lawful-good/lawful-good-document-view.png',
+                            src: '/portfolio/lawful-good/lawful-good-assistant.webp',
                             thumbnail: {
-                                src: '/portfolio/lawful-good/lawful-good-document-view_thumb.png',
-                                alt: 'Lawful Good Workflow',
-                                width: 145,
+                                src: '/portfolio/lawful-good/lawful-good-assistant_thumb.webp',
+                                alt: 'Lawful Good AI Assistant',
+                                width: 149,
                                 height: 85,
                             },
-                            alt: 'Lawful Good Workflow',
-                            width: 2109,
-                            height: 1200,
+                            alt: 'Lawful Good AI Assistant',
+                            width: 3374,
+                            height: 1924,
                         },
+                        {
+                            type: 'image',
+                            src: '/portfolio/lawful-good/lawful-good-editor.webp',
+                            thumbnail: {
+                                src: '/portfolio/lawful-good/lawful-good-editor_thumb.webp',
+                                alt: 'Lawful Good AI Editor',
+                                width: 149,
+                                height: 85,
+                            },
+                            alt: 'Lawful Good AI Editor',
+                            width: 3374,
+                            height: 1924,
+                        },
+                        
+                        
                     ]}
                 />
                 <PortfolioSection
