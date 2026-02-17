@@ -277,7 +277,7 @@ export default function AboutMe() {
                             LangChain and LangGraph for building agentic AI
                             applications
                         </li>
-                        <li>Typescript, Javascript, Python, Java, Go, PHP</li>
+                        <li>Typescript, Javascript, Python</li>
                         <li>
                             Web Standards, and the entire Web application stack
                         </li>
