@@ -1,20 +1,25 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { buildAndAnimateGrid } from '@/animations/script'
-import AboutPanel from '@/components/AboutPanel'
+import { CanvasMap } from './CanvasMap'
 
-export default function GridCanvasClient() {
+export default function CanvasClient({ canvasType }: { canvasType: string }) {
     const [aboutHidden, setAboutHidden] = useState(true)
-
     const toggleAboutPanel = () => {
         setAboutHidden(!aboutHidden)
     }
+    // const pathname = usePathname()
 
     useEffect(() => {
-        const animator = buildAndAnimateGrid('grid-canvas')
+        const animator = CanvasMap.get(canvasType)
+        let animation: any
+        if (animator) {
+            animation = animator('canvas')
+        }
         return () => {
-            animator.destroy()
+            if (animation && animation.destroy) {
+                animation.destroy()
+            }
         }
     }, [])
 
@@ -26,8 +31,8 @@ export default function GridCanvasClient() {
             >
                 ?
             </div>
-            <AboutPanel isHidden={aboutHidden} onClose={toggleAboutPanel} />
-            <canvas id="grid-canvas" className="w-full h-full block" />
+            {/* <AboutPanel isHidden={aboutHidden} onClose={toggleAboutPanel} /> */}
+            <canvas id="canvas" className="w-full h-full block" />
         </div>
     )
 }

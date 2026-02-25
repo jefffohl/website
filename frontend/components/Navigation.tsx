@@ -6,7 +6,8 @@ import NavigationLinks from './NavigationLinks'
 
 const mainLinks = [
     { name: 'Blog', path: '/blog' },
-    { name: 'Portfolio', path: '/portfolio' },
+    { name: 'Design', path: '/design' },
+    { name: 'Art', path: '/art' },
     { name: 'About', path: '/about' },
 ]
 

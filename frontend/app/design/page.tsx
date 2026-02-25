@@ -3,7 +3,7 @@ import PortfolioSection from './_components/PortfolioSection'
 import ContentPageWrapper from '@/components/ContentPageWrapper'
 
 export const metadata: Metadata = {
-    title: 'Portfolio',
+    title: 'Design Portfolio',
     description:
         'Recent work by Jeff Fohl - Software designer with experience in AI, machine learning, and enterprise applications.',
 }
@@ -13,7 +13,7 @@ export default function Portfolio() {
         <ContentPageWrapper>
             <div className="underline-animation">
                 <h1 className="text-2xl font-[400] uppercase text-[var(--site-section-title-color)] tracking-widest">
-                    Portfolio
+                    Design Portfolio
                 </h1>
                 <p className="w-full xl:w-[50%]">
                     Recent work, in reverse chronology. Some of this work was
@@ -28,14 +28,26 @@ export default function Portfolio() {
                     title="Lawful Good"
                     description={
                         <>
-                            <p>In 2025 I founded a company called <a target="_blank" href="https://lawfulgood.us">
+                            <p>
+                                In 2025 I founded a company called{' '}
+                                <a target="_blank" href="https://lawfulgood.us">
                                     Lawful Good
-                                </a>. Lawful Good is a secure AI assistant for attorneys to collaborate with AI on legal research and document drafting. It is designed specifically for the needs of independent lawyers, and uses a <a
+                                </a>
+                                . Lawful Good is a secure AI assistant for
+                                attorneys to collaborate with AI on legal
+                                research and document drafting. It is designed
+                                specifically for the needs of independent
+                                lawyers, and uses a{' '}
+                                <a
                                     target="_blank"
                                     href="https://en.wikipedia.org/wiki/Retrieval-Augmented_Generation"
                                 >
                                     RAG-based approach
-                                </a>, natural language interface to provide accurate and up-to-date legal information. It features a collaborative document editor, and legal research with grounded results.
+                                </a>
+                                , natural language interface to provide accurate
+                                and up-to-date legal information. It features a
+                                collaborative document editor, and legal
+                                research with grounded results.
                             </p>
                         </>
                     }
@@ -137,8 +149,6 @@ export default function Portfolio() {
                             width: 3374,
                             height: 1924,
                         },
-                        
-                        
                     ]}
                 />
                 <PortfolioSection

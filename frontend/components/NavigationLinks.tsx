@@ -10,7 +10,7 @@ interface NavLink {
 
 interface NavigationLinksProps {
     links: NavLink[]
-    onLinkClick: () => void
+    onLinkClick?: () => void
 }
 
 export default function NavigationLinks({
@@ -43,7 +43,7 @@ export default function NavigationLinks({
                     </span>
                     <Link
                         href={link.path}
-                        onClick={onLinkClick}
+                        onClick={onLinkClick ? onLinkClick : () => {}}
                         className={`block no-underline p-2 px-8 cursor-pointer ${getLinkClass(
                             link.path
                         )}`}
