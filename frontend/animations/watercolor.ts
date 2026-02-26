@@ -1,6 +1,7 @@
 /**
  *  Art is a constant process of inventing ways to escape the restrictions of past inventions.
  *  Thanks to Tyler Hobbs: https://www.tylerxhobbs.com/words/a-guide-to-simulating-watercolor-paint-with-generative-art
+ *  Copyright © 2026 Jeff Fohl
  */
 
 // types
