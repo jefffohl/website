@@ -11,6 +11,15 @@ const nextConfig: NextConfig = {
         tsconfigPath: './tsconfig.json',
     },
     poweredByHeader: false,
+    async redirects() {
+        return [
+            {
+                source: '/portfolio',
+                destination: '/design',
+                permanent: true,
+            },
+        ]
+    },
 }
 
 export default nextConfig
