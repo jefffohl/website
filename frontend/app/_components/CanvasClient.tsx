@@ -1,17 +1,20 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { CanvasMap } from './CanvasMap'
+import { useEffect, useState, useRef } from 'react'
+import { CanvasMap, AnimationMetaData } from './CanvasMap'
+import AboutPanel from '@/components/AboutPanel'
 
 export default function CanvasClient({ canvasType }: { canvasType: string }) {
     const [aboutHidden, setAboutHidden] = useState(true)
+    const artwork = useRef<AnimationMetaData | undefined>(undefined)
     const toggleAboutPanel = () => {
         setAboutHidden(!aboutHidden)
     }
     // const pathname = usePathname()
 
     useEffect(() => {
-        const animator = CanvasMap.get(canvasType)
+        artwork.current = CanvasMap.get(canvasType)
+        const animator = artwork.current?.animator
         let animation: any
         if (animator) {
             animation = animator('canvas')
@@ -31,7 +34,12 @@ export default function CanvasClient({ canvasType }: { canvasType: string }) {
             >
                 ?
             </div>
-            {/* <AboutPanel isHidden={aboutHidden} onClose={toggleAboutPanel} /> */}
+            <AboutPanel
+                isHidden={aboutHidden}
+                onClose={toggleAboutPanel}
+                content={artwork.current?.description || ''}
+                title={artwork.current?.title || ' '}
+            />
             <canvas id="canvas" className="w-full h-full block" />
         </div>
     )
