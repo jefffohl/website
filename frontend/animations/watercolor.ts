@@ -163,7 +163,9 @@ class WaterColorAnimator {
 
     public start() {
         // create a random number of polygons:
-        let radius = Math.round(Math.random() * 500)
+        // get the larger of the dimensions
+        const larger = Math.max(this.rect!.width, this.rect!.height)
+        let radius = Math.round((Math.random() * larger) / 4.72)
         let facets = Math.round(Math.random() * 10)
         if (facets < 5) {
             facets = 5
