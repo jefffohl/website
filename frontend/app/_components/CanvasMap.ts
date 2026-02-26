@@ -17,8 +17,13 @@ map.set(CanvasType.BLOOM, {
     animator: buildWatercolorAnimation,
     title: 'Bloom',
     description: `<p>In this piece, I explore a world of continuously blossoming colors, endlessly expanding across an imagined fabric.</p>
-    <p>Inspired by the blooms created from watercolor on paper, the loop is entirely random and continuous. What you are viewing now is entirely unique, and never seen before.</p
-    <p>Thanks to <a href="https://www.tylerxhobbs.com" target="_blank">Tyler Hobbs</a> for his techniques on how to achieve this effect.</p>`,
+    <p>Inspired by the blooms created from watercolor on paper, the loop is entirely random and continuous. What you are viewing now is unique, and never seen before.</p
+    <p>Thanks to <a href="https://www.tylerxhobbs.com" target="_blank">Tyler Hobbs</a> for his techniques on how to achieve this effect.</p>
+    <p>
+        <a href="https://github.com/jefffohl/website/blob/main/frontend/animations/watercolor.ts" target="_blank">
+            You can see the code here.
+        </a>
+    </p>`,
 })
 map.set(CanvasType.GRID, {
     animator: buildAndAnimateGrid,
@@ -51,7 +56,7 @@ map.set(CanvasType.GRID, {
                     design, and then deconstructing it, the system will
                     endlessly explore these ideas of abstraction.
                     <a
-                        href="https://github.com/jefffohl/website/blob/main/frontend/animations/script.ts"
+                        href="https://github.com/jefffohl/website/blob/main/frontend/animations/grid.ts"
                         target="_blank"
                     >
                         You can see the code here.
