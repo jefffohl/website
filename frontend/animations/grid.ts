@@ -1,5 +1,6 @@
 /**
  *  Art is a constant process of inventing ways to escape the restrictions of past inventions.
+ *  Copyright © 2026 Jeff Fohl
  */
 
 // types
@@ -564,8 +565,8 @@ class GridAnimator {
                     winner < 0.5
                         ? cell.drawDirection
                         : gridType === GridType.COLUMN
-                        ? CellDrawDirection.UP
-                        : CellDrawDirection.LEFT
+                          ? CellDrawDirection.UP
+                          : CellDrawDirection.LEFT
                 return {
                     ...cell,
                     color: cell.depth < 2 ? this.backgroundColor : cell.color,

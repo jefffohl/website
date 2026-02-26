@@ -8,6 +8,11 @@
     --primary-hover: var(--color-primary-hover);
 }
 
+/** works only in Chromium **/
+:root {
+    interpolate-size: allow-keywords;
+}
+
 :root[data-theme='light'] {
     --color-primary: #0c7dce;
     --color-primary-hover: #01497d;

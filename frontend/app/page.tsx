@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
-import GridCanvasClient from './_components/GridCanvasClient'
+import CanvasClient from './_components/CanvasClient'
+import { CanvasType } from './_components/CanvasMap'
 
 export const metadata: Metadata = {
     title: 'Design | Code',
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
-    return <GridCanvasClient />
+    return <CanvasClient canvasType={CanvasType.BLOOM} />
 }

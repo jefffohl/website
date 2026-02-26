@@ -3,14 +3,14 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-interface NavLink {
+export interface NavLink {
     name: string
     path: string
 }
 
-interface NavigationLinksProps {
+export interface NavigationLinksProps {
     links: NavLink[]
-    onLinkClick: () => void
+    onLinkClick?: () => void
 }
 
 export default function NavigationLinks({
@@ -31,7 +31,7 @@ export default function NavigationLinks({
     }
 
     return (
-        <ul className="m-0 py-5 list-none">
+        <ul className="m-0 py-0 xl:py-5 list-none">
             {links.map((link) => (
                 <li key={link.path} className="m-0 p-0 list-none relative">
                     <span
@@ -43,7 +43,7 @@ export default function NavigationLinks({
                     </span>
                     <Link
                         href={link.path}
-                        onClick={onLinkClick}
+                        onClick={onLinkClick ? onLinkClick : () => {}}
                         className={`block no-underline p-2 px-8 cursor-pointer ${getLinkClass(
                             link.path
                         )}`}
