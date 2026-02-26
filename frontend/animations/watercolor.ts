@@ -43,9 +43,6 @@ class WaterColorAnimator {
      * Deform a polygon
      */
     private deformPolygon(polygon: Polygon, radius: number): Polygon {
-        // It's pretty simple, and it goes something like this:
-        // For each line A -> C in the polygon, find the midpoint, B. From a Gaussian distribution centered on B, pick a new point B'.
-        // get B:
         const newPoly: Polygon = []
         for (let i = 0; i < polygon.length; i++) {
             const pointA = polygon[i]
@@ -74,9 +71,6 @@ class WaterColorAnimator {
             newPoly.push(A, B, C)
         }
         return newPoly
-        // Update the polygon, replacing the line A -> C with two lines: A -> B' and B' -> C
-        // If we haven't hit our max recursion depth, repeat from step 1, splitting the child lines.
-        // Depending on the variation in your Gaussian distribution and the recursion depth, this will produce a polygon with jagged, detailed edges.
     }
 
     private createPolygon(
@@ -139,7 +133,6 @@ class WaterColorAnimator {
             return
         }
 
-        // Step 3: Draw the polygon
         this.context.beginPath() // Start a new path
         this.context.moveTo(polygon[0].x, polygon[0].y) // Move to the first point
 
