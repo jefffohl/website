@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 const links = [
     { name: 'Grid', path: '/art/grid' },
     { name: 'Bloom', path: '/art/bloom' },
+    { name: 'Bloom 2', path: '/art/bloom2' },
 ]
 
 export default function Art({ children }: { children: React.ReactNode }) {

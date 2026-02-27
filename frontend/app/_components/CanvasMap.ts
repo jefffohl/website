@@ -1,8 +1,10 @@
-import { buildWatercolorAnimation } from '@/animations/watercolor'
+import { buildBloom2Animation } from '@/animations/bloom2'
+import { buildBloomAnimation } from '@/animations/bloom'
 import { buildAndAnimateGrid } from '@/animations/grid'
 
 export enum CanvasType {
     BLOOM = 'bloom',
+    BLOOM2 = 'bloom2',
     GRID = 'grid',
 }
 
@@ -14,13 +16,22 @@ export interface AnimationMetaData {
 
 const map = new Map<string, AnimationMetaData>()
 map.set(CanvasType.BLOOM, {
-    animator: buildWatercolorAnimation,
+    animator: buildBloomAnimation,
     title: 'Bloom',
     description: `<p>In this piece, I explore a world of continuously blossoming colors, endlessly expanding across an imagined fabric.</p>
     <p>Inspired by the blooms created from watercolor on paper, the loop is entirely random and continuous. What you are viewing now is unique, and never seen before.</p
     <p>Thanks to <a href="https://www.tylerxhobbs.com" target="_blank">Tyler Hobbs</a> for his techniques on how to achieve this effect.</p>
     <p>
-        <a href="https://github.com/jefffohl/website/blob/main/frontend/animations/watercolor.ts" target="_blank">
+        <a href="https://github.com/jefffohl/website/blob/main/frontend/animations/bloom2.ts" target="_blank">
+            You can see the code here.
+        </a>
+    </p>`,
+})
+map.set(CanvasType.BLOOM2, {
+    animator: buildBloom2Animation,
+    title: 'Bloom 2',
+    description: `<p>In this piece, I build upon the bloom effect I established in Bloom.</p>
+        <a href="https://github.com/jefffohl/website/blob/main/frontend/animations/bloom.ts" target="_blank">
             You can see the code here.
         </a>
     </p>`,

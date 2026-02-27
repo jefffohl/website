@@ -4,11 +4,13 @@
  *  Copyright © 2026 Jeff Fohl
  */
 
+import { gaussianRandom } from '@/animations/utils/random'
+
 // types
 type Point = { x: number; y: number; variance: number }
 type Polygon = Point[]
 
-class WaterColorAnimator {
+class BloomAnimator {
     private context: CanvasRenderingContext2D | null = null
     private canvas: HTMLCanvasElement | null = null
     private rect: DOMRect | null = null
@@ -26,17 +28,6 @@ class WaterColorAnimator {
             this.context = this.canvas.getContext('2d')
             this.context?.scale(dpr, dpr)
         }
-    }
-
-    private gaussianRandom(mean: number, sd: number) {
-        const u1 = Math.random()
-        const u2 = Math.random()
-
-        // Box-Muller transform
-        const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2)
-
-        // Scale to mean and standard deviation
-        return z0 * sd + mean
     }
 
     /**
@@ -59,13 +50,13 @@ class WaterColorAnimator {
             if (!A || !C) {
                 continue
             }
-            const variance = this.gaussianRandom(
+            const variance = gaussianRandom(
                 (A.variance + C.variance) / 2,
                 radius / 20
             )
             const B = {
-                x: this.gaussianRandom((A.x + C.x) / 2, variance),
-                y: this.gaussianRandom((A.y + C.y) / 2, variance),
+                x: gaussianRandom((A.x + C.x) / 2, variance),
+                y: gaussianRandom((A.y + C.y) / 2, variance),
                 variance,
             }
             newPoly.push(A, B, C)
@@ -230,10 +221,8 @@ class WaterColorAnimator {
     }
 }
 
-export const buildWatercolorAnimation = (
-    canvasId: string
-): WaterColorAnimator => {
-    const animator = new WaterColorAnimator(canvasId)
+export const buildBloomAnimation = (canvasId: string): BloomAnimator => {
+    const animator = new BloomAnimator(canvasId)
     animator.start()
     return animator
 }

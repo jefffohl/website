@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useMemo } from 'react'
 
 export interface NavLink {
     name: string
@@ -19,8 +20,14 @@ export default function NavigationLinks({
 }: NavigationLinksProps) {
     const pathname = usePathname()
 
+    const segments = useMemo(() => {
+        return pathname.split('/')
+    }, [pathname])
+
     const isActive = (path: string) => {
-        return pathname.startsWith(path)
+        const pathSegments = path.split('/')
+        const segment = pathSegments[pathSegments.length - 1]
+        return pathname.startsWith(path) && segments.includes(segment)
     }
 
     const getLinkClass = (path: string) => {
