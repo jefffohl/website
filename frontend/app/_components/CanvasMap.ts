@@ -22,7 +22,7 @@ map.set(CanvasType.BLOOM, {
     <p>Inspired by the blooms created from watercolor on paper, the loop is entirely random and continuous. What you are viewing now is unique, and never seen before.</p
     <p>Thanks to <a href="https://www.tylerxhobbs.com" target="_blank">Tyler Hobbs</a> for his techniques on how to achieve this effect.</p>
     <p>
-        <a href="https://github.com/jefffohl/website/blob/main/frontend/animations/bloom2.ts" target="_blank">
+        <a href="https://github.com/jefffohl/website/blob/main/frontend/animations/bloom.ts" target="_blank">
             You can see the code here.
         </a>
     </p>`,
@@ -30,8 +30,8 @@ map.set(CanvasType.BLOOM, {
 map.set(CanvasType.BLOOM2, {
     animator: buildBloom2Animation,
     title: 'Bloom 2',
-    description: `<p>In this piece, I build upon the bloom effect I established in Bloom.</p>
-        <a href="https://github.com/jefffohl/website/blob/main/frontend/animations/bloom.ts" target="_blank">
+    description: `<p>In this piece, I build upon the bloom effect I established in the first Bloom piece. In this iteration, the blooms are spikier and more explosive.</p>
+        <a href="https://github.com/jefffohl/website/blob/main/frontend/animations/bloom2.ts" target="_blank">
             You can see the code here.
         </a>
     </p>`,

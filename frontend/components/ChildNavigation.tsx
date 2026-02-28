@@ -20,8 +20,8 @@ export default function ChildNavigation({
     }
 
     return (
-        <div className="flex flex-row xl:flex-col justify-start items-center w:full xl:w-48">
-            <h1 className="xl:p-[2rem_3rem_3rem_3rem] p-[1rem_0.5rem_1rem_1rem] text-2xl font-[400] uppercase text-[var(--site-section-title-color)] tracking-widest">
+        <div className="flex flex-row xl:flex-col justify-start items-start w:full xl:w-48">
+            <h1 className="w-full xl:p-[2rem_3rem_3rem_3rem] p-[1rem_0.5rem_1rem_1rem] text-2xl font-[400] uppercase text-[var(--site-section-title-color)] tracking-widest">
                 {pageTitle}
             </h1>
             <nav

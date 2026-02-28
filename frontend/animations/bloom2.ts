@@ -224,7 +224,6 @@ class Bloom2Animator {
                 )
             }
         }
-
         this.canvas = null
         this.context = null
         this.rect = null
