@@ -3,6 +3,8 @@
  *  Copyright © 2026 Jeff Fohl
  */
 
+import { rampedRandom } from '@/animations/utils/random'
+
 // types
 interface GridScaffold {
     columns: number[]
@@ -183,26 +185,6 @@ class GridAnimator {
         return partialSum + a
     }
 
-    /**
-     * Function for generating a random number, with an upper bound
-     * determined by a diminishing probability.
-     * @param sweetness This parameter determines how likely the random number is to be large.
-     * Lower numbers reduce the probability, larger numbers increase the probability.
-     */
-    private getValue(sweet: number): number {
-        let count = 0
-        let coefficient = 1 / sweet
-        let progress = false
-        while (!progress) {
-            if (Math.random() <= coefficient) {
-                progress = true
-            }
-            count++
-            coefficient = coefficient + 1 / sweet
-        }
-        return count
-    }
-
     private createSpread(count: number): number[] {
         const spread = []
         let remaining = 1
@@ -241,8 +223,8 @@ class GridAnimator {
     }
 
     private createGridScaffold(): GridScaffold {
-        const columnLength = this.getValue(SWEETNESS)
-        const rowLength = this.getValue(SWEETNESS)
+        const columnLength = rampedRandom(SWEETNESS)
+        const rowLength = rampedRandom(SWEETNESS)
         const gridScaffold = {
             columns: this.createSpread(columnLength),
             rows: this.createSpread(rowLength),
@@ -354,7 +336,7 @@ class GridAnimator {
             return this.generateRow(parentCell, this.getLevel2Columns())
         } else {
             const gridType = this.chooseGridType()
-            const spread = this.createSpread(this.getValue(SWEETNESS))
+            const spread = this.createSpread(rampedRandom(SWEETNESS))
             return gridType === GridType.COLUMN
                 ? this.generateColumn(parentCell, spread)
                 : this.generateRow(parentCell, spread)

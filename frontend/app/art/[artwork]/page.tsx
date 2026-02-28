@@ -1,5 +1,4 @@
 import CanvasClient from '@/app/_components/CanvasClient'
-import { CanvasType } from '@/app/_components/CanvasMap'
 
 // Server component for the blog post content
 export default async function BlogPost({
