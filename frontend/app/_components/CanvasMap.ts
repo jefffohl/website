@@ -31,6 +31,7 @@ map.set(CanvasType.BLOOM2, {
     animator: buildBloom2Animation,
     title: 'Bloom 2',
     description: `<p>In this piece, I build upon the bloom effect I established in the first Bloom piece. In this iteration, the blooms are spikier and more explosive.</p>
+    <p>I also added the ability to stop and start the animation by clicking on the canvas, so you can pause it to take a screenshot of the current state. Try it out!</p>
         <a href="https://github.com/jefffohl/website/blob/main/frontend/animations/bloom2.ts" target="_blank">
             You can see the code here.
         </a>

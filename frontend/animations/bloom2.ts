@@ -10,11 +10,21 @@ import { gaussianRandom, rampedRandom } from '@/animations/utils/random'
 type Point = { x: number; y: number; variance: number }
 type Polygon = Point[]
 
+interface Bloom {
+    polygon: Polygon
+    color: string
+    numberOfLayers: number
+    iteration: number
+    stopped: boolean
+    timer: number | null
+}
+
 class Bloom2Animator {
     private context: CanvasRenderingContext2D | null = null
     private canvas: HTMLCanvasElement | null = null
     private rect: DOMRect | null = null
-    private timer: number | null = null
+    // private timer: number | null = null
+    private _currentBloom: Bloom | null = null
 
     constructor(canvasId: string) {
         this.canvas = document.getElementById(
@@ -27,6 +37,20 @@ class Bloom2Animator {
             this.canvas.height = this.rect.height * dpr
             this.context = this.canvas.getContext('2d')
             this.context?.scale(dpr, dpr)
+        }
+        this.canvas?.addEventListener('click', () => {
+            if (this._currentBloom?.stopped) {
+                this.start()
+                this._currentBloom.stopped = false
+            } else {
+                this.stop()
+                if (this._currentBloom) {
+                    this._currentBloom.stopped = true
+                }
+            }
+        })
+        if (this.canvas) {
+            this.canvas.style.cursor = 'pointer'
         }
     }
 
@@ -152,22 +176,16 @@ class Bloom2Animator {
         this.context.fill() // Fill the interior
     }
 
-    /**
-     * Initializes the animation on the specified canvas
-     */
-
-    public start() {
-        // create a random number of polygons:
-        // get the larger of the dimensions
-        const larger = Math.max(this.rect!.width, this.rect!.height)
+    private createBloom() {
+        if (!this.rect) {
+            return
+        }
+        const larger = Math.max(this.rect.width, this.rect.height)
         let radius = Math.round((Math.random() * larger) / 6)
         let facets = Math.round(gaussianRandom(15, 5))
-        if (facets < 5) {
-            facets = 5
-        }
         // get coordinates
-        const x = Math.round(Math.random() * (this.rect!.width || 100))
-        const y = Math.round(Math.random() * (this.rect!.height || 100))
+        const x = Math.round(Math.random() * (this.rect.width || 100))
+        const y = Math.round(Math.random() * (this.rect.height || 100))
         // calculate random color
         const l = Math.random() * 100
         const c = Math.random() * 100
@@ -177,22 +195,48 @@ class Bloom2Animator {
         const poly = this.createPolygon({ x, y }, radius, facets, radius / 10)
         const deformedPoly = this.deformPolygon(poly)
         const numberOfLayers = 85
-        let iteration = 0
+
+        this._currentBloom = {
+            polygon: deformedPoly,
+            color: color,
+            numberOfLayers: numberOfLayers,
+            iteration: 0,
+            timer: null,
+            stopped: false,
+        }
+    }
+
+    /**
+     * Initializes the animation on the specified canvas
+     */
+
+    public start() {
+        if (!this._currentBloom) {
+            this.createBloom()
+        }
         let self = this
 
         function draw() {
-            iteration++
+            if (!self._currentBloom) {
+                return
+            }
+            self._currentBloom.iteration++
             self.drawPolygon(
-                self.iterativelyDeformPolygon(deformedPoly, 6),
-                color
+                self.iterativelyDeformPolygon(self._currentBloom.polygon, 6),
+                self._currentBloom.color
             )
-            self.timer = window.setTimeout(() => {
-                if (iteration <= numberOfLayers) {
+            self._currentBloom.timer = window.setTimeout(() => {
+                if (
+                    self._currentBloom &&
+                    self._currentBloom.iteration <=
+                        self._currentBloom.numberOfLayers
+                ) {
                     draw()
                 } else {
-                    if (self.timer) {
-                        clearTimeout(self.timer)
+                    if (self._currentBloom && self._currentBloom.timer) {
+                        clearTimeout(self._currentBloom.timer)
                     }
+                    self._currentBloom = null
                     self.start()
                 }
             }, 10)
@@ -202,9 +246,9 @@ class Bloom2Animator {
 
     public stop(): void {
         // Clear any timeouts
-        if (this.timer !== null) {
-            window.clearTimeout(this.timer)
-            this.timer = null
+        if (this._currentBloom && this._currentBloom.timer !== null) {
+            window.clearTimeout(this._currentBloom.timer)
+            this._currentBloom.timer = null
         }
     }
 
@@ -227,6 +271,7 @@ class Bloom2Animator {
         this.canvas = null
         this.context = null
         this.rect = null
+        this._currentBloom = null
     }
 }
 
