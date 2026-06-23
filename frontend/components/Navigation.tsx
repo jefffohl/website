@@ -16,6 +16,7 @@ const socialLinks = [
     { name: 'Medium', href: 'https://medium.com/@jefffohl' },
     { name: 'GitHub', href: 'https://github.com/jefffohl' },
     { name: 'LinkedIn', href: 'https://www.linkedin.com/in/jeffreyfohl' },
+    { name: 'Instagram', href: 'https://www.instagram.com/space_time_spirit' },
     { name: 'Endlesss', href: 'https://endlesss.fm/spacetimespirit' },
 ]
 
