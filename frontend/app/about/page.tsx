@@ -71,18 +71,6 @@ export default function AboutMe() {
                             ],
                         }}
                     />
-                    <Milestone year="2025" />
-                    <Position
-                        title="Principal"
-                        company="Infinite Tape"
-                        description={
-                            <>
-                                Infinite Tape is a software design and
-                                development studio that builds AI-powered
-                                applications on a contract basis.
-                            </>
-                        }
-                    />
                     <Milestone year="2024" />
                     <Position
                         title="Manager, User Experience Engineering and Design"
@@ -98,47 +86,19 @@ export default function AboutMe() {
                         highlights={{
                             title: 'Highlights',
                             items: [
-                                <>
-                                    Managed teams developing multiple products
-                                    ranging from{' '}
-                                    <span className="italic">H2O AI Cloud</span>
-                                    ,{' '}
-                                    <span className="italic">
-                                        AI Engine Manager
-                                    </span>
-                                    , <span className="italic">App Store</span>,{' '}
-                                    <span className="italic">Document AI</span>,{' '}
-                                    <span className="italic">
-                                        Feature Store
-                                    </span>
-                                    , H2O.ai marketing website, and others.
-                                </>,
-                                'Managed teams spanning many time zones, skill sets, and projects to establish principles of engineering and design excellence.',
+                                'Simultaneously led UX Design, UI Engineering, Marketing Design, and Marketing Engineering teams across three continents.',
+                                'Established engineering and design excellence principles across distributed teams through hands-on mentorship, code reviews, and collaborative product development',
                                 'Led development of component libraries for internal development to reduce redundancy, and speed UI development across projects.',
-                                'Led development of internal design system to create coherent, usable interface designs across multiple products.',
+                                'Led development of internal design system focusing on interaction design and motion to make complex AI workflows intuitive, learnable, and consistent across multiple H2O.ai products.',
                                 'Mentored UI Engineers and Designers to develop a collaborative approach to designing and developing software products.',
                                 'Worked with Product and Engineering teams to develop pathways for ideating and defining product visions, defined by clearly designed artifacts that can be easily understood by all stakeholders, from Sales, to Product, to Design, to Engineering.',
-                                'Increased collaboration and communication across all product stakeholder teams.',
                                 <>
                                     Contributed code and design to many projects
-                                    and products including{' '}
-                                    <span className="italic">H2O AI Cloud</span>
-                                    ,{' '}
-                                    <span className="italic">
-                                        AI Engine Manager
-                                    </span>
-                                    , <span className="italic">App Store</span>,{' '}
-                                    <span className="italic">
-                                        Feature Store
-                                    </span>
-                                    ,{' '}
-                                    <span className="italic">Document AI</span>,{' '}
-                                    <span className="italic">h2oGPT</span>,{' '}
-                                    <span className="italic">
-                                        Enterprise h2oGPTe
-                                    </span>
-                                    , and <span className="italic">UI Kit</span>
-                                    .
+                                    and products including <i>H2O AI Cloud</i>,{' '}
+                                    <i>App Store</i>, <i>AI Engine Manager</i>,{' '}
+                                    <i>Feature Store</i>, <i>Document AI</i>,{' '}
+                                    <i>h2oGPT</i>, <i>Enterprise h2oGPT</i>,{' '}
+                                    <i>AI Governance</i>, and <i>UI Kit</i>.
                                 </>,
                             ],
                         }}
@@ -193,6 +153,10 @@ export default function AboutMe() {
                                     </a>{' '}
                                     retention and privacy compliance software
                                     for Information Governance Solutions.
+                                </>,
+                                <>
+                                    Contributing member to Numenta's open source{' '}
+                                    AI project, <i>NuPIC</i>.
                                 </>,
                                 <>
                                     Jurist for Numenta's{' '}
@@ -277,7 +241,10 @@ export default function AboutMe() {
                             LangChain and LangGraph for building agentic AI
                             applications
                         </li>
-                        <li>Typescript, Javascript, Python</li>
+                        <li>
+                            Typescript, Javascript, Python, and other high-level
+                            languages
+                        </li>
                         <li>
                             Web Standards, and the entire Web application stack
                         </li>
